@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { WorkExperience } from "../types/resume";
 import { Card, Button, Form, Row, Col, InputGroup } from "react-bootstrap";
+import { FaTrash } from "react-icons/fa";
 
 interface WorkExperienceFormProps {
   experiences: WorkExperience[];
@@ -247,19 +248,25 @@ export default function WorkExperienceForm({
                   </Form.Label>
 
                   {exp.achievements.map((achievement, index) => (
-                    <div key={index} className="d-flex align-items-center mb-2">
-                      <div className="flex-grow-1">
-                        <div className="d-flex align-items-center">
-                          <span className="me-2">•</span>
-                          <span>{achievement}</span>
-                        </div>
+                    <div key={index} className="d-flex mb-2">
+                      <div className="flex-grow-1 d-flex">
+                        <span className="me-2 flex-shrink-0">•</span>
+                        <span>{achievement}</span>
                       </div>
                       <Button
                         variant="link"
-                        className="p-0 text-danger ms-2"
+                        className="p-0 text-danger ms-2 align-self-start mt-1"
                         onClick={() => removeAchievement(exp.id, index)}
+                        title="Remove achievement"
+                        style={{ 
+                          minWidth: '20px', 
+                          height: '20px', 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          justifyContent: 'center' 
+                        }}
                       >
-                        Remove
+                        <FaTrash size={14} />
                       </Button>
                     </div>
                   ))}
