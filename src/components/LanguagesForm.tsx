@@ -55,10 +55,7 @@ export default function LanguagesForm({
     updateLanguages(languages.filter((lang) => lang.id !== id));
   };
 
-  const startEditingLanguage = (
-    index: number,
-    lang: Language
-  ) => {
+  const startEditingLanguage = (index: number, lang: Language) => {
     setEditingLanguage({
       index,
       language: lang.name, // Fixed: using lang.name instead of lang.language
@@ -187,7 +184,8 @@ export default function LanguagesForm({
               ) : (
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
-                    <span className="fw-medium">{language.name}</span> {/* Fixed: using language.name */}
+                    <span className="fw-medium">{language.name}</span>{" "}
+                    {/* Fixed: using language.name */}
                     {language.proficiency && (
                       <small className="text-muted ms-2">
                         ({language.proficiency})
