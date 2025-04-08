@@ -182,7 +182,13 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
               flexWrap: "wrap",
             }}
           >
-            <Text style={{ fontSize: 12, marginBottom: 5, marginTop: 5 }}>
+            <Text
+              style={{
+                fontSize: 10,
+                marginBottom: 5,
+                marginTop: 5,
+              }}
+            >
               {resumeData.personalInfo.email} | {resumeData.personalInfo.phone}{" "}
               | {resumeData.personalInfo.location}
               {resumeData.personalInfo.linkedIn &&
@@ -191,6 +197,10 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
                   .replace(/\/$/, "")}`}
               {resumeData.personalInfo.website &&
                 ` | ${resumeData.personalInfo.website
+                  .replace(/^https?:\/\/(www\.)?/i, "")
+                  .replace(/\/$/, "")}`}
+              {resumeData.personalInfo.github &&
+                ` | ${resumeData.personalInfo.github
                   .replace(/^https?:\/\/(www\.)?/i, "")
                   .replace(/\/$/, "")}`}
             </Text>

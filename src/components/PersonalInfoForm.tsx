@@ -105,14 +105,14 @@ export default function PersonalInfoForm({
               </Form.Group>
             </Col>
             <Col md={6}>
-              <Form.Group className="mb-3" controlId="website">
+              <Form.Group className="mb-3" controlId="github">
                 <Form.Label>Github</Form.Label>
                 <Form.Control
                   type="url"
-                  name="website"
-                  value={personalInfo.website || ""}
+                  name="github"
+                  value={personalInfo.github || ""}
                   onChange={handleChange}
-                  placeholder="https://github.com"
+                  placeholder="https://github.com/your-username"
                 />
               </Form.Group>
             </Col>

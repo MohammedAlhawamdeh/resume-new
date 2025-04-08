@@ -423,6 +423,14 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
                   .replace(/\/$/, "")}
               </span>
             )}
+            {personalInfo.website && personalInfo.github && <span> | </span>}
+            {personalInfo.github && (
+              <span>
+                {personalInfo.github
+                  .replace(/^https?:\/\/(www\.)?/i, "")
+                  .replace(/\/$/, "")}
+              </span>
+            )}
           </div>
         </header>
 

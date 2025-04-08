@@ -25,7 +25,7 @@ export default function ResumeBuilder() {
       location: "Eskişehir, Türkiye",
       linkedIn: "https://www.linkedin.com/in/mohammed-alhawamdeh/",
       website: "mohawamdeh.tech",
-      github: "www.github.com/mohawamdeh",
+      github: "https://github.com/MohammedAlhawamdeh",
     },
     summary:
       "Full Stack Developer with 3+ years of experience building responsive and scalable web applications using JavaScript/Typescript, React, NodeJs, and modern frameworks. Proven track record of translating UI/UX designs into intuitive user interfaces and implementing complex business logic. Experienced in Agile methodologies with a strong focus on code quality, system design, debugging, and cross-functional collaboration. Adept at both front-end and back-end development with expertise in performance tuning and microservices architecture.",
