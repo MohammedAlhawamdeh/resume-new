@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 8, // Reduced from 10
-    marginTop: 8,    // Reduced from 10
+    marginTop: 8, // Reduced from 10
   },
   sectionTitle: {
     fontSize: 14,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     lineHeight: 1.25,
   },
   bulletList: {
-    marginTop: 4,    // Reduced from 5
+    marginTop: 4, // Reduced from 5
     marginBottom: 4, // Reduced from 5
   },
   bullet: {
@@ -186,9 +186,13 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
               {resumeData.personalInfo.email} | {resumeData.personalInfo.phone}{" "}
               | {resumeData.personalInfo.location}
               {resumeData.personalInfo.linkedIn &&
-                ` | ${resumeData.personalInfo.linkedIn}`}
+                ` | ${resumeData.personalInfo.linkedIn
+                  .replace(/^https?:\/\/(www\.)?/i, "")
+                  .replace(/\/$/, "")}`}
               {resumeData.personalInfo.website &&
-                ` | ${resumeData.personalInfo.website}`}
+                ` | ${resumeData.personalInfo.website
+                  .replace(/^https?:\/\/(www\.)?/i, "")
+                  .replace(/\/$/, "")}`}
             </Text>
           </View>
         </View>

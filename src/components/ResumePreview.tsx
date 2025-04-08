@@ -123,7 +123,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
           body {
             margin: 0;
             padding: 0;
-            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-family: "Helvetica", "Arial", sans-serif;
             font-size: 11pt;
             line-height: 1.2;
             color: #333333;
@@ -149,13 +149,13 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             box-shadow: none;
             border: none;
           }
-          
+
           /* Page break controls */
           #resume-container .job-title {
             page-break-before: auto;
             page-break-after: avoid;
           }
-          
+
           #resume-container .experience-entry {
             page-break-inside: avoid;
             break-inside: avoid-page;
@@ -167,7 +167,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
 
         /* General resume styling */
         #resume-container {
-          font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
+          font-family: "Open Sans", "Helvetica", "Arial", sans-serif;
           line-height: 1.2;
           color: #333333;
           max-width: 8.5in;
@@ -259,7 +259,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
           font-size: 12pt;
           display: inline;
         }
-        
+
         /* Spacing between job entries */
         #resume-container .mb-4 {
           margin-bottom: 18pt;
@@ -269,7 +269,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
         #resume-container .mb-3 {
           margin-bottom: 14pt;
         }
-        
+
         #resume-container p {
           margin-bottom: 8pt;
           margin-top: 2pt;
@@ -301,9 +301,21 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             {personalInfo.phone && personalInfo.location && <span> | </span>}
             {personalInfo.location && <span>{personalInfo.location}</span>}
             {personalInfo.location && personalInfo.linkedIn && <span> | </span>}
-            {personalInfo.linkedIn && <span>{personalInfo.linkedIn}</span>}
+            {personalInfo.linkedIn && (
+              <span>
+                {personalInfo.linkedIn
+                  .replace(/^https?:\/\/(www\.)?/i, "")
+                  .replace(/\/$/, "")}
+              </span>
+            )}
             {personalInfo.linkedIn && personalInfo.website && <span> | </span>}
-            {personalInfo.website && <span>{personalInfo.website}</span>}
+            {personalInfo.website && (
+              <span>
+                {personalInfo.website
+                  .replace(/^https?:\/\/(www\.)?/i, "")
+                  .replace(/\/$/, "")}
+              </span>
+            )}
           </div>
         </header>
 
@@ -345,7 +357,9 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
                 <div className="job-title">{exp.title}</div>
                 <div className="company-name">{exp.company}</div>
                 <div className="job-details">
-                  {formatDate(exp.startDate)} - {exp.current ? "Present" : formatDate(exp.endDate)} | {exp.location}
+                  {formatDate(exp.startDate)} -{" "}
+                  {exp.current ? "Present" : formatDate(exp.endDate)} |{" "}
+                  {exp.location}
                 </div>
                 {exp.description && <p>{exp.description}</p>}
                 {exp.achievements.length > 0 && exp.achievements[0] && (
