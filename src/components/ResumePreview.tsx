@@ -123,7 +123,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
           body {
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', Arial, sans-serif;
+            font-family: "Roboto", Arial, sans-serif;
             font-size: 11pt;
             line-height: 1.5;
             color: #333333;
@@ -152,11 +152,11 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
         }
 
         /* Web font imports */
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
         /* General resume styling */
         #resume-container {
-          font-family: 'Roboto', Arial, sans-serif;
+          font-family: "Roboto", Arial, sans-serif;
           line-height: 1.5;
           color: #333333;
         }
