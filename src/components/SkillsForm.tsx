@@ -105,333 +105,106 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
       <Card.Body>
         <h2 className="fs-4 fw-bold mb-3">Skills</h2>
 
-        {/* Front-End Skills */}
+        {/* All Skills in a single list */}
         <div className="mb-4">
-          <h3 className="fs-5 fw-medium mb-2">Front-End</h3>
-          <div className="d-flex flex-wrap gap-2">
-            {skillsWithLevels
-              .filter((s) =>
-                [
-                  "React",
-                  "Redux",
-                  "TypeScript",
-                  "JavaScript",
-                  "HTML",
-                  "CSS",
-                  "React Hooks",
-                  "React Testing Library",
-                  "Formik",
-                  "Jest",
-                  "Progressive Web Apps",
-                  "Responsive Design",
-                ].some((frontEnd) => s.name.includes(frontEnd))
-              )
-              .map((skill, index) => {
-                const originalIndex = findSkillIndex(skill.name);
-                return (
-                  <div key={`frontend-${index}`} className="mb-2">
-                    {editingSkill.index === originalIndex ? (
-                      <div className="d-flex gap-2">
-                        <Form.Control
-                          type="text"
-                          size="sm"
-                          value={editingSkill.name}
-                          onChange={(e) =>
-                            setEditingSkill({
-                              ...editingSkill,
-                              name: e.target.value,
-                            })
-                          }
-                        />
-                        <Form.Select
-                          size="sm"
-                          value={editingSkill.level}
-                          onChange={(e) =>
-                            setEditingSkill({
-                              ...editingSkill,
-                              level: e.target.value,
-                            })
-                          }
-                        >
-                          <option value="">No Level</option>
-                          <option value="Beginner">Beginner</option>
-                          <option value="Intermediate">Intermediate</option>
-                          <option value="Advanced">Advanced</option>
-                          <option value="Expert">Expert</option>
-                        </Form.Select>
-                        <Button
-                          variant="success"
-                          size="sm"
-                          onClick={saveEditedSkill}
-                          className="d-flex align-items-center"
-                        >
-                          <FaCheck size={12} />
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          onClick={cancelEditingSkill}
-                          className="d-flex align-items-center"
-                        >
-                          <FaTimes size={12} />
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className="badge bg-primary text-white p-2 d-flex align-items-center">
-                        <span>{skill.name}</span>
+          <div>
+            {skillsWithLevels.map((skill, index) => {
+              const originalIndex = findSkillIndex(skill.name);
+              return (
+                <div key={`skill-${index}`} className="mb-2">
+                  {editingSkill.index === originalIndex ? (
+                    <div className="d-flex gap-2">
+                      <Form.Control
+                        type="text"
+                        size="sm"
+                        value={editingSkill.name}
+                        onChange={(e) =>
+                          setEditingSkill({
+                            ...editingSkill,
+                            name: e.target.value,
+                          })
+                        }
+                      />
+                      <Form.Select
+                        size="sm"
+                        value={editingSkill.level}
+                        onChange={(e) =>
+                          setEditingSkill({
+                            ...editingSkill,
+                            level: e.target.value,
+                          })
+                        }
+                      >
+                        <option value="">No Level</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Expert">Expert</option>
+                      </Form.Select>
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={saveEditedSkill}
+                        className="d-flex align-items-center justify-content-center"
+                        style={{ width: '38px', height: '38px' }}
+                      >
+                        <FaCheck size={14} />
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={cancelEditingSkill}
+                        className="d-flex align-items-center justify-content-center"
+                        style={{ width: '38px', height: '38px' }}
+                      >
+                        <FaTimes size={14} />
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="d-flex justify-content-between align-items-center border-bottom pb-1">
+                      <div>
+                        <span className="fw-medium">{skill.name}</span>
                         {skill.level && (
-                          <small className="ms-1">({skill.level})</small>
+                          <small className="text-muted ms-2">({skill.level})</small>
                         )}
-                        <div className="d-flex ms-1">
-                          <button
-                            className="btn btn-link text-white p-0 me-1"
-                            style={{ fontSize: "10px" }}
-                            onClick={() =>
-                              startEditingSkill(originalIndex, skill)
-                            }
-                          >
-                            <FaEdit size={10} />
-                          </button>
-                          <button
-                            className="btn btn-link text-white p-0"
-                            style={{ fontSize: "10px" }}
-                            onClick={() => removeSkill(originalIndex)}
-                          >
-                            <FaTrash size={10} />
-                          </button>
-                        </div>
                       </div>
-                    )}
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-
-        {/* Back-End Skills */}
-        <div className="mb-4">
-          <h3 className="fs-5 fw-medium mb-2">Back-End</h3>
-          <div className="d-flex flex-wrap gap-2">
-            {skillsWithLevels
-              .filter((s) =>
-                [
-                  "NodeJs",
-                  "Express",
-                  "RESTful API",
-                  "MongoDB",
-                  "API Integration",
-                  "Database",
-                  "Microservices",
-                ].some((backend) => s.name.includes(backend))
-              )
-              .map((skill, index) => {
-                const originalIndex = findSkillIndex(skill.name);
-                return (
-                  <div
-                    key={`backend-${index}`}
-                    className="badge bg-success text-white p-2 d-flex align-items-center"
-                  >
-                    <span>{skill.name}</span>
-                    {skill.level && (
-                      <small className="ms-1">({skill.level})</small>
-                    )}
-                    <div className="d-flex ms-1">
-                      <button
-                        className="btn btn-link text-white p-0 me-1"
-                        style={{ fontSize: "10px" }}
-                        onClick={() => startEditingSkill(originalIndex, skill)}
-                      >
-                        <FaEdit size={10} />
-                      </button>
-                      <button
-                        className="btn btn-link text-white p-0"
-                        style={{ fontSize: "10px" }}
-                        onClick={() => removeSkill(originalIndex)}
-                      >
-                        <FaTrash size={10} />
-                      </button>
+                      <div className="d-flex">
+                        <Button
+                          variant="link"
+                          className="p-1 text-primary"
+                          onClick={() => startEditingSkill(originalIndex, skill)}
+                          title="Edit skill"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            minWidth: "32px",
+                            height: "32px",
+                          }}
+                        >
+                          <FaEdit size={14} />
+                        </Button>
+                        <Button
+                          variant="link"
+                          className="p-1 text-danger"
+                          onClick={() => removeSkill(originalIndex)}
+                          title="Remove skill"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            minWidth: "32px",
+                            height: "32px",
+                          }}
+                        >
+                          <FaTrash size={14} />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-
-        {/* DevOps & Tools */}
-        <div className="mb-4">
-          <h3 className="fs-5 fw-medium mb-2">DevOps & Tools</h3>
-          <div className="d-flex flex-wrap gap-2">
-            {skillsWithLevels
-              .filter((s) =>
-                [
-                  "Git",
-                  "Github",
-                  "CI/CD",
-                  "Azure DevOps",
-                  "Version Control",
-                  "Debugging",
-                  "Performance",
-                  "Deployment",
-                ].some((devops) => s.name.includes(devops))
-              )
-              .map((skill, index) => {
-                const originalIndex = findSkillIndex(skill.name);
-                return (
-                  <div
-                    key={`devops-${index}`}
-                    className="badge bg-info text-dark p-2 d-flex align-items-center"
-                  >
-                    <span>{skill.name}</span>
-                    {skill.level && (
-                      <small className="ms-1">({skill.level})</small>
-                    )}
-                    <div className="d-flex ms-1">
-                      <button
-                        className="btn btn-link text-dark p-0 me-1"
-                        style={{ fontSize: "10px" }}
-                        onClick={() => startEditingSkill(originalIndex, skill)}
-                      >
-                        <FaEdit size={10} />
-                      </button>
-                      <button
-                        className="btn btn-link text-dark p-0"
-                        style={{ fontSize: "10px" }}
-                        onClick={() => removeSkill(originalIndex)}
-                      >
-                        <FaTrash size={10} />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-
-        {/* Development Practices */}
-        <div className="mb-4">
-          <h3 className="fs-5 fw-medium mb-2">Development Practices</h3>
-          <div className="d-flex flex-wrap gap-2">
-            {skillsWithLevels
-              .filter((s) =>
-                [
-                  "Agile",
-                  "Scrum",
-                  "Test Driven",
-                  "Testing",
-                  "Component Design",
-                  "Scalability",
-                  "System Design",
-                  "Code Review",
-                ].some((practice) => s.name.includes(practice))
-              )
-              .map((skill, index) => {
-                const originalIndex = findSkillIndex(skill.name);
-                return (
-                  <div
-                    key={`practice-${index}`}
-                    className="badge bg-secondary text-white p-2 d-flex align-items-center"
-                  >
-                    <span>{skill.name}</span>
-                    {skill.level && (
-                      <small className="ms-1">({skill.level})</small>
-                    )}
-                    <div className="d-flex ms-1">
-                      <button
-                        className="btn btn-link text-white p-0 me-1"
-                        style={{ fontSize: "10px" }}
-                        onClick={() => startEditingSkill(originalIndex, skill)}
-                      >
-                        <FaEdit size={10} />
-                      </button>
-                      <button
-                        className="btn btn-link text-white p-0"
-                        style={{ fontSize: "10px" }}
-                        onClick={() => removeSkill(originalIndex)}
-                      >
-                        <FaTrash size={10} />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-
-        {/* Other Skills */}
-        <div className="mb-4">
-          <h3 className="fs-5 fw-medium mb-2">Other Skills</h3>
-          <div className="d-flex flex-wrap gap-2">
-            {skillsWithLevels
-              .filter(
-                (s) =>
-                  ![
-                    "React",
-                    "Redux",
-                    "TypeScript",
-                    "JavaScript",
-                    "HTML",
-                    "CSS",
-                    "React Hooks",
-                    "React Testing Library",
-                    "Formik",
-                    "Jest",
-                    "Progressive Web Apps",
-                    "Responsive Design",
-                    "NodeJs",
-                    "Express",
-                    "RESTful API",
-                    "MongoDB",
-                    "API Integration",
-                    "Database",
-                    "Microservices",
-                    "Git",
-                    "Github",
-                    "CI/CD",
-                    "Azure DevOps",
-                    "Version Control",
-                    "Debugging",
-                    "Performance",
-                    "Deployment",
-                    "Agile",
-                    "Scrum",
-                    "Test Driven",
-                    "Testing",
-                    "Component Design",
-                    "Scalability",
-                    "System Design",
-                    "Code Review",
-                  ].some((keyword) => s.name.includes(keyword))
-              )
-              .map((skill, index) => {
-                const originalIndex = findSkillIndex(skill.name);
-                return (
-                  <div
-                    key={`other-${index}`}
-                    className="badge bg-dark text-white p-2 d-flex align-items-center"
-                  >
-                    <span>{skill.name}</span>
-                    {skill.level && (
-                      <small className="ms-1">({skill.level})</small>
-                    )}
-                    <div className="d-flex ms-1">
-                      <button
-                        className="btn btn-link text-white p-0 me-1"
-                        style={{ fontSize: "10px" }}
-                        onClick={() => startEditingSkill(originalIndex, skill)}
-                      >
-                        <FaEdit size={10} />
-                      </button>
-                      <button
-                        className="btn btn-link text-white p-0"
-                        style={{ fontSize: "10px" }}
-                        onClick={() => removeSkill(originalIndex)}
-                      >
-                        <FaTrash size={10} />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
 
