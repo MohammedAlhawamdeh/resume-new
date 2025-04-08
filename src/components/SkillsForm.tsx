@@ -146,7 +146,7 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
                         size="sm"
                         onClick={saveEditedSkill}
                         className="d-flex align-items-center justify-content-center"
-                        style={{ width: '38px', height: '38px' }}
+                        style={{ width: "38px", height: "38px" }}
                       >
                         <FaCheck size={14} />
                       </Button>
@@ -155,7 +155,7 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
                         size="sm"
                         onClick={cancelEditingSkill}
                         className="d-flex align-items-center justify-content-center"
-                        style={{ width: '38px', height: '38px' }}
+                        style={{ width: "38px", height: "38px" }}
                       >
                         <FaTimes size={14} />
                       </Button>
@@ -165,14 +165,18 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
                       <div>
                         <span className="fw-medium">{skill.name}</span>
                         {skill.level && (
-                          <small className="text-muted ms-2">({skill.level})</small>
+                          <small className="text-muted ms-2">
+                            ({skill.level})
+                          </small>
                         )}
                       </div>
                       <div className="d-flex">
                         <Button
                           variant="link"
                           className="p-1 text-primary"
-                          onClick={() => startEditingSkill(originalIndex, skill)}
+                          onClick={() =>
+                            startEditingSkill(originalIndex, skill)
+                          }
                           title="Edit skill"
                           style={{
                             display: "flex",
