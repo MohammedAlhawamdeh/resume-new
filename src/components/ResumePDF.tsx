@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     marginBottom: 5,
-    lineHeight: 1.5,
+    lineHeight: 1.25,
   },
   bulletList: {
     marginTop: 5,
@@ -182,7 +182,7 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
               flexWrap: "wrap",
             }}
           >
-            <Text style={{ fontSize: 10 }}>
+            <Text style={{ fontSize: 12, marginBottom: 5, marginTop: 5 }}>
               {resumeData.personalInfo.email} | {resumeData.personalInfo.phone}{" "}
               | {resumeData.personalInfo.location}
               {resumeData.personalInfo.linkedIn &&
@@ -204,7 +204,7 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
                 marginBottom: 5,
               }}
             />
-            <Text style={styles.paragraph}>{resumeData.summary}</Text>
+            <Text style={{ lineHeight: 1.25 }}>{resumeData.summary}</Text>
           </View>
         )}
 
@@ -216,13 +216,13 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
               style={{
                 borderBottom: 1,
                 borderBottomColor: "#888",
-                marginBottom: 5,
+                marginBottom: 10,
               }}
             />
 
             {Object.entries(groupedSkills).map(([category, skillsList]) =>
               skillsList.length > 0 ? (
-                <View key={category} style={{ marginBottom: 8 }}>
+                <View key={category} style={{ marginBottom: 12 }}>
                   <Text>
                     <Text style={{ fontWeight: "bold" }}>{category}:</Text>{" "}
                     {skillsList.join(", ")}
@@ -247,13 +247,19 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
 
             {resumeData.workExperience.map((exp) => (
               <View key={exp.id} style={{ marginBottom: 10 }}>
-                <Text style={{ fontWeight: "bold", marginBottom: 4 }}>
+                <Text
+                  style={{ fontSize: 11, fontWeight: "bold", marginBottom: 8 }}
+                >
                   {exp.title}
                 </Text>
-                <Text style={{ fontWeight: "bold", marginBottom: 4 }}>
+                <Text
+                  style={{ fontSize: 11, fontWeight: "bold", marginBottom: 8 }}
+                >
                   {exp.company}
                 </Text>
-                <Text style={{ fontSize: 10, marginBottom: 5 }}>
+                <Text
+                  style={{ fontStyle: "italic", fontSize: 12, marginBottom: 8 }}
+                >
                   {formatDate(exp.startDate)} -{" "}
                   {exp.current ? "Present" : formatDate(exp.endDate)} |{" "}
                   {exp.location}
@@ -291,8 +297,12 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
 
             {resumeData.education.map((edu) => (
               <View key={edu.id} style={{ marginBottom: 8 }}>
-                <Text style={{ fontWeight: "bold" }}>{edu.institution}</Text>
-                <Text style={{ fontSize: 10, marginBottom: 2 }}>
+                <Text style={{ fontSize: 10, fontWeight: "bold" }}>
+                  {edu.institution}
+                </Text>
+                <Text
+                  style={{ fontStyle: "italic", fontSize: 10, marginBottom: 4 }}
+                >
                   {formatDate(edu.startDate)} - {formatDate(edu.endDate)} |{" "}
                   {edu.location}
                 </Text>
