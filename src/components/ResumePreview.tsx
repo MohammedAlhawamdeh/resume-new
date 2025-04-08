@@ -110,6 +110,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
       <style jsx global>{`
         /* Web font imports */
         @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
         /* General resume styling */
         #resume-container {
@@ -222,6 +223,176 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
           line-height: 1.15;
           text-align: justify;
           font-size: 11pt;
+        }
+        
+        /* Print styles that EXACTLY match ResumePDF.tsx */
+        @media print {
+          /* Reset all styling to make sure we have a clean slate */
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+          
+          /* Only hide specific elements that shouldn't be printed */
+          button, 
+          .btn, 
+          a[role="button"],
+          input[type="button"],
+          input[type="submit"],
+          nav, 
+          footer:not(#resume-container footer) {
+            display: none !important;
+          }
+          
+          /* Ensure the resume container is visible and styled properly */
+          #resume-container {
+            display: block !important;
+            visibility: visible !important;
+            width: 100%;
+            max-width: 100%;
+            padding: 30px;
+            margin: 0 auto;
+            background-color: white !important;
+            color: black !important;
+            font-family: "Roboto", sans-serif;
+            font-size: 11pt;
+            line-height: 1.25;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+
+          /* Make sure all resume content is visible */
+          #resume-container * {
+            display: block;
+            visibility: visible !important;
+          }
+          
+          #resume-container span, #resume-container strong {
+            display: inline;
+          }
+
+          /* Header styling */
+          #resume-container h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 5px;
+          }
+          
+          #resume-container h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+          }
+          
+          /* Contact info styling */
+          #resume-container .contact-info {
+            text-align: center;
+            font-size: 12pt;
+            margin-bottom: 10px;
+            margin-top: 5px;
+          }
+          
+          /* Section headers */
+          #resume-container h3 {
+            font-size: 14pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            margin-top: 8px;
+          }
+          
+          /* Section dividers */
+          #resume-container .section-divider {
+            border-top: 1px solid #888;
+            margin-bottom: 5px;
+            margin-top: 0;
+          }
+          
+          /* Section spacing */
+          #resume-container .section {
+            margin-top: 8px;
+            margin-bottom: 8px;
+          }
+          
+          /* Work experience */
+          #resume-container .job-title,
+          #resume-container .company-name {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 8px;
+          }
+          
+          #resume-container .job-details {
+            font-style: italic;
+            font-size: 12pt;
+            margin-bottom: 8px;
+          }
+          
+          /* Skills section */
+          #resume-container .skills-category {
+            margin-bottom: 12px;
+          }
+          
+          #resume-container .skills-label {
+            font-weight: bold;
+            font-size: 11pt;
+          }
+          
+          /* Education section */
+          #resume-container .institution-name {
+            font-weight: bold;
+            font-size: 10pt;
+          }
+          
+          #resume-container .edu-details {
+            font-style: italic;
+            font-size: 10pt;
+            margin-bottom: 4px;
+          }
+          
+          /* Lists */
+          #resume-container ul {
+            display: block;
+            margin: 0;
+            padding-left: 16px;
+            list-style-position: outside;
+            margin-bottom: 10px;
+          }
+          
+          #resume-container li {
+            display: list-item !important;
+            position: relative;
+            margin-bottom: 5px;
+            text-align: left;
+            font-size: 11pt;
+            padding-left: 8px;
+          }
+          
+          /* Ensuring proper page setup */
+          @page {
+            size: A4;
+            margin: 0;
+          }
+          
+          /* Prevent page breaks inside elements */
+          #resume-container .section, 
+          #resume-container .experience-entry {
+            page-break-inside: avoid;
+          }
+          
+          /* Make sure body shows the content */
+          body {
+            margin: 0;
+            padding: 0;
+            background: white;
+            visibility: visible !important;
+            display: block !important;
+          }
         }
       `}</style>
 

@@ -399,13 +399,7 @@ export default function ResumeBuilder() {
         ) : (
           <div>
             <div className="d-flex justify-content-center mb-4">
-              <Button
-                variant="primary"
-                onClick={() => window.print()}
-                className="me-3"
-              >
-                Print / Save as PDF
-              </Button>
+              {/* Print button removed as it wasn't working properly */}
               <div className="me-3">
                 <DownloadPDFButton resumeData={resumeData} />
               </div>
