@@ -149,6 +149,17 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             box-shadow: none;
             border: none;
           }
+          
+          /* Page break controls */
+          #resume-container .job-title {
+            page-break-before: auto;
+            page-break-after: avoid;
+          }
+          
+          #resume-container .experience-entry {
+            page-break-inside: avoid;
+            break-inside: avoid-page;
+          }
         }
 
         /* Web font imports */
@@ -201,29 +212,31 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
         #resume-container .job-title {
           font-size: 14pt;
           font-weight: 600;
+          margin-bottom: 4pt;
         }
 
         #resume-container .company-name {
           font-size: 12pt;
           font-weight: bold;
+          margin-bottom: 4pt;
         }
 
-        #resume-container .institution-name,
-        #resume-container .certification-name {
-          font-size: 12pt;
-          font-weight: bold;
+        /* Date and location styling */
+        #resume-container .job-details {
+          font-size: 11pt;
+          font-style: italic !important;
+          margin-bottom: 6pt;
         }
 
-        #resume-container .job-details,
         #resume-container .edu-details {
           font-size: 11pt;
-          font-style: italic;
+          font-style: italic !important;
           margin-bottom: 4pt;
         }
 
         #resume-container ul {
           padding-left: 0.3in;
-          margin: 8pt 0 16pt 0;
+          margin: 6pt 0 16pt 0;
           list-style-type: disc;
         }
 
@@ -258,7 +271,8 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
         }
         
         #resume-container p {
-          margin-bottom: 10pt;
+          margin-bottom: 8pt;
+          margin-top: 2pt;
           line-height: 1.15;
           text-align: justify;
           font-size: 11pt;
@@ -327,13 +341,11 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             <h3>EXPERIENCE</h3>
             <div className="section-divider"></div>
             {workExperience.map((exp) => (
-              <div key={exp.id} className="mb-4">
+              <div key={exp.id} className="mb-4 experience-entry">
                 <div className="job-title">{exp.title}</div>
                 <div className="company-name">{exp.company}</div>
                 <div className="job-details">
-                  {formatDate(exp.startDate)} -{" "}
-                  {exp.current ? "Present" : formatDate(exp.endDate)} |{" "}
-                  {exp.location}
+                  {formatDate(exp.startDate)} - {exp.current ? "Present" : formatDate(exp.endDate)} | {exp.location}
                 </div>
                 {exp.description && <p>{exp.description}</p>}
                 {exp.achievements.length > 0 && exp.achievements[0] && (
