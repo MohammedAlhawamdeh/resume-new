@@ -105,63 +105,9 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
 
   const groupedSkills = groupSkillsByCategory(skills);
 
-  // Trigger browser print dialog
-  const handlePrint = () => {
-    window.print();
-  };
-
   return (
     <>
       <style jsx global>{`
-        /* Print-specific styles that will only apply when printing */
-        @media print {
-          @page {
-            size: A4;
-            margin: 0.5in 0.7in;
-          }
-
-          body {
-            margin: 0;
-            padding: 0;
-            font-family: "Helvetica", "Arial", sans-serif;
-            font-size: 11pt;
-            line-height: 1.2;
-            color: #333333;
-          }
-
-          /* Hide everything except the resume */
-          body * {
-            visibility: hidden;
-          }
-
-          #resume-container,
-          #resume-container * {
-            visibility: visible;
-          }
-
-          #resume-container {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            box-shadow: none;
-            border: none;
-          }
-
-          /* Page break controls */
-          #resume-container .job-title {
-            page-break-before: auto;
-            page-break-after: avoid;
-          }
-
-          #resume-container .experience-entry {
-            page-break-inside: avoid;
-            break-inside: avoid-page;
-          }
-        }
-
         /* Web font imports */
         @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 
@@ -278,16 +224,6 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
           font-size: 11pt;
         }
       `}</style>
-
-      <div className="mb-3">
-        <button
-          onClick={handlePrint}
-          className="btn btn-outline-primary"
-          title="Print resume using browser print dialog"
-        >
-          Print Resume
-        </button>
-      </div>
 
       <div id="resume-container" className="bg-white p-4">
         {/* Header with Personal Information */}
