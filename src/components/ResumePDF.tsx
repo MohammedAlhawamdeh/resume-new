@@ -39,22 +39,22 @@ const styles = StyleSheet.create({
     fontSize: 11,
   },
   section: {
-    marginBottom: 10,
-    marginTop: 10,
+    marginBottom: 8, // Reduced from 10
+    marginTop: 8,    // Reduced from 10
   },
   sectionTitle: {
     fontSize: 14,
     fontWeight: "bold",
-    marginBottom: 5,
+    marginBottom: 4, // Reduced from 5
     textTransform: "uppercase",
   },
   paragraph: {
-    marginBottom: 5,
+    marginBottom: 3, // Reduced from 5
     lineHeight: 1.25,
   },
   bulletList: {
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 4,    // Reduced from 5
+    marginBottom: 4, // Reduced from 5
   },
   bullet: {
     width: 10,
