@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { WorkExperience } from "../types/resume";
 import { Card, Button, Form, Row, Col, InputGroup } from "react-bootstrap";
-import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
+import { FaTrash, FaEdit, FaCheck, FaTimes, FaChevronUp, FaChevronDown } from "react-icons/fa";
 
 interface WorkExperienceFormProps {
   experiences: WorkExperience[];
@@ -154,17 +154,33 @@ export default function WorkExperienceForm({
               <div className="d-flex gap-2">
                 <Button
                   variant="link"
-                  className="p-0 text-primary"
+                  className="p-1 text-primary"
                   onClick={() => toggleExpanded(exp.id)}
+                  title={expandedId === exp.id ? "Collapse" : "Expand"}
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    minWidth: '32px', 
+                    height: '32px' 
+                  }}
                 >
-                  {expandedId === exp.id ? "Collapse" : "Expand"}
+                  {expandedId === exp.id ? <FaChevronUp size={16} /> : <FaChevronDown size={16} />}
                 </Button>
                 <Button
                   variant="link"
-                  className="p-0 text-danger"
+                  className="p-1 text-danger"
                   onClick={() => removeExperience(exp.id)}
+                  title="Remove experience"
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    minWidth: '32px', 
+                    height: '32px'  
+                  }}
                 >
-                  Remove
+                  <FaTrash size={14} />
                 </Button>
               </div>
             </div>

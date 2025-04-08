@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Education } from "../types/resume";
 import { Card, Button, Form, Row, Col } from "react-bootstrap";
+import { FaTrash, FaChevronUp, FaChevronDown } from "react-icons/fa";
 
 interface EducationFormProps {
   education: Education[];
@@ -64,17 +65,33 @@ export default function EducationForm({
               <div className="d-flex gap-2">
                 <Button
                   variant="link"
-                  className="p-0 text-primary"
+                  className="p-1 text-primary"
                   onClick={() => toggleExpanded(edu.id)}
+                  title={expandedId === edu.id ? "Collapse" : "Expand"}
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    minWidth: '32px', 
+                    height: '32px' 
+                  }}
                 >
-                  {expandedId === edu.id ? "Collapse" : "Expand"}
+                  {expandedId === edu.id ? <FaChevronUp size={16} /> : <FaChevronDown size={16} />}
                 </Button>
                 <Button
                   variant="link"
-                  className="p-0 text-danger"
+                  className="p-1 text-danger"
                   onClick={() => removeEducation(edu.id)}
+                  title="Remove education"
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    minWidth: '32px', 
+                    height: '32px'  
+                  }}
                 >
-                  Remove
+                  <FaTrash size={14} />
                 </Button>
               </div>
             </div>
