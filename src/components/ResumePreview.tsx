@@ -224,7 +224,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
           text-align: justify;
           font-size: 11pt;
         }
-        
+
         /* Print styles that EXACTLY match ResumePDF.tsx */
         @media print {
           /* Reset all styling to make sure we have a clean slate */
@@ -233,18 +233,18 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             padding: 0;
             box-sizing: border-box;
           }
-          
+
           /* Only hide specific elements that shouldn't be printed */
-          button, 
-          .btn, 
+          button,
+          .btn,
           a[role="button"],
           input[type="button"],
           input[type="submit"],
-          nav, 
+          nav,
           footer:not(#resume-container footer) {
             display: none !important;
           }
-          
+
           /* Ensure the resume container is visible and styled properly */
           #resume-container {
             display: block !important;
@@ -267,8 +267,9 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             display: block;
             visibility: visible !important;
           }
-          
-          #resume-container span, #resume-container strong {
+
+          #resume-container span,
+          #resume-container strong {
             display: inline;
           }
 
@@ -280,7 +281,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             text-align: center;
             margin-bottom: 5px;
           }
-          
+
           #resume-container h2 {
             font-size: 14pt;
             font-weight: bold;
@@ -288,7 +289,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             margin-bottom: 5px;
             text-transform: uppercase;
           }
-          
+
           /* Contact info styling */
           #resume-container .contact-info {
             text-align: center;
@@ -296,7 +297,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             margin-bottom: 10px;
             margin-top: 5px;
           }
-          
+
           /* Section headers */
           #resume-container h3 {
             font-size: 14pt;
@@ -305,20 +306,20 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             margin-bottom: 4px;
             margin-top: 8px;
           }
-          
+
           /* Section dividers */
           #resume-container .section-divider {
             border-top: 1px solid #888;
             margin-bottom: 5px;
             margin-top: 0;
           }
-          
+
           /* Section spacing */
           #resume-container .section {
             margin-top: 8px;
             margin-bottom: 8px;
           }
-          
+
           /* Work experience */
           #resume-container .job-title,
           #resume-container .company-name {
@@ -326,35 +327,35 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             font-weight: bold;
             margin-bottom: 8px;
           }
-          
+
           #resume-container .job-details {
             font-style: italic;
             font-size: 12pt;
             margin-bottom: 8px;
           }
-          
+
           /* Skills section */
           #resume-container .skills-category {
             margin-bottom: 12px;
           }
-          
+
           #resume-container .skills-label {
             font-weight: bold;
             font-size: 11pt;
           }
-          
+
           /* Education section */
           #resume-container .institution-name {
             font-weight: bold;
             font-size: 10pt;
           }
-          
+
           #resume-container .edu-details {
             font-style: italic;
             font-size: 10pt;
             margin-bottom: 4px;
           }
-          
+
           /* Lists */
           #resume-container ul {
             display: block;
@@ -363,7 +364,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             list-style-position: outside;
             margin-bottom: 10px;
           }
-          
+
           #resume-container li {
             display: list-item !important;
             position: relative;
@@ -372,19 +373,19 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             font-size: 11pt;
             padding-left: 8px;
           }
-          
+
           /* Ensuring proper page setup */
           @page {
             size: A4;
             margin: 0;
           }
-          
+
           /* Prevent page breaks inside elements */
-          #resume-container .section, 
+          #resume-container .section,
           #resume-container .experience-entry {
             page-break-inside: avoid;
           }
-          
+
           /* Make sure body shows the content */
           body {
             margin: 0;
