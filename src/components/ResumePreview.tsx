@@ -117,15 +117,15 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
         @media print {
           @page {
             size: A4;
-            margin: 0.5in;
+            margin: 0.5in 0.7in;
           }
 
           body {
             margin: 0;
             padding: 0;
-            font-family: "Roboto", Arial, sans-serif;
+            font-family: 'Helvetica', 'Arial', sans-serif;
             font-size: 11pt;
-            line-height: 1.5;
+            line-height: 1.2;
             color: #333333;
           }
 
@@ -152,81 +152,116 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
         }
 
         /* Web font imports */
-        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 
         /* General resume styling */
         #resume-container {
-          font-family: "Roboto", Arial, sans-serif;
-          line-height: 1.5;
+          font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
+          line-height: 1.2;
           color: #333333;
+          max-width: 8.5in;
+          margin: 0 auto;
         }
 
         #resume-container h1 {
-          font-size: 24px;
+          font-size: 20pt;
           font-weight: bold;
           text-transform: uppercase;
           text-align: center;
-          margin-bottom: 5px;
+          margin-bottom: 6pt;
         }
 
         #resume-container h2 {
-          font-size: 16px;
+          font-size: 14pt;
           font-weight: bold;
           text-transform: uppercase;
           text-align: center;
-          margin-bottom: 15px;
+          margin-bottom: 14pt;
         }
 
         #resume-container h3 {
-          font-size: 16px;
+          font-size: 16pt;
           font-weight: bold;
           text-transform: uppercase;
-          margin-bottom: 5px;
+          margin-bottom: 6pt;
+          margin-top: 24pt;
         }
 
         #resume-container .contact-info {
           text-align: center;
-          margin-bottom: 20px;
-          font-size: 12px;
+          margin-bottom: 20pt;
+          font-size: 11pt;
         }
 
         #resume-container .section-divider {
           border-top: 1px solid #888;
-          margin: 5px 0 15px 0;
+          margin: 5pt 0 18pt 0;
         }
 
-        #resume-container .job-title,
-        #resume-container .company-name,
+        #resume-container .job-title {
+          font-size: 14pt;
+          font-weight: 600;
+        }
+
+        #resume-container .company-name {
+          font-size: 12pt;
+          font-weight: bold;
+        }
+
         #resume-container .institution-name,
         #resume-container .certification-name {
+          font-size: 12pt;
           font-weight: bold;
         }
 
         #resume-container .job-details,
         #resume-container .edu-details {
-          margin-bottom: 3px;
+          font-size: 11pt;
+          font-style: italic;
+          margin-bottom: 4pt;
         }
 
         #resume-container ul {
-          padding-left: 20px;
-          margin: 5px 0 15px 0;
+          padding-left: 0.3in;
+          margin: 8pt 0 16pt 0;
+          list-style-type: disc;
         }
 
         #resume-container li {
-          margin-bottom: 5px;
+          margin-bottom: 8pt;
+          text-align: justify;
+          font-size: 11pt;
         }
 
         #resume-container .section {
-          margin-bottom: 20px;
+          margin-bottom: 20pt;
         }
 
         #resume-container .skills-category {
-          margin-bottom: 8px;
+          margin-bottom: 10pt;
         }
 
         #resume-container .skills-label {
           font-weight: bold;
+          font-size: 12pt;
           display: inline;
+        }
+        
+        /* Spacing between job entries */
+        #resume-container .mb-4 {
+          margin-bottom: 18pt;
+        }
+
+        /* Spacing between education entries */
+        #resume-container .mb-3 {
+          margin-bottom: 14pt;
+        }
+        
+        #resume-container p {
+          margin-bottom: 10pt;
+          line-height: 1.15;
+          text-align: justify;
+          font-size: 11pt;
         }
       `}</style>
 
