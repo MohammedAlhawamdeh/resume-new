@@ -247,8 +247,12 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
 
             {resumeData.workExperience.map((exp) => (
               <View key={exp.id} style={{ marginBottom: 10 }}>
-                <Text style={{ fontWeight: "bold" }}>{exp.title}</Text>
-                <Text style={{ fontWeight: "bold" }}>{exp.company}</Text>
+                <Text style={{ fontWeight: "bold", marginBottom: 4 }}>
+                  {exp.title}
+                </Text>
+                <Text style={{ fontWeight: "bold", marginBottom: 4 }}>
+                  {exp.company}
+                </Text>
                 <Text style={{ fontSize: 10, marginBottom: 5 }}>
                   {formatDate(exp.startDate)} -{" "}
                   {exp.current ? "Present" : formatDate(exp.endDate)} |{" "}
@@ -262,6 +266,7 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
                   <View
                     key={idx}
                     style={{ flexDirection: "row", marginBottom: 5 }}
+                    wrap={false}
                   >
                     <Text style={styles.bullet}>•</Text>
                     <Text style={styles.bulletText}>{achievement}</Text>
@@ -317,6 +322,7 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
               <View
                 key={cert.id}
                 style={{ flexDirection: "row", marginBottom: 10 }}
+                wrap={false}
               >
                 <Text style={styles.bullet}>•</Text>
                 <View style={styles.bulletText}>
@@ -347,6 +353,7 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
               <View
                 key={lang.id}
                 style={{ flexDirection: "row", marginBottom: 10 }}
+                wrap={false}
               >
                 <Text style={styles.bullet}>•</Text>
                 <View style={styles.bulletText}>
