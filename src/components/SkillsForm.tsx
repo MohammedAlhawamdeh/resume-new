@@ -4,11 +4,6 @@ import { useState } from "react";
 import { Card, Form, Button, Row, Col } from "react-bootstrap";
 import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
 
-interface SkillWithLevel {
-  name: string;
-  level: string;
-}
-
 interface SkillsFormProps {
   skills: string[];
   updateSkills: (skills: string[]) => void;
@@ -17,52 +12,21 @@ interface SkillsFormProps {
 export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
   // State for new skill input
   const [newSkill, setNewSkill] = useState("");
-  const [newLevel, setNewLevel] = useState("");
   const [editingSkill, setEditingSkill] = useState<{
     index: number | null;
     name: string;
-    level: string;
-  }>({ index: null, name: "", level: "" });
+  }>({ index: null, name: "" });
 
-  // Convert the array of skill strings to array of skill objects with name and level
-  const skillsWithLevels: SkillWithLevel[] = skills.map((skill) => {
-    // Extract the level if it's already in the format "Skill (Level)"
-    const match = skill.match(/(.+?)\s*\((.+?)\)$/);
-    if (match) {
-      return { name: match[1], level: match[2] };
-    }
-
-    // Determine level based on common patterns
-    let level = "";
-    if (skill.includes("Advanced") || skill.includes("Expert")) {
-      level = "Expert";
-    } else if (
-      skill.includes("React") ||
-      skill.includes("TypeScript") ||
-      skill.includes("JavaScript") ||
-      skill.includes("NodeJs")
-    ) {
-      level = "Advanced";
-    } else if (
-      skill.includes("Testing") ||
-      skill.includes("CI/CD") ||
-      skill.includes("DevOps")
-    ) {
-      level = "Intermediate";
-    }
-
-    return { name: skill, level };
+  // Clean skills to remove any level information
+  const cleanSkills = skills.map((skill) => {
+    // Remove any level information in parentheses
+    return skill.replace(/\s*\(.+\)$/, '');
   });
 
   const addSkill = () => {
     if (newSkill.trim()) {
-      const skillToAdd = newLevel
-        ? `${newSkill.trim()} (${newLevel})`
-        : newSkill.trim();
-
-      updateSkills([...skills, skillToAdd]);
+      updateSkills([...skills, newSkill.trim()]);
       setNewSkill("");
-      setNewLevel("");
     }
   };
 
@@ -72,32 +36,21 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
     updateSkills(updatedSkills);
   };
 
-  const startEditingSkill = (index: number, skill: SkillWithLevel) => {
-    setEditingSkill({ index, name: skill.name, level: skill.level || "" });
+  const startEditingSkill = (index: number, skillName: string) => {
+    setEditingSkill({ index, name: skillName });
   };
 
   const cancelEditingSkill = () => {
-    setEditingSkill({ index: null, name: "", level: "" });
+    setEditingSkill({ index: null, name: "" });
   };
 
   const saveEditedSkill = () => {
     if (editingSkill.index !== null && editingSkill.name.trim()) {
       const updatedSkills = [...skills];
-      const skillToSave = editingSkill.level
-        ? `${editingSkill.name.trim()} (${editingSkill.level})`
-        : editingSkill.name.trim();
-
-      updatedSkills[editingSkill.index] = skillToSave;
+      updatedSkills[editingSkill.index] = editingSkill.name.trim();
       updateSkills(updatedSkills);
       cancelEditingSkill();
     }
-  };
-
-  // Helper function to find the original index of a skill in the skills array
-  const findSkillIndex = (skillName: string): number => {
-    return skills.findIndex(
-      (skill) => skill === skillName || skill.startsWith(`${skillName} (`)
-    );
   };
 
   return (
@@ -108,11 +61,10 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
         {/* All Skills in a single list */}
         <div className="mb-4">
           <div>
-            {skillsWithLevels.map((skill, index) => {
-              const originalIndex = findSkillIndex(skill.name);
+            {cleanSkills.map((skill, index) => {
               return (
                 <div key={`skill-${index}`} className="mb-2">
-                  {editingSkill.index === originalIndex ? (
+                  {editingSkill.index === index ? (
                     <div className="d-flex gap-2">
                       <Form.Control
                         type="text"
@@ -125,22 +77,6 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
                           })
                         }
                       />
-                      <Form.Select
-                        size="sm"
-                        value={editingSkill.level}
-                        onChange={(e) =>
-                          setEditingSkill({
-                            ...editingSkill,
-                            level: e.target.value,
-                          })
-                        }
-                      >
-                        <option value="">No Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
-                        <option value="Expert">Expert</option>
-                      </Form.Select>
                       <Button
                         variant="success"
                         size="sm"
@@ -163,19 +99,14 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
                   ) : (
                     <div className="d-flex justify-content-between align-items-center border-bottom pb-1">
                       <div>
-                        <span className="fw-medium">{skill.name}</span>
-                        {skill.level && (
-                          <small className="text-muted ms-2">
-                            ({skill.level})
-                          </small>
-                        )}
+                        <span className="fw-medium">{skill}</span>
                       </div>
                       <div className="d-flex">
                         <Button
                           variant="link"
                           className="p-1 text-primary"
                           onClick={() =>
-                            startEditingSkill(originalIndex, skill)
+                            startEditingSkill(index, skill)
                           }
                           title="Edit skill"
                           style={{
@@ -191,7 +122,7 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
                         <Button
                           variant="link"
                           className="p-1 text-danger"
-                          onClick={() => removeSkill(originalIndex)}
+                          onClick={() => removeSkill(index)}
                           title="Remove skill"
                           style={{
                             display: "flex",
@@ -215,7 +146,7 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
         {/* Form to add new skills */}
         <Form className="mt-3">
           <Row className="align-items-end">
-            <Col md={5}>
+            <Col md={9}>
               <Form.Group>
                 <Form.Label className="fw-medium">Add Skill</Form.Label>
                 <Form.Control
@@ -224,21 +155,6 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
                   onChange={(e) => setNewSkill(e.target.value)}
                   placeholder="e.g., JavaScript"
                 />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label className="fw-medium">Level (Optional)</Form.Label>
-                <Form.Select
-                  value={newLevel}
-                  onChange={(e) => setNewLevel(e.target.value)}
-                >
-                  <option value="">Select Level</option>
-                  <option value="Beginner">Beginner</option>
-                  <option value="Intermediate">Intermediate</option>
-                  <option value="Advanced">Advanced</option>
-                  <option value="Expert">Expert</option>
-                </Form.Select>
               </Form.Group>
             </Col>
             <Col md={3}>

@@ -82,21 +82,24 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
     };
 
     skillList.forEach((skill) => {
+      // Strip out any level information in parentheses
+      const cleanSkill = skill.replace(/\s*\(.+\)$/, '');
+
       let found = false;
       for (const [category, keywords] of Object.entries(categories)) {
         if (
           keywords.some((keyword) =>
-            skill.toLowerCase().includes(keyword.toLowerCase())
+            cleanSkill.toLowerCase().includes(keyword.toLowerCase())
           )
         ) {
-          grouped[category].push(skill);
+          grouped[category].push(cleanSkill);
           found = true;
           break;
         }
       }
 
       if (!found) {
-        grouped["Development Practices"].push(skill);
+        grouped["Development Practices"].push(cleanSkill);
       }
     });
 
