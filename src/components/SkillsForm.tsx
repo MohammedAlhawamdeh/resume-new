@@ -20,7 +20,7 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
   // Clean skills to remove any level information
   const cleanSkills = skills.map((skill) => {
     // Remove any level information in parentheses
-    return skill.replace(/\s*\(.+\)$/, '');
+    return skill.replace(/\s*\(.+\)$/, "");
   });
 
   const addSkill = () => {
@@ -105,9 +105,7 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
                         <Button
                           variant="link"
                           className="p-1 text-primary"
-                          onClick={() =>
-                            startEditingSkill(index, skill)
-                          }
+                          onClick={() => startEditingSkill(index, skill)}
                           title="Edit skill"
                           style={{
                             display: "flex",

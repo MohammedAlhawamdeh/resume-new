@@ -83,7 +83,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
 
     skillList.forEach((skill) => {
       // Strip out any level information in parentheses
-      const cleanSkill = skill.replace(/\s*\(.+\)$/, '');
+      const cleanSkill = skill.replace(/\s*\(.+\)$/, "");
 
       let found = false;
       for (const [category, keywords] of Object.entries(categories)) {
