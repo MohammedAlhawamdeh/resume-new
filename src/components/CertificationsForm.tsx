@@ -77,21 +77,24 @@ export default function CertificationsForm({
     if (editingCert.index !== null && editingCert.name.trim()) {
       // Only require name to be non-empty, issuer can be empty
       const updatedCertifications = [...certifications];
-      
+
       updatedCertifications[editingCert.index] = {
         id: certifications[editingCert.index].id,
         name: editingCert.name.trim(),
         issuer: editingCert.issuer.trim(), // Even if empty, trim it
         date: editingCert.date.trim(),
       };
-      
+
       // Log for debugging
-      console.log("Saving edited certification:", updatedCertifications[editingCert.index]);
+      console.log(
+        "Saving edited certification:",
+        updatedCertifications[editingCert.index]
+      );
       console.log("All certifications after edit:", updatedCertifications);
-      
+
       // Update the state with the new array
       updateCertifications(updatedCertifications);
-      
+
       // Reset the editing state
       cancelEditingCertification();
     } else {

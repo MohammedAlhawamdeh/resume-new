@@ -35,12 +35,12 @@ Font.register({
     {
       src: "/fonts/JetBrainsMono-Regular.ttf",
       fontWeight: 400,
-      fontStyle: 'normal',
+      fontStyle: "normal",
     },
     {
-      src: "/fonts/JetBrainsMono-Bold.ttf", 
+      src: "/fonts/JetBrainsMono-Bold.ttf",
       fontWeight: "bold",
-      fontStyle: 'normal',
+      fontStyle: "normal",
     },
   ],
 });
@@ -418,31 +418,31 @@ export const DownloadPDFButton = ({
   resumeData: ResumeData;
 }) => {
   const [isClient, setIsClient] = React.useState(false);
-  
+
   // Use useEffect to ensure this only runs on client side
   React.useEffect(() => {
     setIsClient(true);
-    
+
     // Preload fonts to avoid async loading issues
     const preloadFonts = async () => {
       try {
         // Force preload of fonts
         const fontUrls = [
-          '/fonts/JetBrainsMono-Regular.ttf',
-          '/fonts/JetBrainsMono-Bold.ttf'
+          "/fonts/JetBrainsMono-Regular.ttf",
+          "/fonts/JetBrainsMono-Bold.ttf",
         ];
-        
+
         await Promise.all(
-          fontUrls.map(url => fetch(url).then(res => res.blob()))
+          fontUrls.map((url) => fetch(url).then((res) => res.blob()))
         );
       } catch (err) {
-        console.error('Font preloading error:', err);
+        console.error("Font preloading error:", err);
       }
     };
-    
+
     preloadFonts();
   }, []);
-  
+
   // Only render the PDFDownloadLink on the client side
   if (!isClient) {
     return <button className="btn btn-primary">Loading PDF...</button>;
@@ -451,13 +451,16 @@ export const DownloadPDFButton = ({
   return (
     <PDFDownloadLink
       document={<ResumePDF resumeData={resumeData} />}
-      fileName={`${resumeData.personalInfo.name.replace(/\s+/g, "_")}_Resume.pdf`}
+      fileName={`${resumeData.personalInfo.name.replace(
+        /\s+/g,
+        "_"
+      )}_Resume.pdf`}
       className="btn btn-primary"
     >
       {({ loading, error }) => {
         if (error) {
-          console.error('PDF generation error:', error);
-          return 'Error generating PDF';
+          console.error("PDF generation error:", error);
+          return "Error generating PDF";
         }
         return loading ? "Preparing PDF..." : "Download PDF";
       }}
