@@ -2,9 +2,9 @@
 
 export default function ATSTips() {
   return (
-    <div className="bg-info bg-opacity-10 border-start border-4 border-info text-primary p-4 mb-4 rounded">
-      <h2 className="fs-5 fw-bold mb-2">ATS Compatibility Tips</h2>
-      <ul className="ps-4">
+    <div className="bg-oxford-blue bg-opacity-10 border-l-4 border-vivid-orange text-oxford-blue p-4 mb-4 rounded">
+      <h2 className="text-lg font-bold mb-2">ATS Compatibility Tips</h2>
+      <ul className="list-disc pl-5">
         <li>Use standard section headings (Experience, Education, Skills)</li>
         <li>Stick with common fonts like Arial, Calibri, or Times New Roman</li>
         <li>Use simple formatting - avoid tables, text boxes, and columns</li>

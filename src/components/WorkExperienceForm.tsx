@@ -2,8 +2,14 @@
 
 import { useState } from "react";
 import { WorkExperience } from "../types/resume";
-import { Card, Button, Form, Row, Col, InputGroup } from "react-bootstrap";
-import { FaTrash, FaEdit, FaCheck, FaTimes, FaChevronUp, FaChevronDown } from "react-icons/fa";
+import {
+  FaTrash,
+  FaEdit,
+  FaCheck,
+  FaTimes,
+  FaChevronUp,
+  FaChevronDown,
+} from "react-icons/fa";
 
 interface WorkExperienceFormProps {
   experiences: WorkExperience[];
@@ -107,7 +113,11 @@ export default function WorkExperienceForm({
     }
   };
 
-  const startEditingAchievement = (expId: string, index: number, text: string) => {
+  const startEditingAchievement = (
+    expId: string,
+    index: number,
+    text: string
+  ) => {
     setEditingAchievement({ expId, index, text });
   };
 
@@ -139,283 +149,270 @@ export default function WorkExperienceForm({
   };
 
   return (
-    <Card className="shadow-sm mb-4">
-      <Card.Body>
-        <h2 className="fs-4 fw-bold mb-3">Work Experience</h2>
+    <div className="bg-white rounded-xl shadow-sm mb-4 p-6">
+      <h2 className="text-xl font-bold mb-4">Work Experience</h2>
 
-        {experiences.map((exp) => (
-          <div key={exp.id} className="mb-4 border rounded p-3">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <div className="fw-medium">
-                {exp.title
-                  ? `${exp.title} at ${exp.company || "Company"}`
-                  : "New Experience"}
-              </div>
-              <div className="d-flex gap-2">
-                <Button
-                  variant="link"
-                  className="p-1 text-primary"
-                  onClick={() => toggleExpanded(exp.id)}
-                  title={expandedId === exp.id ? "Collapse" : "Expand"}
-                  style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    minWidth: '32px', 
-                    height: '32px' 
-                  }}
-                >
-                  {expandedId === exp.id ? <FaChevronUp size={16} /> : <FaChevronDown size={16} />}
-                </Button>
-                <Button
-                  variant="link"
-                  className="p-1 text-danger"
-                  onClick={() => removeExperience(exp.id)}
-                  title="Remove experience"
-                  style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    minWidth: '32px', 
-                    height: '32px'  
-                  }}
-                >
-                  <FaTrash size={14} />
-                </Button>
-              </div>
+      {experiences.map((exp) => (
+        <div key={exp.id} className="mb-4 border rounded-lg p-3">
+          <div className="flex justify-between items-center mb-3">
+            <div className="font-medium">
+              {exp.title
+                ? `${exp.title} at ${exp.company || "Company"}`
+                : "New Experience"}
             </div>
+            <div className="flex gap-2">
+              <button
+                className="p-1 text-oxford-blue hover:text-vivid-orange flex items-center justify-center min-w-8 h-8"
+                onClick={() => toggleExpanded(exp.id)}
+                title={expandedId === exp.id ? "Collapse" : "Expand"}
+              >
+                {expandedId === exp.id ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
+              </button>
+              <button
+                className="p-1 text-red-500 hover:text-red-700 flex items-center justify-center min-w-8 h-8"
+                onClick={() => removeExperience(exp.id)}
+                title="Remove experience"
+              >
+                <FaTrash size={14} />
+              </button>
+            </div>
+          </div>
 
-            {expandedId === exp.id && (
-              <>
-                <Row className="mb-3 g-3">
-                  <Col md={6}>
-                    <Form.Group>
-                      <Form.Label className="fw-medium">Job Title *</Form.Label>
-                      <Form.Control
-                        type="text"
-                        value={exp.title}
-                        onChange={(e) =>
-                          handleChange(exp.id, "title", e.target.value)
-                        }
-                        placeholder="e.g., Software Engineer"
-                        required
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  <Col md={6}>
-                    <Form.Group>
-                      <Form.Label className="fw-medium">Company *</Form.Label>
-                      <Form.Control
-                        type="text"
-                        value={exp.company}
-                        onChange={(e) =>
-                          handleChange(exp.id, "company", e.target.value)
-                        }
-                        required
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  <Col md={6}>
-                    <Form.Group>
-                      <Form.Label className="fw-medium">Location</Form.Label>
-                      <Form.Control
-                        type="text"
-                        value={exp.location}
-                        onChange={(e) =>
-                          handleChange(exp.id, "location", e.target.value)
-                        }
-                        placeholder="City, State/Country or Remote"
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  <Col md={6}>
-                    <div className="d-flex align-items-center h-100 mt-4">
-                      <Form.Check
-                        type="checkbox"
-                        id={`current-${exp.id}`}
-                        checked={exp.current}
-                        onChange={(e) =>
-                          handleCurrentChange(exp.id, e.target.checked)
-                        }
-                        label="I currently work here"
-                      />
-                    </div>
-                  </Col>
-                </Row>
-
-                <Row className="mb-3 g-3">
-                  <Col md={6}>
-                    <Form.Group>
-                      <Form.Label className="fw-medium">
-                        Start Date *
-                      </Form.Label>
-                      <Form.Control
-                        type="month"
-                        value={exp.startDate}
-                        onChange={(e) =>
-                          handleChange(exp.id, "startDate", e.target.value)
-                        }
-                        required
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  <Col md={6}>
-                    <Form.Group>
-                      <Form.Label className="fw-medium">
-                        End Date {!exp.current && "*"}
-                      </Form.Label>
-                      <Form.Control
-                        type="month"
-                        value={exp.endDate}
-                        onChange={(e) =>
-                          handleChange(exp.id, "endDate", e.target.value)
-                        }
-                        disabled={exp.current}
-                        required={!exp.current}
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
-
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-medium">Job Description</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    value={exp.description}
+          {expandedId === exp.id && (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Job Title *
+                  </label>
+                  <input
+                    type="text"
+                    value={exp.title}
                     onChange={(e) =>
-                      handleChange(exp.id, "description", e.target.value)
+                      handleChange(exp.id, "title", e.target.value)
                     }
-                    rows={3}
-                    placeholder="Briefly describe your role and responsibilities"
+                    placeholder="e.g., Software Engineer"
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   />
-                </Form.Group>
+                </div>
 
-                <Form.Group className="mb-3">
-                  <Form.Label className="fw-medium mb-2">
-                    Key Achievements
-                  </Form.Label>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Company *
+                  </label>
+                  <input
+                    type="text"
+                    value={exp.company}
+                    onChange={(e) =>
+                      handleChange(exp.id, "company", e.target.value)
+                    }
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                </div>
 
-                  {exp.achievements.map((achievement, index) => (
-                    <div key={index} className="d-flex mb-2">
-                      {editingAchievement.expId === exp.id && 
-                       editingAchievement.index === index ? (
-                        <div className="flex-grow-1 d-flex">
-                          <span className="me-2 flex-shrink-0">•</span>
-                          <div className="flex-grow-1">
-                            <Form.Control
-                              type="text"
-                              value={editingAchievement.text}
-                              onChange={(e) => setEditingAchievement({
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    value={exp.location}
+                    onChange={(e) =>
+                      handleChange(exp.id, "location", e.target.value)
+                    }
+                    placeholder="City, State/Country or Remote"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                </div>
+
+                <div className="flex items-center h-full mt-4">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`current-${exp.id}`}
+                      checked={exp.current}
+                      onChange={(e) =>
+                        handleCurrentChange(exp.id, e.target.checked)
+                      }
+                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">
+                      I currently work here
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Start Date *
+                  </label>
+                  <input
+                    type="month"
+                    value={exp.startDate}
+                    onChange={(e) =>
+                      handleChange(exp.id, "startDate", e.target.value)
+                    }
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    End Date {!exp.current && "*"}
+                  </label>
+                  <input
+                    type="month"
+                    value={exp.endDate}
+                    onChange={(e) =>
+                      handleChange(exp.id, "endDate", e.target.value)
+                    }
+                    disabled={exp.current}
+                    required={!exp.current}
+                    className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
+                      exp.current ? "bg-gray-100" : ""
+                    }`}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Job Description
+                </label>
+                <textarea
+                  value={exp.description}
+                  onChange={(e) =>
+                    handleChange(exp.id, "description", e.target.value)
+                  }
+                  rows={3}
+                  placeholder="Briefly describe your role and responsibilities"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Key Achievements
+                </label>
+
+                {exp.achievements.map((achievement, index) => (
+                  <div key={index} className="flex mb-2">
+                    {editingAchievement.expId === exp.id &&
+                    editingAchievement.index === index ? (
+                      <div className="flex-grow flex">
+                        <span className="mr-2 flex-shrink-0">•</span>
+                        <div className="flex-grow">
+                          <input
+                            type="text"
+                            value={editingAchievement.text}
+                            onChange={(e) =>
+                              setEditingAchievement({
                                 ...editingAchievement,
-                                text: e.target.value
-                              })}
-                              autoFocus
-                            />
-                            <div className="mt-1 d-flex gap-2">
-                              <Button 
-                                variant="success"
-                                size="sm"
-                                className="d-flex align-items-center py-1"
-                                onClick={saveEditedAchievement}
-                              >
-                                <FaCheck size={12} className="me-1"/> Save
-                              </Button>
-                              <Button 
-                                variant="secondary"
-                                size="sm"
-                                className="d-flex align-items-center py-1"
-                                onClick={cancelEditingAchievement}
-                              >
-                                <FaTimes size={12} className="me-1"/> Cancel
-                              </Button>
-                            </div>
+                                text: e.target.value,
+                              })
+                            }
+                            autoFocus
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                          />
+                          <div className="mt-1 flex gap-2">
+                            <button
+                              className="bg-green-600 hover:bg-green-700 text-white px-2 py-1 text-xs rounded flex items-center"
+                              onClick={saveEditedAchievement}
+                            >
+                              <FaCheck size={12} className="mr-1" /> Save
+                            </button>
+                            <button
+                              className="bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 text-xs rounded flex items-center"
+                              onClick={cancelEditingAchievement}
+                            >
+                              <FaTimes size={12} className="mr-1" /> Cancel
+                            </button>
                           </div>
                         </div>
-                      ) : (
-                        <>
-                          <div className="flex-grow-1 d-flex">
-                            <span className="me-2 flex-shrink-0">•</span>
-                            <span>{achievement}</span>
-                          </div>
-                          <div className="d-flex">
-                            <Button
-                              variant="link"
-                              className="p-0 text-primary ms-2 align-self-start mt-1"
-                              onClick={() => startEditingAchievement(exp.id, index, achievement)}
-                              title="Edit achievement"
-                              style={{ 
-                                minWidth: '20px', 
-                                height: '20px', 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                justifyContent: 'center' 
-                              }}
-                            >
-                              <FaEdit size={14} />
-                            </Button>
-                            <Button
-                              variant="link"
-                              className="p-0 text-danger ms-2 align-self-start mt-1"
-                              onClick={() => removeAchievement(exp.id, index)}
-                              title="Remove achievement"
-                              style={{ 
-                                minWidth: '20px', 
-                                height: '20px', 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                justifyContent: 'center' 
-                              }}
-                            >
-                              <FaTrash size={14} />
-                            </Button>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  ))}
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex-grow flex">
+                          <span className="mr-2 flex-shrink-0">•</span>
+                          <span>{achievement}</span>
+                        </div>
+                        <div className="flex">
+                          <button
+                            className="p-0 text-indigo-600 hover:text-indigo-800 ml-2 self-start mt-1 flex items-center justify-center min-w-5 h-5"
+                            onClick={() =>
+                              startEditingAchievement(
+                                exp.id,
+                                index,
+                                achievement
+                              )
+                            }
+                            title="Edit achievement"
+                          >
+                            <FaEdit size={14} />
+                          </button>
+                          <button
+                            className="p-0 text-red-500 hover:text-red-700 ml-2 self-start mt-1 flex items-center justify-center min-w-5 h-5"
+                            onClick={() => removeAchievement(exp.id, index)}
+                            title="Remove achievement"
+                          >
+                            <FaTrash size={14} />
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ))}
 
-                  <InputGroup className="mt-2">
-                    <Form.Control
-                      type="text"
-                      value={newAchievement[exp.id] || ""}
-                      onChange={(e) =>
-                        handleAchievementChange(exp.id, e.target.value)
-                      }
-                      onKeyPress={(e) => handleAchievementKeyPress(e, exp.id)}
-                      placeholder="Add a key achievement or responsibility"
-                    />
-                    <Button
-                      variant="primary"
-                      onClick={() => addAchievement(exp.id)}
-                    >
-                      Add
-                    </Button>
-                  </InputGroup>
-                  <Form.Text className="text-muted">
-                    Tip: Use action verbs and quantify results when possible
-                    (e.g., "Increased sales by 20%")
-                  </Form.Text>
-                </Form.Group>
-              </>
-            )}
-          </div>
-        ))}
-
-        <Button variant="primary" onClick={addExperience}>
-          Add Work Experience
-        </Button>
-
-        <div className="mt-3 small text-secondary">
-          <p>
-            Tip: List your work experience in reverse-chronological order (most
-            recent first) for better ATS performance.
-          </p>
+                <div className="flex mt-2">
+                  <input
+                    type="text"
+                    value={newAchievement[exp.id] || ""}
+                    onChange={(e) =>
+                      handleAchievementChange(exp.id, e.target.value)
+                    }
+                    onKeyPress={(e) => handleAchievementKeyPress(e, exp.id)}
+                    placeholder="Add a key achievement or responsibility"
+                    className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                  <button
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-r-md"
+                    onClick={() => addAchievement(exp.id)}
+                  >
+                    Add
+                  </button>
+                </div>
+                <p className="mt-1 text-xs text-gray-500">
+                  Tip: Use action verbs and quantify results when possible
+                  (e.g., "Increased sales by 20%")
+                </p>
+              </div>
+            </>
+          )}
         </div>
-      </Card.Body>
-    </Card>
+      ))}
+
+      <button
+        className="bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md"
+        onClick={addExperience}
+      >
+        Add Work Experience
+      </button>
+
+      <div className="mt-3 text-sm text-gray-500">
+        <p>
+          Tip: List your work experience in reverse-chronological order (most
+          recent first) for better ATS performance.
+        </p>
+      </div>
+    </div>
   );
 }

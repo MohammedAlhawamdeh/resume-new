@@ -448,7 +448,11 @@ export const DownloadPDFButton = ({
 
   // Only render the PDFDownloadLink on the client side
   if (!isClient) {
-    return <button className="btn btn-primary">Loading PDF...</button>;
+    return (
+      <button className="bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md">
+        Loading PDF...
+      </button>
+    );
   }
 
   return (
@@ -458,7 +462,7 @@ export const DownloadPDFButton = ({
         /\s+/g,
         "_"
       )}_Resume.pdf`}
-      className="btn btn-primary"
+      className="bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md"
     >
       {({ loading, error }) => {
         if (error) {

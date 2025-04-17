@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { ResumeData } from "../types/resume";
-import { Card, Form } from "react-bootstrap";
 
 interface JobDescriptionAnalyzerProps {
   resumeData: ResumeData;
@@ -168,100 +167,106 @@ export default function JobDescriptionAnalyzer({
   }, [jobDescription, resumeData]);
 
   return (
-    <Card className="shadow-sm mb-4">
-      <Card.Body>
-        <h2 className="fs-4 fw-bold mb-3">Job Description Analyzer</h2>
-        <p className="mb-3 text-secondary">
-          Paste a job description to analyze how well your resume matches the
-          requirements. This will help identify important keywords to include
-          for better ATS performance.
-        </p>
+    <div className="bg-white rounded-xl shadow-sm mb-4 p-6">
+      <h2 className="text-xl font-bold mb-3">Job Description Analyzer</h2>
+      <p className="mb-3 text-gray-600">
+        Paste a job description to analyze how well your resume matches the
+        requirements. This will help identify important keywords to include for
+        better ATS performance.
+      </p>
 
-        <div className="mb-4">
-          <Form.Group controlId="job-description">
-            <Form.Label className="fw-medium">Job Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              value={jobDescription}
-              onChange={(e) => setJobDescription(e.target.value)}
-              rows={6}
-              placeholder="Paste the job description here..."
-            />
-          </Form.Group>
+      <div className="mb-4">
+        <div>
+          <label
+            htmlFor="job-description"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Job Description
+          </label>
+          <textarea
+            id="job-description"
+            value={jobDescription}
+            onChange={(e) => setJobDescription(e.target.value)}
+            rows={6}
+            placeholder="Paste the job description here..."
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          />
         </div>
+      </div>
 
-        {keywords.length > 0 && (
-          <div className="bg-light p-3 rounded border">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h3 className="fs-5 fw-medium">ATS Match Analysis</h3>
-              <div className="d-flex align-items-center">
-                <span className="me-2">Match Score:</span>
-                <div
-                  className={`text-white fw-bold rounded px-3 py-1 ${
-                    score > 70
-                      ? "bg-success"
-                      : score > 40
-                      ? "bg-warning"
-                      : "bg-danger"
-                  }`}
-                >
-                  {score}%
-                </div>
+      {keywords.length > 0 && (
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+            <h3 className="text-lg font-medium">ATS Match Analysis</h3>
+            <div className="flex items-center mt-2 md:mt-0">
+              <span className="mr-2">Match Score:</span>
+              <div
+                className={`text-white font-bold rounded-md px-3 py-1 ${
+                  score > 70
+                    ? "bg-green-600"
+                    : score > 40
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
+                }`}
+              >
+                {score}%
               </div>
-            </div>
-
-            <div className="row g-3">
-              <div className="col-md-6">
-                <h4 className="fw-medium text-success mb-2">
-                  Keywords in Your Resume
-                </h4>
-                {matchedKeywords.length > 0 ? (
-                  <div className="d-flex flex-wrap gap-2">
-                    {matchedKeywords.map((keyword, index) => (
-                      <span
-                        key={index}
-                        className="bg-success bg-opacity-10 text-success py-1 px-2 rounded-pill fs-6"
-                      >
-                        {keyword}
-                      </span>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="fst-italic text-muted">
-                    No matching keywords found
-                  </p>
-                )}
-              </div>
-
-              <div className="col-md-6">
-                <h4 className="fw-medium text-danger mb-2">Missing Keywords</h4>
-                {missingKeywords.length > 0 ? (
-                  <div className="d-flex flex-wrap gap-2">
-                    {missingKeywords.map((keyword, index) => (
-                      <span
-                        key={index}
-                        className="bg-danger bg-opacity-10 text-danger py-1 px-2 rounded-pill fs-6"
-                      >
-                        {keyword}
-                      </span>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="fst-italic text-muted">No missing keywords</p>
-                )}
-              </div>
-            </div>
-
-            <div className="mt-3 small text-secondary">
-              <p>
-                <strong>Tip:</strong> Try to incorporate missing keywords into
-                your resume to improve ATS compatibility. Focus especially on
-                skills and qualifications that you genuinely possess.
-              </p>
             </div>
           </div>
-        )}
-      </Card.Body>
-    </Card>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 className="font-medium text-green-600 mb-2">
+                Keywords in Your Resume
+              </h4>
+              {matchedKeywords.length > 0 ? (
+                <div className="flex flex-wrap gap-2">
+                  {matchedKeywords.map((keyword, index) => (
+                    <span
+                      key={index}
+                      className="bg-green-100 text-green-700 py-1 px-2 rounded-full text-sm"
+                    >
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="italic text-gray-500">
+                  No matching keywords found
+                </p>
+              )}
+            </div>
+
+            <div>
+              <h4 className="font-medium text-red-600 mb-2">
+                Missing Keywords
+              </h4>
+              {missingKeywords.length > 0 ? (
+                <div className="flex flex-wrap gap-2">
+                  {missingKeywords.map((keyword, index) => (
+                    <span
+                      key={index}
+                      className="bg-red-100 text-red-700 py-1 px-2 rounded-full text-sm"
+                    >
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="italic text-gray-500">No missing keywords</p>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-3 text-sm text-gray-600">
+            <p>
+              <strong>Tip:</strong> Try to incorporate missing keywords into
+              your resume to improve ATS compatibility. Focus especially on
+              skills and qualifications that you genuinely possess.
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

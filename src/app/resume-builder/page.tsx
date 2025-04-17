@@ -13,7 +13,6 @@ import CertificationsForm from "@/components/CertificationsForm";
 import ResumePreview from "@/components/ResumePreview";
 import ATSTips from "@/components/ATSTips";
 import JobDescriptionAnalyzer from "@/components/JobDescriptionAnalyzer";
-import { Container, Row, Col, Button } from "react-bootstrap";
 import { DownloadPDFButton } from "@/components/ResumePDF";
 
 export default function ResumeBuilder() {
@@ -301,31 +300,34 @@ export default function ResumeBuilder() {
   };
 
   return (
-    <div className="min-vh-100 bg-gray-50">
-      <header className="bg-white border-bottom sticky-top shadow-sm">
-        <Container fluid className="py-3">
-          <div className="d-flex justify-content-between align-items-center">
-            <h1 className="fs-3 fw-bold m-0">Resume Builder</h1>
-            <div>
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-oxford-blue border-b sticky top-0 shadow-sm z-10 text-white">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-bold m-0">Resume Builder</h1>
+            <div className="flex items-center">
               <DownloadPDFButton resumeData={resumeData} />
-              <Button
-                variant="outline-danger"
-                size="sm"
-                className="ms-2"
+              <button
+                className="ml-2 px-3 py-1.5 text-sm border border-red-500 text-red-500 rounded hover:bg-red-50 transition-colors"
                 onClick={handleReset}
               >
                 Reset
-              </Button>
+              </button>
             </div>
           </div>
-        </Container>
+        </div>
       </header>
 
-      <Container fluid className="py-4">
-        <Row className="g-4">
+      <div className="container mx-auto px-4 py-4">
+        {/* ATS Tips at the top of the page */}
+        <div className="mb-4">
+          <ATSTips />
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-4">
           {/* Form Column */}
-          <Col lg={7} className="pe-lg-4">
-            <div className="d-flex flex-column gap-4 pb-5">
+          <div className="lg:w-7/12 pr-0 lg:pr-4">
+            <div className="flex flex-col gap-4 pb-5">
               <PersonalInfoForm
                 personalInfo={resumeData.personalInfo}
                 updatePersonalInfo={updatePersonalInfo}
@@ -362,70 +364,32 @@ export default function ResumeBuilder() {
               />
 
               <JobDescriptionAnalyzer resumeData={resumeData} />
-              <ATSTips />
+              {/* Removed ATSTips from here */}
             </div>
-          </Col>
+          </div>
 
           {/* Preview Column */}
-          <Col lg={5} className="ps-lg-4">
+          <div className="lg:w-5/12 pl-0 lg:pl-4">
             <div
-              className="sticky-top preview-container"
-              style={{
-                top: "80px",
-                maxHeight: "calc(100vh - 100px)",
-                overflowY: "auto",
-              }}
+              className="sticky top-20 preview-container overflow-y-auto"
+              style={{ maxHeight: "calc(100vh - 100px)" }}
             >
-              <div className="bg-white shadow-sm rounded-3 p-4 mb-4">
-                <h2 className="fs-5 fw-bold mb-3">Resume Preview</h2>
-                <div className="border rounded-3">
+              <div className="bg-white shadow-sm rounded-xl p-4 mb-4">
+                <h2 className="text-lg font-bold mb-3">Resume Preview</h2>
+                <div className="border rounded-lg">
                   <ResumePreview resumeData={resumeData} />
                 </div>
               </div>
             </div>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
 
       <style jsx global>{`
-        body {
-          background-color: #f8f9fa;
-        }
-        .card {
-          border: none;
-          border-radius: 0.5rem;
-          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-        }
-        .card-body {
-          padding: 1.5rem;
-        }
-        .form-label {
-          font-weight: 500;
-          color: #344054;
-        }
-        .form-control,
-        .form-select {
-          border-radius: 0.375rem;
-          border-color: #d0d5dd;
-          padding: 0.5rem 0.75rem;
-        }
-        .form-control:focus,
-        .form-select:focus {
-          border-color: #7f56d9;
-          box-shadow: 0 0 0 3px rgba(127, 86, 217, 0.1);
-        }
-        .btn-primary {
-          background-color: #7f56d9;
-          border-color: #7f56d9;
-        }
-        .btn-primary:hover {
-          background-color: #6941c6;
-          border-color: #6941c6;
-        }
         .preview-container {
           border-left: 1px solid #eaecf0;
         }
-        @media (max-width: 991.98px) {
+        @media (max-width: 1024px) {
           .preview-container {
             border-left: none;
             position: relative !important;

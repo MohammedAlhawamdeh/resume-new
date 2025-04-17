@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Form, Button, InputGroup, Row, Col } from "react-bootstrap";
 import { Language } from "@/types/resume";
 import { v4 as uuidv4 } from "uuid";
 import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
@@ -58,7 +57,7 @@ export default function LanguagesForm({
   const startEditingLanguage = (index: number, lang: Language) => {
     setEditingLanguage({
       index,
-      language: lang.name, // Fixed: using lang.name instead of lang.language
+      language: lang.name,
       proficiency: lang.proficiency || "",
     });
   };
@@ -71,8 +70,8 @@ export default function LanguagesForm({
     if (editingLanguage.index !== null && editingLanguage.language.trim()) {
       const updatedLanguages = [...languages];
       updatedLanguages[editingLanguage.index] = {
-        id: languages[editingLanguage.index].id, // Preserve the existing ID
-        name: editingLanguage.language.trim(), // Fixed: using name instead of language
+        id: languages[editingLanguage.index].id,
+        name: editingLanguage.language.trim(),
         proficiency: editingLanguage.proficiency,
       };
       updateLanguages(updatedLanguages);
@@ -81,162 +80,152 @@ export default function LanguagesForm({
   };
 
   return (
-    <Card className="shadow-sm mb-4">
-      <Card.Body>
-        <h2 className="fs-4 fw-bold mb-3">Languages</h2>
+    <div className="bg-white rounded-xl shadow-sm mb-4 p-6">
+      <h2 className="text-xl font-bold mb-4">Languages</h2>
 
-        <div className="mb-4">
-          <Row>
-            <Col md={8}>
-              <Form.Group controlId="language-input">
-                <Form.Label className="fw-medium">Language</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={newLanguage}
-                  onChange={(e) => setNewLanguage(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Add a language (e.g., English, Spanish)"
-                />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group controlId="proficiency-input">
-                <Form.Label className="fw-medium">Proficiency</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={newProficiency}
-                  onChange={(e) => setNewProficiency(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="e.g., Fluent, Native"
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <div className="mt-2">
-            <Button variant="primary" onClick={handleAddLanguage}>
-              Add Language
-            </Button>
+      <div className="mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+          <div className="md:col-span-8">
+            <label
+              htmlFor="language-input"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Language
+            </label>
+            <input
+              id="language-input"
+              type="text"
+              value={newLanguage}
+              onChange={(e) => setNewLanguage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Add a language (e.g., English, Spanish)"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+          </div>
+          <div className="md:col-span-4">
+            <label
+              htmlFor="proficiency-input"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Proficiency
+            </label>
+            <input
+              id="proficiency-input"
+              type="text"
+              value={newProficiency}
+              onChange={(e) => setNewProficiency(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="e.g., Fluent, Native"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
           </div>
         </div>
-
-        <div className="mb-3">
-          {languages.map((language, index) => (
-            <div key={index} className="mb-2">
-              {editingLanguage.index === index ? (
-                <div className="d-flex gap-2">
-                  <Form.Group className="flex-grow-1 me-2">
-                    <Form.Control
-                      type="text"
-                      value={editingLanguage.language}
-                      onChange={(e) =>
-                        setEditingLanguage({
-                          ...editingLanguage,
-                          language: e.target.value,
-                        })
-                      }
-                      placeholder="Language name"
-                      autoFocus
-                    />
-                  </Form.Group>
-                  <Form.Group className="me-2" style={{ width: "150px" }}>
-                    <Form.Select
-                      value={editingLanguage.proficiency}
-                      onChange={(e) =>
-                        setEditingLanguage({
-                          ...editingLanguage,
-                          proficiency: e.target.value,
-                        })
-                      }
-                    >
-                      <option value="">Proficiency (optional)</option>
-                      <option value="Elementary">Elementary</option>
-                      <option value="Limited Working">Limited Working</option>
-                      <option value="Professional Working">
-                        Professional Working
-                      </option>
-                      <option value="Full Professional">
-                        Full Professional
-                      </option>
-                      <option value="Native/Bilingual">Native/Bilingual</option>
-                    </Form.Select>
-                  </Form.Group>
-                  <div className="d-flex gap-1">
-                    <Button
-                      variant="success"
-                      className="d-flex align-items-center justify-content-center"
-                      style={{ width: "38px", height: "38px" }}
-                      onClick={saveEditedLanguage}
-                      title="Save language"
-                    >
-                      <FaCheck size={14} />
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      className="d-flex align-items-center justify-content-center"
-                      style={{ width: "38px", height: "38px" }}
-                      onClick={cancelEditingLanguage}
-                      title="Cancel edit"
-                    >
-                      <FaTimes size={14} />
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <span className="fw-medium">{language.name}</span>{" "}
-                    {/* Fixed: using language.name */}
-                    {language.proficiency && (
-                      <small className="text-muted ms-2">
-                        ({language.proficiency})
-                      </small>
-                    )}
-                  </div>
-                  <div className="d-flex">
-                    <Button
-                      variant="link"
-                      className="p-1 text-primary"
-                      onClick={() => startEditingLanguage(index, language)}
-                      title="Edit language"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        minWidth: "32px",
-                        height: "32px",
-                      }}
-                    >
-                      <FaEdit size={14} />
-                    </Button>
-                    <Button
-                      variant="link"
-                      className="p-1 text-danger"
-                      onClick={() => handleRemoveLanguage(language.id)}
-                      title="Remove language"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        minWidth: "32px",
-                        height: "32px",
-                      }}
-                    >
-                      <FaTrash size={14} />
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
+        <div className="mt-3">
+          <button
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md"
+            onClick={handleAddLanguage}
+          >
+            Add Language
+          </button>
         </div>
+      </div>
 
-        <div className="mt-3 small text-secondary">
-          <p>
-            Tip: Include language proficiency levels like "Native", "Fluent",
-            "Intermediate", or "Basic".
-          </p>
-        </div>
-      </Card.Body>
-    </Card>
+      <div className="mb-3">
+        {languages.map((language, index) => (
+          <div key={index} className="mb-2">
+            {editingLanguage.index === index ? (
+              <div className="flex gap-2">
+                <div className="flex-grow mr-2">
+                  <input
+                    type="text"
+                    value={editingLanguage.language}
+                    onChange={(e) =>
+                      setEditingLanguage({
+                        ...editingLanguage,
+                        language: e.target.value,
+                      })
+                    }
+                    placeholder="Language name"
+                    autoFocus
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                </div>
+                <div className="w-36 mr-2">
+                  <select
+                    value={editingLanguage.proficiency}
+                    onChange={(e) =>
+                      setEditingLanguage({
+                        ...editingLanguage,
+                        proficiency: e.target.value,
+                      })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  >
+                    <option value="">Proficiency (optional)</option>
+                    <option value="Elementary">Elementary</option>
+                    <option value="Limited Working">Limited Working</option>
+                    <option value="Professional Working">
+                      Professional Working
+                    </option>
+                    <option value="Full Professional">Full Professional</option>
+                    <option value="Native/Bilingual">Native/Bilingual</option>
+                  </select>
+                </div>
+                <div className="flex gap-1">
+                  <button
+                    className="bg-green-600 hover:bg-green-700 text-white w-10 h-10 rounded-md flex items-center justify-center"
+                    onClick={saveEditedLanguage}
+                    title="Save language"
+                  >
+                    <FaCheck size={14} />
+                  </button>
+                  <button
+                    className="bg-gray-500 hover:bg-gray-600 text-white w-10 h-10 rounded-md flex items-center justify-center"
+                    onClick={cancelEditingLanguage}
+                    title="Cancel edit"
+                  >
+                    <FaTimes size={14} />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-between items-center">
+                <div>
+                  <span className="font-medium">{language.name}</span>{" "}
+                  {language.proficiency && (
+                    <small className="text-gray-500 ml-2">
+                      ({language.proficiency})
+                    </small>
+                  )}
+                </div>
+                <div className="flex">
+                  <button
+                    className="p-1 text-indigo-600 hover:text-indigo-800 flex items-center justify-center min-w-8 h-8"
+                    onClick={() => startEditingLanguage(index, language)}
+                    title="Edit language"
+                  >
+                    <FaEdit size={14} />
+                  </button>
+                  <button
+                    className="p-1 text-red-500 hover:text-red-700 flex items-center justify-center min-w-8 h-8"
+                    onClick={() => handleRemoveLanguage(language.id)}
+                    title="Remove language"
+                  >
+                    <FaTrash size={14} />
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-3 text-sm text-gray-500">
+        <p>
+          Tip: Include language proficiency levels like "Native", "Fluent",
+          "Intermediate", or "Basic".
+        </p>
+      </div>
+    </div>
   );
 }

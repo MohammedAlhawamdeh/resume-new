@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Form, Button, Row, Col } from "react-bootstrap";
 import { Certification } from "@/types/resume";
 import { v4 as uuidv4 } from "uuid";
 import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
@@ -85,214 +84,193 @@ export default function CertificationsForm({
         date: editingCert.date.trim(),
       };
 
-      // Log for debugging
-      console.log(
-        "Saving edited certification:",
-        updatedCertifications[editingCert.index]
-      );
-      console.log("All certifications after edit:", updatedCertifications);
-
       // Update the state with the new array
       updateCertifications(updatedCertifications);
 
       // Reset the editing state
       cancelEditingCertification();
-    } else {
-      // Log validation issues for debugging
-      console.warn("Cannot save certification - validation failed:", {
-        index: editingCert.index,
-        name: editingCert.name,
-        // Issuer is now optional
-      });
     }
   };
 
   return (
-    <Card className="shadow-sm mb-4">
-      <Card.Body>
-        <h2 className="fs-4 fw-bold mb-3">Professional Certifications</h2>
+    <div className="bg-white rounded-xl shadow-sm mb-4 p-6">
+      <h2 className="text-xl font-bold mb-4">Professional Certifications</h2>
 
-        <div className="mb-4">
-          <Row className="mb-2">
-            <Col md={6}>
-              <Form.Group controlId="certification-input">
-                <Form.Label className="fw-medium">
-                  Certification Name
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  value={newCertification}
-                  onChange={(e) => setNewCertification(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="e.g., Advanced React and Redux"
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group controlId="issuer-input">
-                <Form.Label className="fw-medium">Issuer</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={newIssuer}
-                  onChange={(e) => setNewIssuer(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="e.g., Udemy, Microsoft"
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="mb-2">
-            <Col md={6}>
-              <Form.Group controlId="date-input">
-                <Form.Label className="fw-medium">Date (Year)</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={newDate}
-                  onChange={(e) => setNewDate(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="e.g., 2023"
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <div className="mt-2">
-            <Button variant="primary" onClick={handleAddCertification}>
-              Add Certification
-            </Button>
+      <div className="mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+          <div>
+            <label
+              htmlFor="certification-input"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Certification Name
+            </label>
+            <input
+              id="certification-input"
+              type="text"
+              value={newCertification}
+              onChange={(e) => setNewCertification(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="e.g., Advanced React and Redux"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="issuer-input"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Issuer
+            </label>
+            <input
+              id="issuer-input"
+              type="text"
+              value={newIssuer}
+              onChange={(e) => setNewIssuer(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="e.g., Udemy, Microsoft"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
           </div>
         </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+          <div>
+            <label
+              htmlFor="date-input"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Date (Year)
+            </label>
+            <input
+              id="date-input"
+              type="text"
+              value={newDate}
+              onChange={(e) => setNewDate(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="e.g., 2023"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+        <div className="mt-3">
+          <button
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md"
+            onClick={handleAddCertification}
+          >
+            Add Certification
+          </button>
+        </div>
+      </div>
 
-        <div className="mb-3">
-          {certifications.map((cert, index) => (
-            <div key={index} className="mb-3 border-bottom pb-2">
-              {editingCert.index === index ? (
-                <div className="mb-3">
-                  <Form.Group className="mb-2">
-                    <Form.Label className="fw-medium">
-                      Certificate Name *
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={editingCert.name}
-                      onChange={(e) =>
-                        setEditingCert({ ...editingCert, name: e.target.value })
-                      }
-                      placeholder="e.g., AWS Certified Solutions Architect"
-                      required
-                      autoFocus
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-2">
-                    <Form.Label className="fw-medium">
-                      Issuing Organization *
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={editingCert.issuer}
-                      onChange={(e) =>
-                        setEditingCert({
-                          ...editingCert,
-                          issuer: e.target.value,
-                        })
-                      }
-                      placeholder="e.g., Amazon Web Services"
-                      required
-                    />
-                  </Form.Group>
-                  <Row className="mb-2">
-                    <Col md={12}>
-                      <Form.Group>
-                        <Form.Label className="fw-medium">
-                          Issue Date
-                        </Form.Label>
-                        <Form.Control
-                          type="month"
-                          value={editingCert.date}
-                          onChange={(e) =>
-                            setEditingCert({
-                              ...editingCert,
-                              date: e.target.value,
-                            })
-                          }
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <div className="d-flex gap-2">
-                    <Button
-                      variant="success"
-                      className="d-flex align-items-center"
-                      size="sm"
-                      onClick={saveEditedCertification}
-                    >
-                      <FaCheck size={12} className="me-1" /> Save
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      className="d-flex align-items-center"
-                      size="sm"
-                      onClick={cancelEditingCertification}
-                    >
-                      <FaTimes size={12} className="me-1" /> Cancel
-                    </Button>
-                  </div>
+      <div className="mb-3">
+        {certifications.map((cert, index) => (
+          <div key={index} className="mb-3 border-b pb-2">
+            {editingCert.index === index ? (
+              <div className="mb-3">
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Certificate Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={editingCert.name}
+                    onChange={(e) =>
+                      setEditingCert({ ...editingCert, name: e.target.value })
+                    }
+                    placeholder="e.g., AWS Certified Solutions Architect"
+                    required
+                    autoFocus
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
                 </div>
-              ) : (
-                <div>
-                  <div className="d-flex justify-content-between align-items-center mb-2">
-                    <div>
-                      <div className="fw-medium">{cert.name}</div>
-                      <div className="small text-muted">
-                        {cert.issuer}
-                        {cert.date && ` • ${cert.date}`}
-                      </div>
-                    </div>
-                    <div className="d-flex">
-                      <Button
-                        variant="link"
-                        className="p-1 text-primary"
-                        onClick={() => startEditingCertification(index, cert)}
-                        title="Edit certification"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          minWidth: "32px",
-                          height: "32px",
-                        }}
-                      >
-                        <FaEdit size={14} />
-                      </Button>
-                      <Button
-                        variant="link"
-                        className="p-1 text-danger"
-                        onClick={() => handleRemoveCertification(cert.id)}
-                        title="Remove certification"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          minWidth: "32px",
-                          height: "32px",
-                        }}
-                      >
-                        <FaTrash size={14} />
-                      </Button>
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Issuing Organization *
+                  </label>
+                  <input
+                    type="text"
+                    value={editingCert.issuer}
+                    onChange={(e) =>
+                      setEditingCert({
+                        ...editingCert,
+                        issuer: e.target.value,
+                      })
+                    }
+                    placeholder="e.g., Amazon Web Services"
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                </div>
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Issue Date
+                  </label>
+                  <input
+                    type="month"
+                    value={editingCert.date}
+                    onChange={(e) =>
+                      setEditingCert({
+                        ...editingCert,
+                        date: e.target.value,
+                      })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    className="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1.5 rounded flex items-center"
+                    onClick={saveEditedCertification}
+                  >
+                    <FaCheck size={12} className="mr-1" /> Save
+                  </button>
+                  <button
+                    className="bg-gray-500 hover:bg-gray-600 text-white text-sm px-3 py-1.5 rounded flex items-center"
+                    onClick={cancelEditingCertification}
+                  >
+                    <FaTimes size={12} className="mr-1" /> Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <div>
+                    <div className="font-medium">{cert.name}</div>
+                    <div className="text-sm text-gray-500">
+                      {cert.issuer}
+                      {cert.date && ` • ${cert.date}`}
                     </div>
                   </div>
+                  <div className="flex">
+                    <button
+                      className="p-1 text-indigo-600 hover:text-indigo-800 flex items-center justify-center min-w-8 h-8"
+                      onClick={() => startEditingCertification(index, cert)}
+                      title="Edit certification"
+                    >
+                      <FaEdit size={14} />
+                    </button>
+                    <button
+                      className="p-1 text-red-500 hover:text-red-700 flex items-center justify-center min-w-8 h-8"
+                      onClick={() => handleRemoveCertification(cert.id)}
+                      title="Remove certification"
+                    >
+                      <FaTrash size={14} />
+                    </button>
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
-        </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
 
-        <div className="mt-3 small text-secondary">
-          <p>
-            Tip: Include relevant professional certifications that show your
-            expertise and commitment to ongoing learning.
-          </p>
-        </div>
-      </Card.Body>
-    </Card>
+      <div className="mt-3 text-sm text-gray-500">
+        <p>
+          Tip: Include relevant professional certifications that show your
+          expertise and commitment to ongoing learning.
+        </p>
+      </div>
+    </div>
   );
 }

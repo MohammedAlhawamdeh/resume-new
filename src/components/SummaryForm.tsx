@@ -1,7 +1,5 @@
 "use client";
 
-import { Card, Form } from "react-bootstrap";
-
 interface SummaryFormProps {
   summary: string;
   updateSummary: (summary: string) => void;
@@ -16,25 +14,29 @@ export default function SummaryForm({
   };
 
   return (
-    <Card className="shadow-sm mb-4">
-      <Card.Body>
-        <h2 className="fs-4 fw-bold mb-3">Professional Summary</h2>
-        <Form.Group controlId="summary">
-          <Form.Label className="fw-medium">Summary</Form.Label>
-          <Form.Control
-            as="textarea"
-            value={summary}
-            onChange={handleChange}
-            rows={4}
-            placeholder="Brief overview of your professional background, key strengths, and career goals (2-4 sentences recommended)"
-          />
-          <Form.Text className="text-muted">
-            Tip: Tailor your summary to highlight relevant skills and experience
-            for the position you're applying to. Include keywords from the job
-            description for better ATS performance.
-          </Form.Text>
-        </Form.Group>
-      </Card.Body>
-    </Card>
+    <div className="bg-white rounded-xl shadow-sm mb-4 p-6">
+      <h2 className="text-xl font-bold mb-4">Professional Summary</h2>
+      <div>
+        <label
+          htmlFor="summary"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Summary
+        </label>
+        <textarea
+          id="summary"
+          value={summary}
+          onChange={handleChange}
+          rows={4}
+          placeholder="Brief overview of your professional background, key strengths, and career goals (2-4 sentences recommended)"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+        />
+        <p className="mt-2 text-sm text-gray-500">
+          Tip: Tailor your summary to highlight relevant skills and experience
+          for the position you're applying to. Include keywords from the job
+          description for better ATS performance.
+        </p>
+      </div>
+    </div>
   );
 }

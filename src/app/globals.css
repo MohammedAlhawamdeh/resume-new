@@ -1,31 +1,33 @@
-/* Import Bootstrap CSS */
-@import "bootstrap/dist/css/bootstrap.min.css";
+/* Tailwind CSS */
+@import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #0d6efd;
-  --primary-hover: #0b5ed7;
+  --background: #0d1b2a; /* Oxford Blue */
+  --foreground: #ffffff;
+  --primary: #fb5607; /* Vivid Orange */
+  --primary-hover: #e04e06; /* Slightly darker Vivid Orange for hover states */
   --gray-light: #f8f9fa;
   --gray-medium: #dee2e6;
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 body {
-  background: var(--gray-light);
-  color: var(--foreground);
-  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+  font-family: var(--font-sans);
+  background-color: rgb(249 250 251); /* bg-gray-50 */
+  color: rgb(17 24 39); /* text-gray-900 */
 }
 
 /* ATS-friendly print styles */
 @media print {
   body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12pt;
-    line-height: 1.4;
-    color: #000;
-    background: #fff;
+    font-family: var(--font-sans);
+    color: #0d1b2a;
+    background-color: white;
     margin: 0;
     padding: 0;
+    font-size: 12pt;
+    line-height: 1.4;
   }
 
   h1,
@@ -60,16 +62,17 @@ body {
   }
 
   ul {
-    margin: 0.5em 0 0.5em 1.5em;
-    padding: 0;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 1.5rem;
   }
 
   li {
-    margin-bottom: 0.25em;
+    margin-bottom: 0.25rem;
   }
 
   a {
-    color: #000;
+    color: black;
     text-decoration: none;
   }
 
@@ -92,15 +95,15 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--gray-light);
-  border-radius: 4px;
+  background-color: rgb(249 250 251); /* bg-gray-50 */
+  border-radius: 0.25rem; /* rounded */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gray-medium);
-  border-radius: 4px;
+  background-color: rgb(209 213 219); /* bg-gray-300 */
+  border-radius: 0.25rem; /* rounded */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #adb5bd;
+  background-color: rgb(156 163 175); /* bg-gray-400 */
 }

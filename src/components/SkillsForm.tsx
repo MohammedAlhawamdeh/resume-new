@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Form, Button } from "react-bootstrap";
 import { FaTrash, FaEdit, FaCheck, FaTimes, FaPlus } from "react-icons/fa";
 
 interface SkillsFormProps {
@@ -51,273 +50,103 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
   };
 
   return (
-    <Card className="border-0 mb-4">
-      <Card.Body className="p-0">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <h2 className="section-title">Skills</h2>
-        </div>
+    <div className="bg-white rounded-xl shadow-sm mb-4 p-6">
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-xl font-bold text-gray-800">Skills</h2>
+      </div>
 
-        {/* Skills list with resume-now styling */}
-        <div className="mb-4">
-          {cleanSkills.length > 0 ? (
-            <div className="skills-container">
-              {cleanSkills.map((skill, index) => (
-                <div key={`skill-${index}`} className="skill-item mb-2">
-                  {editingSkill.index === index ? (
-                    <div className="d-flex skill-edit-container">
-                      <Form.Control
-                        type="text"
-                        value={editingSkill.name}
-                        onChange={(e) =>
-                          setEditingSkill({
-                            ...editingSkill,
-                            name: e.target.value,
-                          })
-                        }
-                        className="skill-edit-input"
-                        autoFocus
-                      />
-                      <div className="skill-edit-actions">
-                        <Button
-                          variant="success"
-                          size="sm"
-                          onClick={saveEditedSkill}
-                          className="action-btn save-btn"
-                        >
-                          <FaCheck size={12} />
-                        </Button>
-                        <Button
-                          variant="light"
-                          size="sm"
-                          onClick={cancelEditingSkill}
-                          className="action-btn cancel-btn"
-                        >
-                          <FaTimes size={12} />
-                        </Button>
-                      </div>
+      {/* Skills list */}
+      <div className="mb-4">
+        {cleanSkills.length > 0 ? (
+          <div className="flex flex-wrap gap-2 mb-5">
+            {cleanSkills.map((skill, index) => (
+              <div key={`skill-${index}`} className="mb-2">
+                {editingSkill.index === index ? (
+                  <div className="flex w-full gap-2">
+                    <input
+                      type="text"
+                      value={editingSkill.name}
+                      onChange={(e) =>
+                        setEditingSkill({
+                          ...editingSkill,
+                          name: e.target.value,
+                        })
+                      }
+                      className="flex-grow px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+                      autoFocus
+                    />
+                    <div className="flex gap-1">
+                      <button
+                        onClick={saveEditedSkill}
+                        className="bg-vivid-orange hover:bg-opacity-90 text-white rounded-md p-2 flex items-center justify-center"
+                      >
+                        <FaCheck size={12} />
+                      </button>
+                      <button
+                        onClick={cancelEditingSkill}
+                        className="bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md p-2 flex items-center justify-center"
+                      >
+                        <FaTimes size={12} />
+                      </button>
                     </div>
-                  ) : (
-                    <div className="skill-display">
-                      <span className="skill-text">{skill}</span>
-                      <div className="skill-actions">
-                        <button
-                          type="button"
-                          onClick={() => startEditingSkill(index, skill)}
-                          className="skill-action-btn edit-btn"
-                          title="Edit skill"
-                        >
-                          <FaEdit size={14} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => removeSkill(index)}
-                          className="skill-action-btn delete-btn"
-                          title="Remove skill"
-                        >
-                          <FaTrash size={14} />
-                        </button>
-                      </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-md px-3 py-2 w-full group">
+                    <span className="text-gray-700 text-sm">{skill}</span>
+                    <div className="flex gap-2 opacity-70 group-hover:opacity-100">
+                      <button
+                        type="button"
+                        onClick={() => startEditingSkill(index, skill)}
+                        className="text-gray-500 hover:text-vivid-orange p-1"
+                        title="Edit skill"
+                      >
+                        <FaEdit size={14} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeSkill(index)}
+                        className="text-gray-500 hover:text-red-600 p-1"
+                        title="Remove skill"
+                      >
+                        <FaTrash size={14} />
+                      </button>
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="empty-state">
-              <p>Add skills that highlight your strengths</p>
-            </div>
-          )}
-        </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-gray-50 border border-dashed border-gray-300 rounded-md p-5 text-center text-gray-500 mb-5">
+            <p>Add skills that highlight your strengths</p>
+          </div>
+        )}
+      </div>
 
-        {/* Form to add new skills with resume-now styling */}
-        <div className="skill-add-container">
-          <Form.Control
-            type="text"
-            value={newSkill}
-            onChange={(e) => setNewSkill(e.target.value)}
-            placeholder="Enter a skill"
-            className="skill-input"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                addSkill();
-              }
-            }}
-          />
-          <Button
-            onClick={addSkill}
-            className="skill-add-btn"
-            disabled={!newSkill.trim()}
-          >
-            <FaPlus size={14} className="me-2" />
-            Add
-          </Button>
-        </div>
-      </Card.Body>
-
-      <style jsx global>{`
-        /* Resume-now inspired styling */
-        .section-title {
-          font-size: 1.25rem;
-          font-weight: 600;
-          color: #2d3e50;
-          margin-bottom: 0;
-        }
-
-        .skills-container {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px;
-          margin-bottom: 20px;
-        }
-
-        .skill-item {
-          margin-bottom: 5px;
-          width: auto;
-        }
-
-        .skill-display {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          background-color: #f7f9fc;
-          border: 1px solid #e2e8f0;
-          border-radius: 4px;
-          padding: 8px 12px;
-          width: 100%;
-        }
-
-        .skill-text {
-          font-size: 0.95rem;
-          color: #334155;
-        }
-
-        .skill-actions {
-          display: flex;
-          gap: 8px;
-          opacity: 0.7;
-        }
-
-        .skill-display:hover .skill-actions {
-          opacity: 1;
-        }
-
-        .skill-action-btn {
-          background: none;
-          border: none;
-          color: #64748b;
-          cursor: pointer;
-          padding: 2px;
-        }
-
-        .edit-btn:hover {
-          color: #3b82f6;
-        }
-
-        .delete-btn:hover {
-          color: #ef4444;
-        }
-
-        .skill-edit-container {
-          width: 100%;
-          gap: 8px;
-        }
-
-        .skill-edit-input {
-          border: 1px solid #cbd5e1;
-          border-radius: 4px;
-          padding: 8px 12px;
-          font-size: 0.95rem;
-        }
-
-        .skill-edit-input:focus {
-          border-color: #3b82f6;
-          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-        }
-
-        .skill-edit-actions {
-          display: flex;
-          gap: 5px;
-        }
-
-        .action-btn {
-          border-radius: 4px;
-          padding: 6px 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .save-btn {
-          background-color: #10b981;
-          border-color: #10b981;
-        }
-
-        .save-btn:hover {
-          background-color: #059669;
-          border-color: #059669;
-        }
-
-        .cancel-btn {
-          background-color: #f1f5f9;
-          border-color: #e2e8f0;
-          color: #64748b;
-        }
-
-        .cancel-btn:hover {
-          background-color: #e2e8f0;
-          border-color: #cbd5e1;
-        }
-
-        .empty-state {
-          background-color: #f7f9fc;
-          border: 1px dashed #cbd5e1;
-          border-radius: 4px;
-          padding: 20px;
-          text-align: center;
-          color: #64748b;
-        }
-
-        .skill-add-container {
-          display: flex;
-          gap: 10px;
-          margin-top: 15px;
-        }
-
-        .skill-input {
-          border: 1px solid #cbd5e1;
-          border-radius: 4px;
-          padding: 10px 12px;
-          font-size: 0.95rem;
-        }
-
-        .skill-input:focus {
-          border-color: #3b82f6;
-          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .skill-add-btn {
-          background-color: #0284c7;
-          border-color: #0284c7;
-          color: white;
-          border-radius: 4px;
-          padding: 8px 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 500;
-        }
-
-        .skill-add-btn:hover:not(:disabled) {
-          background-color: #0369a1;
-          border-color: #0369a1;
-        }
-
-        .skill-add-btn:disabled {
-          background-color: #cbd5e1;
-          border-color: #cbd5e1;
-        }
-      `}</style>
-    </Card>
+      {/* Form to add new skills */}
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={newSkill}
+          onChange={(e) => setNewSkill(e.target.value)}
+          placeholder="Enter a skill"
+          className="flex-grow px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              addSkill();
+            }
+          }}
+        />
+        <button
+          onClick={addSkill}
+          disabled={!newSkill.trim()}
+          className="bg-vivid-orange hover:bg-opacity-90 disabled:bg-gray-300 text-white px-4 py-2 rounded-md flex items-center justify-center"
+        >
+          <FaPlus size={14} className="mr-2" />
+          Add
+        </button>
+      </div>
+    </div>
   );
 }
