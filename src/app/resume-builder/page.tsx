@@ -13,7 +13,7 @@ import CertificationsForm from "@/components/CertificationsForm";
 import ResumePreview from "@/components/ResumePreview";
 import ATSTips from "@/components/ATSTips";
 import JobDescriptionAnalyzer from "@/components/JobDescriptionAnalyzer";
-import { Container, Row, Col, Nav, Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { DownloadPDFButton } from "@/components/ResumePDF";
 
 export default function ResumeBuilder() {
@@ -301,119 +301,139 @@ export default function ResumeBuilder() {
   };
 
   return (
-    <div className="min-vh-100 bg-light">
-      <header className="bg-white shadow-sm">
-        <Container className="py-4">
-          <h1 className="fs-2 fw-bold">ATS-Friendly Resume Builder</h1>
+    <div className="min-vh-100 bg-gray-50">
+      <header className="bg-white border-bottom sticky-top shadow-sm">
+        <Container fluid className="py-3">
+          <div className="d-flex justify-content-between align-items-center">
+            <h1 className="fs-3 fw-bold m-0">Resume Builder</h1>
+            <div>
+              <DownloadPDFButton resumeData={resumeData} />
+              <Button
+                variant="outline-danger"
+                size="sm"
+                className="ms-2"
+                onClick={handleReset}
+              >
+                Reset
+              </Button>
+            </div>
+          </div>
         </Container>
       </header>
 
-      <Container className="py-4">
-        <div className="d-flex justify-content-center mb-4">
-          <Nav variant="tabs">
-            <Nav.Item>
-              <Nav.Link
-                active={activeTab === "edit"}
-                onClick={() => setActiveTab("edit")}
-                className={activeTab === "edit" ? "active" : ""}
-              >
-                Build Resume
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                active={activeTab === "preview"}
-                onClick={() => setActiveTab("preview")}
-                className={activeTab === "preview" ? "active" : ""}
-              >
-                Preview
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-        </div>
+      <Container fluid className="py-4">
+        <Row className="g-4">
+          {/* Form Column */}
+          <Col lg={7} className="pe-lg-4">
+            <div className="d-flex flex-column gap-4 pb-5">
+              <PersonalInfoForm
+                personalInfo={resumeData.personalInfo}
+                updatePersonalInfo={updatePersonalInfo}
+              />
 
-        {activeTab === "edit" ? (
-          <Row className="g-4">
-            <Col lg={8}>
-              <div className="d-flex flex-column gap-4">
-                <PersonalInfoForm
-                  personalInfo={resumeData.personalInfo}
-                  updatePersonalInfo={updatePersonalInfo}
-                />
+              <SummaryForm
+                summary={resumeData.summary}
+                updateSummary={updateSummary}
+              />
 
-                <SummaryForm
-                  summary={resumeData.summary}
-                  updateSummary={updateSummary}
-                />
+              <WorkExperienceForm
+                experiences={resumeData.workExperience}
+                updateExperiences={updateWorkExperience}
+              />
 
-                <SkillsForm
-                  skills={resumeData.skills}
-                  updateSkills={updateSkills}
-                />
+              <EducationForm
+                education={resumeData.education}
+                updateEducation={updateEducation}
+              />
 
-                <LanguagesForm
-                  languages={resumeData.languages}
-                  updateLanguages={updateLanguages}
-                />
+              <SkillsForm
+                skills={resumeData.skills}
+                updateSkills={updateSkills}
+              />
 
-                <CertificationsForm
-                  certifications={resumeData.certifications}
-                  updateCertifications={updateCertifications}
-                />
+              <LanguagesForm
+                languages={resumeData.languages}
+                updateLanguages={updateLanguages}
+              />
 
-                <WorkExperienceForm
-                  experiences={resumeData.workExperience}
-                  updateExperiences={updateWorkExperience}
-                />
+              <CertificationsForm
+                certifications={resumeData.certifications}
+                updateCertifications={updateCertifications}
+              />
 
-                <EducationForm
-                  education={resumeData.education}
-                  updateEducation={updateEducation}
-                />
+              <JobDescriptionAnalyzer resumeData={resumeData} />
+              <ATSTips />
+            </div>
+          </Col>
 
-                <div className="d-flex justify-content-center mt-4">
-                  <Button
-                    variant="danger"
-                    onClick={handleReset}
-                    className="me-3"
-                  >
-                    Reset All Data
-                  </Button>
-                  <Button
-                    variant="primary"
-                    onClick={() => setActiveTab("preview")}
-                  >
-                    Preview Resume
-                  </Button>
+          {/* Preview Column */}
+          <Col lg={5} className="ps-lg-4">
+            <div
+              className="sticky-top preview-container"
+              style={{
+                top: "80px",
+                maxHeight: "calc(100vh - 100px)",
+                overflowY: "auto",
+              }}
+            >
+              <div className="bg-white shadow-sm rounded-3 p-4 mb-4">
+                <h2 className="fs-5 fw-bold mb-3">Resume Preview</h2>
+                <div className="border rounded-3">
+                  <ResumePreview resumeData={resumeData} />
                 </div>
               </div>
-            </Col>
-
-            <Col lg={4}>
-              <div className="d-flex flex-column gap-4">
-                <ATSTips />
-                <JobDescriptionAnalyzer resumeData={resumeData} />
-              </div>
-            </Col>
-          </Row>
-        ) : (
-          <div>
-            <div className="d-flex justify-content-center mb-4">
-              {/* Print button removed as it wasn't working properly */}
-              <div className="me-3">
-                <DownloadPDFButton resumeData={resumeData} />
-              </div>
-              <Button
-                variant="outline-secondary"
-                onClick={() => setActiveTab("edit")}
-              >
-                Back to Editor
-              </Button>
             </div>
-            <ResumePreview resumeData={resumeData} />
-          </div>
-        )}
+          </Col>
+        </Row>
       </Container>
+
+      <style jsx global>{`
+        body {
+          background-color: #f8f9fa;
+        }
+        .card {
+          border: none;
+          border-radius: 0.5rem;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+        .card-body {
+          padding: 1.5rem;
+        }
+        .form-label {
+          font-weight: 500;
+          color: #344054;
+        }
+        .form-control,
+        .form-select {
+          border-radius: 0.375rem;
+          border-color: #d0d5dd;
+          padding: 0.5rem 0.75rem;
+        }
+        .form-control:focus,
+        .form-select:focus {
+          border-color: #7f56d9;
+          box-shadow: 0 0 0 3px rgba(127, 86, 217, 0.1);
+        }
+        .btn-primary {
+          background-color: #7f56d9;
+          border-color: #7f56d9;
+        }
+        .btn-primary:hover {
+          background-color: #6941c6;
+          border-color: #6941c6;
+        }
+        .preview-container {
+          border-left: 1px solid #eaecf0;
+        }
+        @media (max-width: 991.98px) {
+          .preview-container {
+            border-left: none;
+            position: relative !important;
+            max-height: none !important;
+            overflow-y: visible !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

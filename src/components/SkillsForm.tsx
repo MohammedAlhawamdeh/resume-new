@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Form, Button, Row, Col } from "react-bootstrap";
-import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
+import { Card, Form, Button } from "react-bootstrap";
+import { FaTrash, FaEdit, FaCheck, FaTimes, FaPlus } from "react-icons/fa";
 
 interface SkillsFormProps {
   skills: string[];
@@ -10,16 +10,13 @@ interface SkillsFormProps {
 }
 
 export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
-  // State for new skill input
   const [newSkill, setNewSkill] = useState("");
   const [editingSkill, setEditingSkill] = useState<{
     index: number | null;
     name: string;
   }>({ index: null, name: "" });
 
-  // Clean skills to remove any level information
   const cleanSkills = skills.map((skill) => {
-    // Remove any level information in parentheses
     return skill.replace(/\s*\(.+\)$/, "");
   });
 
@@ -54,21 +51,22 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
   };
 
   return (
-    <Card className="shadow-sm mb-4">
-      <Card.Body>
-        <h2 className="fs-4 fw-bold mb-3">Skills</h2>
+    <Card className="border-0 mb-4">
+      <Card.Body className="p-0">
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h2 className="section-title">Skills</h2>
+        </div>
 
-        {/* All Skills in a single list */}
+        {/* Skills list with resume-now styling */}
         <div className="mb-4">
-          <div>
-            {cleanSkills.map((skill, index) => {
-              return (
-                <div key={`skill-${index}`} className="mb-2">
+          {cleanSkills.length > 0 ? (
+            <div className="skills-container">
+              {cleanSkills.map((skill, index) => (
+                <div key={`skill-${index}`} className="skill-item mb-2">
                   {editingSkill.index === index ? (
-                    <div className="d-flex gap-2">
+                    <div className="d-flex skill-edit-container">
                       <Form.Control
                         type="text"
-                        size="sm"
                         value={editingSkill.name}
                         onChange={(e) =>
                           setEditingSkill({
@@ -76,93 +74,250 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
                             name: e.target.value,
                           })
                         }
+                        className="skill-edit-input"
+                        autoFocus
                       />
-                      <Button
-                        variant="success"
-                        size="sm"
-                        onClick={saveEditedSkill}
-                        className="d-flex align-items-center justify-content-center"
-                        style={{ width: "38px", height: "38px" }}
-                      >
-                        <FaCheck size={14} />
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        onClick={cancelEditingSkill}
-                        className="d-flex align-items-center justify-content-center"
-                        style={{ width: "38px", height: "38px" }}
-                      >
-                        <FaTimes size={14} />
-                      </Button>
+                      <div className="skill-edit-actions">
+                        <Button
+                          variant="success"
+                          size="sm"
+                          onClick={saveEditedSkill}
+                          className="action-btn save-btn"
+                        >
+                          <FaCheck size={12} />
+                        </Button>
+                        <Button
+                          variant="light"
+                          size="sm"
+                          onClick={cancelEditingSkill}
+                          className="action-btn cancel-btn"
+                        >
+                          <FaTimes size={12} />
+                        </Button>
+                      </div>
                     </div>
                   ) : (
-                    <div className="d-flex justify-content-between align-items-center border-bottom pb-1">
-                      <div>
-                        <span className="fw-medium">{skill}</span>
-                      </div>
-                      <div className="d-flex">
-                        <Button
-                          variant="link"
-                          className="p-1 text-primary"
+                    <div className="skill-display">
+                      <span className="skill-text">{skill}</span>
+                      <div className="skill-actions">
+                        <button
+                          type="button"
                           onClick={() => startEditingSkill(index, skill)}
+                          className="skill-action-btn edit-btn"
                           title="Edit skill"
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            minWidth: "32px",
-                            height: "32px",
-                          }}
                         >
                           <FaEdit size={14} />
-                        </Button>
-                        <Button
-                          variant="link"
-                          className="p-1 text-danger"
+                        </button>
+                        <button
+                          type="button"
                           onClick={() => removeSkill(index)}
+                          className="skill-action-btn delete-btn"
                           title="Remove skill"
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            minWidth: "32px",
-                            height: "32px",
-                          }}
                         >
                           <FaTrash size={14} />
-                        </Button>
+                        </button>
                       </div>
                     </div>
                   )}
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <p>Add skills that highlight your strengths</p>
+            </div>
+          )}
         </div>
 
-        {/* Form to add new skills */}
-        <Form className="mt-3">
-          <Row className="align-items-end">
-            <Col md={9}>
-              <Form.Group>
-                <Form.Label className="fw-medium">Add Skill</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={newSkill}
-                  onChange={(e) => setNewSkill(e.target.value)}
-                  placeholder="e.g., JavaScript"
-                />
-              </Form.Group>
-            </Col>
-            <Col md={3}>
-              <Button variant="primary" onClick={addSkill} className="w-100">
-                Add Skill
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+        {/* Form to add new skills with resume-now styling */}
+        <div className="skill-add-container">
+          <Form.Control
+            type="text"
+            value={newSkill}
+            onChange={(e) => setNewSkill(e.target.value)}
+            placeholder="Enter a skill"
+            className="skill-input"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                addSkill();
+              }
+            }}
+          />
+          <Button
+            onClick={addSkill}
+            className="skill-add-btn"
+            disabled={!newSkill.trim()}
+          >
+            <FaPlus size={14} className="me-2" />
+            Add
+          </Button>
+        </div>
       </Card.Body>
+
+      <style jsx global>{`
+        /* Resume-now inspired styling */
+        .section-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #2d3e50;
+          margin-bottom: 0;
+        }
+
+        .skills-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-bottom: 20px;
+        }
+
+        .skill-item {
+          margin-bottom: 5px;
+          width: auto;
+        }
+
+        .skill-display {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background-color: #f7f9fc;
+          border: 1px solid #e2e8f0;
+          border-radius: 4px;
+          padding: 8px 12px;
+          width: 100%;
+        }
+
+        .skill-text {
+          font-size: 0.95rem;
+          color: #334155;
+        }
+
+        .skill-actions {
+          display: flex;
+          gap: 8px;
+          opacity: 0.7;
+        }
+
+        .skill-display:hover .skill-actions {
+          opacity: 1;
+        }
+
+        .skill-action-btn {
+          background: none;
+          border: none;
+          color: #64748b;
+          cursor: pointer;
+          padding: 2px;
+        }
+
+        .edit-btn:hover {
+          color: #3b82f6;
+        }
+
+        .delete-btn:hover {
+          color: #ef4444;
+        }
+
+        .skill-edit-container {
+          width: 100%;
+          gap: 8px;
+        }
+
+        .skill-edit-input {
+          border: 1px solid #cbd5e1;
+          border-radius: 4px;
+          padding: 8px 12px;
+          font-size: 0.95rem;
+        }
+
+        .skill-edit-input:focus {
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+
+        .skill-edit-actions {
+          display: flex;
+          gap: 5px;
+        }
+
+        .action-btn {
+          border-radius: 4px;
+          padding: 6px 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .save-btn {
+          background-color: #10b981;
+          border-color: #10b981;
+        }
+
+        .save-btn:hover {
+          background-color: #059669;
+          border-color: #059669;
+        }
+
+        .cancel-btn {
+          background-color: #f1f5f9;
+          border-color: #e2e8f0;
+          color: #64748b;
+        }
+
+        .cancel-btn:hover {
+          background-color: #e2e8f0;
+          border-color: #cbd5e1;
+        }
+
+        .empty-state {
+          background-color: #f7f9fc;
+          border: 1px dashed #cbd5e1;
+          border-radius: 4px;
+          padding: 20px;
+          text-align: center;
+          color: #64748b;
+        }
+
+        .skill-add-container {
+          display: flex;
+          gap: 10px;
+          margin-top: 15px;
+        }
+
+        .skill-input {
+          border: 1px solid #cbd5e1;
+          border-radius: 4px;
+          padding: 10px 12px;
+          font-size: 0.95rem;
+        }
+
+        .skill-input:focus {
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .skill-add-btn {
+          background-color: #0284c7;
+          border-color: #0284c7;
+          color: white;
+          border-radius: 4px;
+          padding: 8px 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 500;
+        }
+
+        .skill-add-btn:hover:not(:disabled) {
+          background-color: #0369a1;
+          border-color: #0369a1;
+        }
+
+        .skill-add-btn:disabled {
+          background-color: #cbd5e1;
+          border-color: #cbd5e1;
+        }
+      `}</style>
     </Card>
   );
 }
