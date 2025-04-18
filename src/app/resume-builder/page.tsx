@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Link from "next/link"; // Import Link component
 import { ResumeData } from "@/types/resume";
 import PersonalInfoForm from "@/components/PersonalInfoForm";
 import SummaryForm from "@/components/SummaryForm";
@@ -304,8 +305,31 @@ export default function ResumeBuilder() {
       <header className="bg-oxford-blue border-b sticky top-0 shadow-sm z-10 text-white">
         <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
-            <h1 className="text-xl font-bold m-0">Resume Builder</h1>
+            <h1 className="text-xl font-bold m-0">
+              <span className="text-white">KWIK</span>
+              <span className="text-vivid-orange">CV</span>
+            </h1>
             <div className="flex items-center">
+              <Link
+                href="/"
+                className="bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md flex items-center mr-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 mr-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
+                </svg>
+                Back to Home
+              </Link>
               <DownloadPDFButton resumeData={resumeData} />
               <button
                 className="ml-2 bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md"

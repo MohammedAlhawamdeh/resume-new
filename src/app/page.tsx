@@ -1,5 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import {
+  FaGoogle,
+  FaAmazon,
+  FaMicrosoft,
+  FaApple,
+  FaFacebookSquare,
+} from "react-icons/fa";
 
 export default function LandingPage() {
   return (
@@ -9,7 +16,8 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <span className="text-2xl font-bold tracking-tight">
-              ResumeBuilder
+              <span className="text-white">KWIK</span>
+              <span className="text-vivid-orange">CV</span>
             </span>
           </div>
           <nav className="hidden md:flex space-x-8">
@@ -192,20 +200,27 @@ export default function LandingPage() {
               </p>
             </div>
             <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-              {["Google", "Amazon", "Microsoft", "Apple", "Meta"].map(
-                (company, index) => (
-                  <div
-                    key={index}
-                    className="grayscale opacity-50 hover:opacity-100 transition-opacity"
-                  >
-                    <div className="h-6 md:h-8 w-24 md:w-32 bg-gray-200 rounded flex items-center justify-center">
-                      <span className="text-gray-500 font-semibold">
-                        {company}
-                      </span>
-                    </div>
+              {[
+                { name: "Google", icon: FaGoogle, color: "#4285F4" },
+                { name: "Amazon", icon: FaAmazon, color: "#FF9900" },
+                { name: "Microsoft", icon: FaMicrosoft, color: "#00A4EF" },
+                { name: "Apple", icon: FaApple, color: "#A2AAAD" },
+                { name: "Meta", icon: FaFacebookSquare, color: "#0866FF" },
+              ].map((company, index) => (
+                <div
+                  key={index}
+                  className="grayscale opacity-50 hover:opacity-100 transition-all hover:grayscale-0 duration-300"
+                >
+                  <div className="flex items-center justify-center">
+                    <company.icon
+                      size={48}
+                      title={`${company.name} logo`}
+                      color={company.color}
+                      className="h-8 md:h-12 w-auto"
+                    />
                   </div>
-                )
-              )}
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -901,7 +916,10 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-2xl font-bold mb-4">ResumeBuilder</h3>
+              <h3 className="text-2xl font-bold mb-4">
+                <span className="text-white">KWIK</span>
+                <span className="text-vivid-orange">CV</span>
+              </h3>
               <p className="text-gray-400 mb-4">
                 Create professional, ATS-friendly resumes that get you hired
                 faster.
@@ -1066,7 +1084,10 @@ export default function LandingPage() {
           </div>
           <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400">
-              © {new Date().getFullYear()} ResumeBuilder. All rights reserved.
+              © {new Date().getFullYear()}{" "}
+              <span className="text-white">KWIK</span>
+              <span className="text-vivid-orange">CV</span>. All rights
+              reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a
