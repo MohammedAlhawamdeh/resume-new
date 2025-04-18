@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Document,
   Page,
@@ -9,6 +9,8 @@ import {
   PDFDownloadLink,
 } from "@react-pdf/renderer";
 import { ResumeData } from "@/types/resume";
+import LoadingSpinner from "./LoadingSpinner";
+import { useToast } from "./ToastContext";
 
 // Register standard fonts with unicode support for Turkish characters
 Font.register({
@@ -417,40 +419,87 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
 
 export const DownloadPDFButton = ({
   resumeData,
+  btnText,
+  className = "",
 }: {
   resumeData: ResumeData;
+  btnText?: React.ReactNode;
+  className?: string;
 }) => {
-  const [isClient, setIsClient] = React.useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const [isFontsLoaded, setIsFontsLoaded] = useState(false);
+  const { addToast } = useToast();
 
   // Use useEffect to ensure this only runs on client side
-  React.useEffect(() => {
+  useEffect(() => {
+    let isMounted = true; // Add this flag to prevent state updates if component unmounts
     setIsClient(true);
 
     // Preload fonts to avoid async loading issues
     const preloadFonts = async () => {
       try {
+        // Skip if fonts are already loaded
+        if (isFontsLoaded) return;
+
         // Force preload of fonts
         const fontUrls = [
-          "/fonts/JetBrainsMono-Regular.ttf",
-          "/fonts/JetBrainsMono-Bold.ttf",
+          "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf",
+          "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf",
+          "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-italic-webfont.ttf",
         ];
 
-        await Promise.all(
-          fontUrls.map((url) => fetch(url).then((res) => res.blob()))
+        // Using Promise.allSettled instead of Promise.all to handle partial failures
+        const results = await Promise.allSettled(
+          fontUrls.map((url) =>
+            fetch(url).then((res) => {
+              if (!res.ok) throw new Error(`Failed to load font: ${url}`);
+              return res.blob();
+            })
+          )
         );
+
+        // Log any failures but continue
+        results.forEach((result, index) => {
+          if (result.status === "rejected") {
+            console.warn(
+              `Font load warning for ${fontUrls[index]}:`,
+              result.reason
+            );
+          }
+        });
+
+        // Only update state if component is still mounted
+        if (isMounted) {
+          setIsFontsLoaded(true);
+        }
       } catch (err) {
         console.error("Font preloading error:", err);
+        // Only update state if component is still mounted
+        if (isMounted) {
+          addToast("Failed to load fonts for PDF generation", "error");
+          // Still set fonts loaded to true to avoid getting stuck
+          setIsFontsLoaded(true);
+        }
       }
     };
 
     preloadFonts();
-  }, []);
 
-  // Only render the PDFDownloadLink on the client side
+    // Add cleanup function
+    return () => {
+      isMounted = false;
+    };
+  }, [addToast, isFontsLoaded]);
+
+  // Only render the PDFDownloadLink on the client side and when fonts are loaded
   if (!isClient) {
     return (
-      <button className="bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md">
-        Loading PDF...
+      <button
+        className={`bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md inline-flex items-center justify-center ${className}`}
+        disabled
+      >
+        <LoadingSpinner size="small" text="" />
+        <span className="ml-2">Initializing...</span>
       </button>
     );
   }
@@ -458,18 +507,28 @@ export const DownloadPDFButton = ({
   return (
     <PDFDownloadLink
       document={<ResumePDF resumeData={resumeData} />}
-      fileName={`${resumeData.personalInfo.name.replace(
-        /\s+/g,
-        "_"
-      )}_Resume.pdf`}
-      className="bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md"
+      fileName={`${
+        resumeData.personalInfo.name.replace(/\s+/g, "_") || "Your"
+      }_Resume.pdf`}
+      className={`bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md inline-flex items-center justify-center ${className}`}
     >
       {({ loading, error }) => {
         if (error) {
           console.error("PDF generation error:", error);
+          addToast("Error generating PDF", "error");
           return "Error generating PDF";
         }
-        return loading ? "Preparing PDF..." : "Download PDF";
+
+        if (loading) {
+          return (
+            <>
+              <LoadingSpinner size="small" text="" />
+              <span className="ml-2">Preparing PDF...</span>
+            </>
+          );
+        }
+
+        return btnText || "Download PDF";
       }}
     </PDFDownloadLink>
   );

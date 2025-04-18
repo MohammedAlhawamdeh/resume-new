@@ -20,16 +20,17 @@ export default function PersonalInfoForm({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm mb-4 p-6">
+    <div>
       <h2 className="text-xl font-bold mb-4">Personal Information</h2>
+      <p className="text-gray-600 mb-4">
+        Start by adding your personal details. This information will appear in
+        the header of your resume.
+      </p>
       <form>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Full Name *
+            <label htmlFor="name" className="form-label">
+              Full Name <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -38,16 +39,14 @@ export default function PersonalInfoForm({
               value={personalInfo.name}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+              className="form-input"
+              placeholder="John Doe"
             />
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="title"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Job Title *
+            <label htmlFor="title" className="form-label">
+              Job Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -57,16 +56,13 @@ export default function PersonalInfoForm({
               onChange={handleChange}
               required
               placeholder="e.g. Full Stack Developer"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+              className="form-input"
             />
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Email *
+            <label htmlFor="email" className="form-label">
+              Email <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -75,16 +71,14 @@ export default function PersonalInfoForm({
               value={personalInfo.email}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+              placeholder="email@example.com"
+              className="form-input"
             />
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Phone *
+            <label htmlFor="phone" className="form-label">
+              Phone <span className="text-red-500">*</span>
             </label>
             <input
               type="tel"
@@ -93,16 +87,14 @@ export default function PersonalInfoForm({
               value={personalInfo.phone}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+              placeholder="+1 (555) 123-4567"
+              className="form-input"
             />
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="location"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Location *
+            <label htmlFor="location" className="form-label">
+              Location <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -112,15 +104,12 @@ export default function PersonalInfoForm({
               onChange={handleChange}
               required
               placeholder="City, State/Province"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+              className="form-input"
             />
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="linkedIn"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="linkedIn" className="form-label">
               LinkedIn URL
             </label>
             <input
@@ -130,15 +119,12 @@ export default function PersonalInfoForm({
               value={personalInfo.linkedIn || ""}
               onChange={handleChange}
               placeholder="https://linkedin.com/in/yourprofile"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+              className="form-input"
             />
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="website"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="website" className="form-label">
               Website/Portfolio
             </label>
             <input
@@ -148,16 +134,13 @@ export default function PersonalInfoForm({
               value={personalInfo.website || ""}
               onChange={handleChange}
               placeholder="https://your-website.com"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+              className="form-input"
             />
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="github"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Github
+            <label htmlFor="github" className="form-label">
+              GitHub
             </label>
             <input
               type="url"
@@ -166,8 +149,12 @@ export default function PersonalInfoForm({
               value={personalInfo.github || ""}
               onChange={handleChange}
               placeholder="https://github.com/your-username"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+              className="form-input"
             />
+            <small className="text-gray-500 mt-1 block">
+              Adding social links helps employers verify your work and connect
+              with you.
+            </small>
           </div>
         </div>
       </form>
