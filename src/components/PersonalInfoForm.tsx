@@ -44,6 +44,25 @@ export default function PersonalInfoForm({
 
           <div className="mb-4">
             <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Job Title *
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={personalInfo.title || ""}
+              onChange={handleChange}
+              required
+              placeholder="e.g. Full Stack Developer"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700 mb-1"
             >

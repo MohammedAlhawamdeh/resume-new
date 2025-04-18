@@ -4,6 +4,7 @@ export interface ResumeData {
     email: string;
     phone: string;
     location: string;
+    title: string;
     linkedIn?: string;
     website?: string;
     github?: string;

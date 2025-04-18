@@ -21,6 +21,7 @@ export default function ResumeBuilder() {
     personalInfo: {
       name: "MOHAMMED ALHAWAMDEH",
       email: "mohawamdehtech@gmail.com",
+      title: "Full Stack Developer",
       phone: "+905343359042",
       location: "Eskişehir, Türkiye",
       linkedIn: "https://www.linkedin.com/in/mohammed-alhawamdeh/",
@@ -283,6 +284,7 @@ export default function ResumeBuilder() {
       setResumeData({
         personalInfo: {
           name: "",
+          title: "",
           email: "",
           phone: "",
           location: "",

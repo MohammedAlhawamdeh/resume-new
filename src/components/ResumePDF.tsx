@@ -192,7 +192,7 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
             {resumeData.personalInfo.name}
           </Text>
           <Text style={{ fontSize: 14, fontWeight: "bold", marginBottom: 5 }}>
-            FULL STACK DEVELOPER
+            {resumeData.personalInfo.title || "YOUR JOB TITLE"}
           </Text>
 
           <View

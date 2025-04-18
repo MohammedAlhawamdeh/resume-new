@@ -404,7 +404,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
         {/* Header with Personal Information */}
         <header className="mb-4">
           <h1>{personalInfo.name || "YOUR NAME"}</h1>
-          <h2>FULL STACK DEVELOPER</h2>
+          <h2>{personalInfo.title || "YOUR JOB TITLE"}</h2>
           <div className="contact-info">
             {personalInfo.email && <span>{personalInfo.email}</span>}
             {personalInfo.email && personalInfo.phone && <span> | </span>}
