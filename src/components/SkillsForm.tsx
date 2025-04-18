@@ -55,7 +55,7 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
         <h2 className="text-xl font-bold text-gray-800">Skills</h2>
       </div>
 
-      {/* Skills list */}
+      {/* Skills list - redesigned to be simple and clean */}
       <div className="mb-4">
         {cleanSkills.length > 0 ? (
           <div className="flex flex-wrap gap-2 mb-5">
@@ -91,24 +91,24 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-md px-3 py-2 w-full group">
+                  <div className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-md px-3 py-2 w-full">
                     <span className="text-gray-700 text-sm">{skill}</span>
-                    <div className="flex gap-2 opacity-70 group-hover:opacity-100">
+                    <div className="flex gap-2">
                       <button
                         type="button"
                         onClick={() => startEditingSkill(index, skill)}
-                        className="text-gray-500 hover:text-vivid-orange p-1"
+                        className="text-vivid-orange bg-white p-1"
                         title="Edit skill"
                       >
-                        <FaEdit size={14} />
+                        <FaEdit size={12} />
                       </button>
                       <button
                         type="button"
                         onClick={() => removeSkill(index)}
-                        className="text-gray-500 hover:text-red-600 p-1"
+                        className="text-red-500 bg-white p-1"
                         title="Remove skill"
                       >
-                        <FaTrash size={14} />
+                        <FaTrash size={12} />
                       </button>
                     </div>
                   </div>
@@ -142,8 +142,9 @@ export default function SkillsForm({ skills, updateSkills }: SkillsFormProps) {
           onClick={addSkill}
           disabled={!newSkill.trim()}
           className="bg-vivid-orange hover:bg-opacity-90 disabled:bg-gray-300 text-white px-4 py-2 rounded-md flex items-center justify-center"
+          style={{ backgroundColor: "#FB5607", color: "white" }}
         >
-          <FaPlus size={14} className="mr-2" />
+          <FaPlus size={12} className="mr-2" />
           Add
         </button>
       </div>

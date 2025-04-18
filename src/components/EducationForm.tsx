@@ -96,7 +96,7 @@ export default function EducationForm({
                       handleChange(edu.id, "institution", e.target.value)
                     }
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
 
@@ -111,7 +111,7 @@ export default function EducationForm({
                       handleChange(edu.id, "location", e.target.value)
                     }
                     placeholder="City, State/Country"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
 
@@ -127,7 +127,7 @@ export default function EducationForm({
                     }
                     placeholder="e.g., Bachelor of Science, Master's"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
 
@@ -143,7 +143,7 @@ export default function EducationForm({
                     }
                     placeholder="e.g., Computer Science"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
               </div>
@@ -160,7 +160,7 @@ export default function EducationForm({
                       handleChange(edu.id, "startDate", e.target.value)
                     }
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
 
@@ -175,7 +175,7 @@ export default function EducationForm({
                       handleChange(edu.id, "endDate", e.target.value)
                     }
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
 
@@ -190,7 +190,7 @@ export default function EducationForm({
                       handleChange(edu.id, "gpa", e.target.value)
                     }
                     placeholder="e.g., 3.8/4.0"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
               </div>

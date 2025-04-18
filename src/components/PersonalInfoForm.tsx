@@ -38,7 +38,7 @@ export default function PersonalInfoForm({
               value={personalInfo.name}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
 
@@ -56,7 +56,7 @@ export default function PersonalInfoForm({
               value={personalInfo.email}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
 
@@ -74,7 +74,7 @@ export default function PersonalInfoForm({
               value={personalInfo.phone}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
 
@@ -93,7 +93,7 @@ export default function PersonalInfoForm({
               onChange={handleChange}
               required
               placeholder="City, State/Province"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
 
@@ -111,7 +111,7 @@ export default function PersonalInfoForm({
               value={personalInfo.linkedIn || ""}
               onChange={handleChange}
               placeholder="https://linkedin.com/in/yourprofile"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
 
@@ -129,7 +129,7 @@ export default function PersonalInfoForm({
               value={personalInfo.website || ""}
               onChange={handleChange}
               placeholder="https://your-website.com"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
 
@@ -147,7 +147,7 @@ export default function PersonalInfoForm({
               value={personalInfo.github || ""}
               onChange={handleChange}
               placeholder="https://github.com/your-username"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
         </div>

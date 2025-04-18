@@ -197,7 +197,7 @@ export default function WorkExperienceForm({
                     }
                     placeholder="e.g., Software Engineer"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
 
@@ -212,7 +212,7 @@ export default function WorkExperienceForm({
                       handleChange(exp.id, "company", e.target.value)
                     }
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
 
@@ -227,7 +227,7 @@ export default function WorkExperienceForm({
                       handleChange(exp.id, "location", e.target.value)
                     }
                     placeholder="City, State/Country or Remote"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
 
@@ -240,7 +240,7 @@ export default function WorkExperienceForm({
                       onChange={(e) =>
                         handleCurrentChange(exp.id, e.target.checked)
                       }
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-vivid-orange focus:ring-vivid-orange border-gray-300 rounded"
                     />
                     <span className="ml-2 text-sm text-gray-700">
                       I currently work here
@@ -261,7 +261,7 @@ export default function WorkExperienceForm({
                       handleChange(exp.id, "startDate", e.target.value)
                     }
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
 
@@ -277,7 +277,7 @@ export default function WorkExperienceForm({
                     }
                     disabled={exp.current}
                     required={!exp.current}
-                    className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
+                    className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent ${
                       exp.current ? "bg-gray-100" : ""
                     }`}
                   />
@@ -295,7 +295,7 @@ export default function WorkExperienceForm({
                   }
                   rows={3}
                   placeholder="Briefly describe your role and responsibilities"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                 />
               </div>
 
@@ -321,17 +321,17 @@ export default function WorkExperienceForm({
                               })
                             }
                             autoFocus
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                           />
                           <div className="mt-1 flex gap-2">
                             <button
-                              className="bg-green-600 hover:bg-green-700 text-white px-2 py-1 text-xs rounded flex items-center"
+                              className="bg-vivid-orange hover:bg-opacity-90 text-white px-2 py-1 text-xs rounded flex items-center"
                               onClick={saveEditedAchievement}
                             >
                               <FaCheck size={12} className="mr-1" /> Save
                             </button>
                             <button
-                              className="bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 text-xs rounded flex items-center"
+                              className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1 text-xs rounded flex items-center"
                               onClick={cancelEditingAchievement}
                             >
                               <FaTimes size={12} className="mr-1" /> Cancel
@@ -347,7 +347,7 @@ export default function WorkExperienceForm({
                         </div>
                         <div className="flex">
                           <button
-                            className="p-0 text-indigo-600 hover:text-indigo-800 ml-2 self-start mt-1 flex items-center justify-center min-w-5 h-5"
+                            className="p-0 text-vivid-orange bg-white ml-2 self-start mt-1 flex items-center justify-center min-w-5 h-5"
                             onClick={() =>
                               startEditingAchievement(
                                 exp.id,
@@ -357,14 +357,14 @@ export default function WorkExperienceForm({
                             }
                             title="Edit achievement"
                           >
-                            <FaEdit size={14} />
+                            <FaEdit size={12} />
                           </button>
                           <button
-                            className="p-0 text-red-500 hover:text-red-700 ml-2 self-start mt-1 flex items-center justify-center min-w-5 h-5"
+                            className="p-0 text-red-500 bg-white ml-2 self-start mt-1 flex items-center justify-center min-w-5 h-5"
                             onClick={() => removeAchievement(exp.id, index)}
                             title="Remove achievement"
                           >
-                            <FaTrash size={14} />
+                            <FaTrash size={12} />
                           </button>
                         </div>
                       </>
@@ -381,10 +381,10 @@ export default function WorkExperienceForm({
                     }
                     onKeyPress={(e) => handleAchievementKeyPress(e, exp.id)}
                     placeholder="Add a key achievement or responsibility"
-                    className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                   <button
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-r-md"
+                    className="bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-r-md"
                     onClick={() => addAchievement(exp.id)}
                   >
                     Add

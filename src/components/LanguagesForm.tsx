@@ -99,7 +99,7 @@ export default function LanguagesForm({
               onChange={(e) => setNewLanguage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Add a language (e.g., English, Spanish)"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
           <div className="md:col-span-4">
@@ -116,13 +116,13 @@ export default function LanguagesForm({
               onChange={(e) => setNewProficiency(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="e.g., Fluent, Native"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
         </div>
         <div className="mt-3">
           <button
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md"
+            className="bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md"
             onClick={handleAddLanguage}
           >
             Add Language
@@ -147,7 +147,7 @@ export default function LanguagesForm({
                     }
                     placeholder="Language name"
                     autoFocus
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
                 <div className="w-36 mr-2">
@@ -159,7 +159,7 @@ export default function LanguagesForm({
                         proficiency: e.target.value,
                       })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   >
                     <option value="">Proficiency (optional)</option>
                     <option value="Elementary">Elementary</option>
@@ -173,14 +173,14 @@ export default function LanguagesForm({
                 </div>
                 <div className="flex gap-1">
                   <button
-                    className="bg-green-600 hover:bg-green-700 text-white w-10 h-10 rounded-md flex items-center justify-center"
+                    className="bg-vivid-orange hover:bg-opacity-90 text-white w-10 h-10 rounded-md flex items-center justify-center"
                     onClick={saveEditedLanguage}
                     title="Save language"
                   >
                     <FaCheck size={14} />
                   </button>
                   <button
-                    className="bg-gray-500 hover:bg-gray-600 text-white w-10 h-10 rounded-md flex items-center justify-center"
+                    className="bg-gray-200 hover:bg-gray-300 text-gray-700 w-10 h-10 rounded-md flex items-center justify-center"
                     onClick={cancelEditingLanguage}
                     title="Cancel edit"
                   >
@@ -200,14 +200,14 @@ export default function LanguagesForm({
                 </div>
                 <div className="flex">
                   <button
-                    className="p-1 text-indigo-600 hover:text-indigo-800 flex items-center justify-center min-w-8 h-8"
+                    className="p-1 text-vivid-orange bg-white flex items-center justify-center min-w-8 h-8"
                     onClick={() => startEditingLanguage(index, language)}
                     title="Edit language"
                   >
                     <FaEdit size={14} />
                   </button>
                   <button
-                    className="p-1 text-red-500 hover:text-red-700 flex items-center justify-center min-w-8 h-8"
+                    className="p-1 text-red-500 bg-white flex items-center justify-center min-w-8 h-8"
                     onClick={() => handleRemoveLanguage(language.id)}
                     title="Remove language"
                   >

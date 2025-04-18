@@ -112,7 +112,7 @@ export default function CertificationsForm({
               onChange={(e) => setNewCertification(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="e.g., Advanced React and Redux"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
           <div>
@@ -129,7 +129,7 @@ export default function CertificationsForm({
               onChange={(e) => setNewIssuer(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="e.g., Udemy, Microsoft"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
         </div>
@@ -148,13 +148,13 @@ export default function CertificationsForm({
               onChange={(e) => setNewDate(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="e.g., 2023"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
             />
           </div>
         </div>
         <div className="mt-3">
           <button
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md"
+            className="bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md"
             onClick={handleAddCertification}
           >
             Add Certification
@@ -180,7 +180,7 @@ export default function CertificationsForm({
                     placeholder="e.g., AWS Certified Solutions Architect"
                     required
                     autoFocus
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
                 <div className="mb-2">
@@ -198,7 +198,7 @@ export default function CertificationsForm({
                     }
                     placeholder="e.g., Amazon Web Services"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
                 <div className="mb-2">
@@ -214,18 +214,18 @@ export default function CertificationsForm({
                         date: e.target.value,
                       })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
                   />
                 </div>
                 <div className="flex gap-2">
                   <button
-                    className="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1.5 rounded flex items-center"
+                    className="bg-vivid-orange hover:bg-opacity-90 text-white text-sm px-3 py-1.5 rounded flex items-center"
                     onClick={saveEditedCertification}
                   >
                     <FaCheck size={12} className="mr-1" /> Save
                   </button>
                   <button
-                    className="bg-gray-500 hover:bg-gray-600 text-white text-sm px-3 py-1.5 rounded flex items-center"
+                    className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm px-3 py-1.5 rounded flex items-center"
                     onClick={cancelEditingCertification}
                   >
                     <FaTimes size={12} className="mr-1" /> Cancel
@@ -244,18 +244,18 @@ export default function CertificationsForm({
                   </div>
                   <div className="flex">
                     <button
-                      className="p-1 text-indigo-600 hover:text-indigo-800 flex items-center justify-center min-w-8 h-8"
+                      className="p-1 text-vivid-orange bg-white flex items-center justify-center min-w-8 h-8"
                       onClick={() => startEditingCertification(index, cert)}
                       title="Edit certification"
                     >
-                      <FaEdit size={14} />
+                      <FaEdit size={12} />
                     </button>
                     <button
-                      className="p-1 text-red-500 hover:text-red-700 flex items-center justify-center min-w-8 h-8"
+                      className="p-1 text-red-500 bg-white flex items-center justify-center min-w-8 h-8"
                       onClick={() => handleRemoveCertification(cert.id)}
                       title="Remove certification"
                     >
-                      <FaTrash size={14} />
+                      <FaTrash size={12} />
                     </button>
                   </div>
                 </div>

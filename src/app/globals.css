@@ -2,10 +2,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0d1b2a; /* Oxford Blue */
+  --oxford-blue: #0d1b2a;
+  --vivid-orange: #fb5607;
+  --background: var(--oxford-blue);
   --foreground: #ffffff;
-  --primary: #fb5607; /* Vivid Orange */
-  --primary-hover: #e04e06; /* Slightly darker Vivid Orange for hover states */
+  --primary: var(--vivid-orange);
+  --primary-hover: #e04e06;
   --gray-light: #f8f9fa;
   --gray-medium: #dee2e6;
   --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
@@ -16,6 +18,62 @@ body {
   font-family: var(--font-sans);
   background-color: rgb(249 250 251); /* bg-gray-50 */
   color: rgb(17 24 39); /* text-gray-900 */
+}
+
+/* Direct utility classes to override Tailwind if needed */
+.bg-vivid-orange {
+  background-color: var(--vivid-orange) !important;
+}
+
+.text-vivid-orange {
+  color: var(--vivid-orange) !important;
+}
+
+.border-vivid-orange {
+  border-color: var(--vivid-orange) !important;
+}
+
+.bg-oxford-blue {
+  background-color: var(--oxford-blue) !important;
+}
+
+.text-oxford-blue {
+  color: var(--oxford-blue) !important;
+}
+
+/* Focus ring utilities */
+.focus\:ring-vivid-orange:focus {
+  --tw-ring-color: var(--vivid-orange) !important;
+}
+
+/* Global button styling */
+button.primary,
+.primary-button,
+.bg-vivid-orange {
+  background-color: var(--vivid-orange) !important;
+  color: white !important;
+  border-radius: 0.375rem;
+}
+
+button.primary:hover,
+.primary-button:hover,
+.bg-vivid-orange:hover {
+  background-color: var(--primary-hover) !important;
+}
+
+/* Icon styling */
+button.icon-button {
+  background-color: transparent !important;
+}
+
+button.delete-icon {
+  color: #ff0000 !important;
+  background-color: white !important;
+}
+
+button.edit-icon {
+  color: var(--primary) !important;
+  background-color: white !important;
 }
 
 /* ATS-friendly print styles */

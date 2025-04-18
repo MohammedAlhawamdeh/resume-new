@@ -11,8 +11,8 @@ import SkillsForm from "@/components/SkillsForm";
 import LanguagesForm from "@/components/LanguagesForm";
 import CertificationsForm from "@/components/CertificationsForm";
 import ResumePreview from "@/components/ResumePreview";
-import ATSTips from "@/components/ATSTips";
-import JobDescriptionAnalyzer from "@/components/JobDescriptionAnalyzer";
+// Removed ATSTips import
+// Removed JobDescriptionAnalyzer import
 import { DownloadPDFButton } from "@/components/ResumePDF";
 
 export default function ResumeBuilder() {
@@ -308,7 +308,8 @@ export default function ResumeBuilder() {
             <div className="flex items-center">
               <DownloadPDFButton resumeData={resumeData} />
               <button
-                className="ml-2 px-3 py-1.5 text-sm border border-red-500 text-red-500 rounded hover:bg-red-50 transition-colors"
+                className="ml-2 bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md"
+                style={{ backgroundColor: "#FB5607", color: "white" }}
                 onClick={handleReset}
               >
                 Reset
@@ -319,10 +320,7 @@ export default function ResumeBuilder() {
       </header>
 
       <div className="container mx-auto px-4 py-4">
-        {/* ATS Tips at the top of the page */}
-        <div className="mb-4">
-          <ATSTips />
-        </div>
+        {/* Removed ATS Tips section */}
 
         <div className="flex flex-col lg:flex-row gap-4">
           {/* Form Column */}
@@ -363,8 +361,7 @@ export default function ResumeBuilder() {
                 updateCertifications={updateCertifications}
               />
 
-              <JobDescriptionAnalyzer resumeData={resumeData} />
-              {/* Removed ATSTips from here */}
+              {/* Removed JobDescriptionAnalyzer component */}
             </div>
           </div>
 

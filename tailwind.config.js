@@ -1,6 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  safelist: [
+    "bg-vivid-orange",
+    "text-vivid-orange",
+    "focus:ring-vivid-orange",
+    "hover:text-vivid-orange",
+    "hover:bg-opacity-90",
+    "bg-oxford-blue",
+    "text-oxford-blue",
+    "border-vivid-orange",
+  ],
   theme: {
     extend: {
       colors: {

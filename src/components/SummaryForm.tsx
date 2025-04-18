@@ -29,12 +29,11 @@ export default function SummaryForm({
           onChange={handleChange}
           rows={4}
           placeholder="Brief overview of your professional background, key strengths, and career goals (2-4 sentences recommended)"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vivid-orange focus:border-transparent"
         />
         <p className="mt-2 text-sm text-gray-500">
           Tip: Tailor your summary to highlight relevant skills and experience
-          for the position you're applying to. Include keywords from the job
-          description for better ATS performance.
+          for the position you're applying to.
         </p>
       </div>
     </div>
