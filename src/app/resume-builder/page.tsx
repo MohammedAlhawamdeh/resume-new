@@ -11,6 +11,7 @@ import EducationForm from "@/components/EducationForm";
 import SkillsForm from "@/components/SkillsForm";
 import LanguagesForm from "@/components/LanguagesForm";
 import CertificationsForm from "@/components/CertificationsForm";
+import CustomSectionsForm from "@/components/CustomSectionsForm";
 import ResumePreview from "@/components/ResumePreview";
 import StepIndicator from "@/components/StepIndicator";
 import { DownloadPDFButton } from "@/components/ResumePDF";
@@ -234,6 +235,7 @@ export default function ResumeBuilder() {
         date: "2022",
       },
     ],
+    customSections: [],
   });
 
   const { addToast } = useToast();
@@ -343,6 +345,12 @@ export default function ResumeBuilder() {
     setResumeData((prev) => ({ ...prev, certifications }));
   };
 
+  const updateCustomSections = (
+    customSections: ResumeData["customSections"]
+  ) => {
+    setResumeData((prev) => ({ ...prev, customSections }));
+  };
+
   const handleReset = () => {
     if (
       confirm(
@@ -366,6 +374,7 @@ export default function ResumeBuilder() {
         skills: [],
         languages: [],
         certifications: [],
+        customSections: [],
       });
       setCurrentStep(0);
       setVisitedSteps(Array(steps.length).fill(false));
@@ -469,6 +478,10 @@ export default function ResumeBuilder() {
             <CertificationsForm
               certifications={resumeData.certifications}
               updateCertifications={updateCertifications}
+            />
+            <CustomSectionsForm
+              customSections={resumeData.customSections}
+              updateCustomSections={updateCustomSections}
             />
           </div>
         );

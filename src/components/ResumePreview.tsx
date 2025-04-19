@@ -16,6 +16,7 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
     skills,
     languages,
     certifications,
+    customSections,
   } = resumeData;
 
   // Format date to MM/YYYY format
@@ -226,6 +227,35 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
           line-height: 1.15;
           text-align: justify;
           font-size: 11pt;
+        }
+
+        /* Rich text content styling */
+        #resume-container .rich-text-content {
+          font-size: 11pt;
+          line-height: 1.25;
+        }
+        
+        #resume-container .rich-text-content ul,
+        #resume-container .rich-text-content ol {
+          padding-left: 0.3in;
+          margin: 6pt 0 10pt 0;
+        }
+        
+        #resume-container .rich-text-content li {
+          margin-bottom: 4pt;
+        }
+        
+        #resume-container .rich-text-content p {
+          margin-bottom: 6pt;
+        }
+        
+        #resume-container .rich-text-content a {
+          color: #0366d6;
+          text-decoration: none;
+        }
+        
+        #resume-container .rich-text-content a:hover {
+          text-decoration: underline;
         }
 
         /* Print styles that EXACTLY match ResumePDF.tsx */
@@ -547,6 +577,41 @@ export default function ResumePreview({ resumeData }: ResumePreviewProps) {
             </ul>
           </section>
         )}
+
+        {/* Custom Sections */}
+        {customSections?.length > 0 &&
+          customSections.map(
+            (section) =>
+              section.items.length > 0 && (
+                <section key={section.id} className="section">
+                  <h3>{section.title.toUpperCase()}</h3>
+                  <div className="section-divider"></div>
+                  {section.items.map((item) => (
+                    <div key={item.id} className="mb-3">
+                      {Object.entries(item.fields).map(
+                        ([fieldName, fieldValue], index) =>
+                          fieldValue && (
+                            <div key={fieldName}>
+                              {fieldName === "content" ? (
+                                <div 
+                                  dangerouslySetInnerHTML={{ __html: fieldValue }}
+                                  className="rich-text-content"
+                                />
+                              ) : index === 0 ? (
+                                <div className="font-bold">{fieldValue}</div>
+                              ) : fieldName.toLowerCase().includes("date") ? (
+                                <div className="edu-details">{fieldValue}</div>
+                              ) : (
+                                <div>{fieldValue}</div>
+                              )}
+                            </div>
+                          )
+                      )}
+                    </div>
+                  ))}
+                </section>
+              )
+          )}
       </div>
     </>
   );

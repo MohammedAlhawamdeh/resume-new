@@ -15,6 +15,7 @@ export interface ResumeData {
   skills: string[];
   languages: Language[];
   certifications: Certification[];
+  customSections: CustomSection[];
 }
 
 export interface WorkExperience {
@@ -51,4 +52,15 @@ export interface Certification {
   name: string;
   issuer: string;
   date: string;
+}
+
+export interface CustomSection {
+  id: string;
+  title: string;
+  items: CustomSectionItem[];
+}
+
+export interface CustomSectionItem {
+  id: string;
+  fields: { [key: string]: string };
 }
