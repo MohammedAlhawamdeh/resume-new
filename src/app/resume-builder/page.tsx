@@ -471,18 +471,43 @@ export default function ResumeBuilder() {
       case 5:
         return (
           <div className="space-y-6">
-            <LanguagesForm
-              languages={resumeData.languages}
-              updateLanguages={updateLanguages}
-            />
-            <CertificationsForm
-              certifications={resumeData.certifications}
-              updateCertifications={updateCertifications}
-            />
-            <CustomSectionsForm
-              customSections={resumeData.customSections}
-              updateCustomSections={updateCustomSections}
-            />
+            <div className="border-l-4 border-blue-500 pl-4 py-2 mb-4 bg-blue-50 rounded-r-md">
+              <h2 className="text-lg font-semibold text-blue-800">Additional Information</h2>
+              <p className="text-sm text-blue-700">Add languages, certifications, and any custom sections to enhance your resume</p>
+            </div>
+            
+            {/* Languages section with distinct visual styling */}
+            <div className="bg-white rounded-lg shadow-sm p-5 border-l-4 border-indigo-400">
+              <h3 className="text-lg font-semibold mb-3 flex items-center">
+                <span className="mr-2">🌐</span> Languages
+              </h3>
+              <LanguagesForm
+                languages={resumeData.languages}
+                updateLanguages={updateLanguages}
+              />
+            </div>
+            
+            {/* Certifications section with distinct visual styling */}
+            <div className="bg-white rounded-lg shadow-sm p-5 border-l-4 border-green-400">
+              <h3 className="text-lg font-semibold mb-3 flex items-center">
+                <span className="mr-2">🏆</span> Certifications
+              </h3>
+              <CertificationsForm
+                certifications={resumeData.certifications}
+                updateCertifications={updateCertifications}
+              />
+            </div>
+            
+            {/* Custom Sections with distinct visual styling */}
+            <div className="bg-white rounded-lg shadow-sm p-5 border-l-4 border-orange-400">
+              <h3 className="text-lg font-semibold mb-3 flex items-center">
+                <span className="mr-2">📝</span> Custom Sections
+              </h3>
+              <CustomSectionsForm
+                customSections={resumeData.customSections}
+                updateCustomSections={updateCustomSections}
+              />
+            </div>
           </div>
         );
       case 6:
