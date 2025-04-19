@@ -12,43 +12,42 @@ import { ResumeData } from "@/types/resume";
 import LoadingSpinner from "./LoadingSpinner";
 import { useToast } from "./ToastContext";
 
-// Register standard fonts with unicode support for Turkish characters
-Font.register({
-  family: "Roboto",
-  fonts: [
-    {
-      src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf",
-    },
-    {
-      src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf",
-      fontWeight: "bold",
-    },
-    {
-      src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-italic-webfont.ttf",
-      fontStyle: "italic",
-    },
-  ],
-});
+// Move font registration inside a function so it's not executed on module load
+const registerFonts = () => {
+  // Check if fonts are already registered to avoid duplicates
+  if (!Font.getRegisteredFontFamilies().includes("Roboto")) {
+    // Register standard fonts with unicode support for Turkish characters
+    Font.register({
+      family: "Roboto",
+      fonts: [
+        { src: "/fonts/roboto-regular.ttf" },
+        { src: "/fonts/roboto-bold.ttf", fontWeight: "bold" },
+        { src: "/fonts/roboto-italic.ttf", fontStyle: "italic" },
+      ],
+    });
+  }
 
-// Preload fonts to avoid async loading issues
-Font.register({
-  family: "JetBrainsMono",
-  fonts: [
-    {
-      src: "/fonts/JetBrainsMono-Regular.ttf",
-      fontWeight: 400,
-      fontStyle: "normal",
-    },
-    {
-      src: "/fonts/JetBrainsMono-Bold.ttf",
-      fontWeight: "bold",
-      fontStyle: "normal",
-    },
-  ],
-});
+  if (!Font.getRegisteredFontFamilies().includes("JetBrainsMono")) {
+    Font.register({
+      family: "JetBrainsMono",
+      fonts: [
+        {
+          src: "/fonts/JetBrainsMono-Regular.ttf",
+          fontWeight: 400,
+          fontStyle: "normal",
+        },
+        {
+          src: "/fonts/JetBrainsMono-Bold.ttf",
+          fontWeight: "bold",
+          fontStyle: "normal",
+        },
+      ],
+    });
+  }
 
-// Register hyphenation callback for better text wrapping
-Font.registerHyphenationCallback((word) => [word]);
+  // Register hyphenation callback for better text wrapping
+  Font.registerHyphenationCallback((word) => [word]);
+};
 
 // Minimal styling for basic structure only
 const styles = StyleSheet.create({
@@ -179,56 +178,62 @@ const groupSkillsByCategory = (skillList: string[]) => {
 // Simple HTML parsing for PDF content
 const parseHTML = (htmlString: string) => {
   if (!htmlString) return [];
-  
+
   // Basic parsing to handle common rich text elements
   // This is a simple approach that handles common HTML tags from the rich text editor
-  
+
   try {
     // Replace common HTML tags with React-PDF compatible components
     // Bold text
     const boldMatches = htmlString.match(/<strong>(.*?)<\/strong>/g) || [];
     for (const match of boldMatches) {
       const content = match.replace(/<strong>(.*?)<\/strong>/, "$1");
-      htmlString = htmlString.replace(match, `__BOLD_START__${content}__BOLD_END__`);
+      htmlString = htmlString.replace(
+        match,
+        `__BOLD_START__${content}__BOLD_END__`
+      );
     }
-    
+
     // Italic text
     const italicMatches = htmlString.match(/<em>(.*?)<\/em>/g) || [];
     for (const match of italicMatches) {
       const content = match.replace(/<em>(.*?)<\/em>/, "$1");
-      htmlString = htmlString.replace(match, `__ITALIC_START__${content}__ITALIC_END__`);
+      htmlString = htmlString.replace(
+        match,
+        `__ITALIC_START__${content}__ITALIC_END__`
+      );
     }
-    
+
     // Links
     const linkMatches = htmlString.match(/<a href="(.*?)">(.*?)<\/a>/g) || [];
     for (const match of linkMatches) {
       const content = match.replace(/<a href="(.*?)">(.*?)<\/a>/, "$2");
       htmlString = htmlString.replace(match, content);
     }
-    
+
     // Remove paragraph tags but keep line breaks
     htmlString = htmlString.replace(/<p>/g, "").replace(/<\/p>/g, "\n\n");
-    
+
     // Handle lists
     htmlString = htmlString.replace(/<ul>/g, "").replace(/<\/ul>/g, "");
     htmlString = htmlString.replace(/<ol>/g, "").replace(/<\/ol>/g, "");
     htmlString = htmlString.replace(/<li>/g, "• ").replace(/<\/li>/g, "\n");
-    
+
     // Remove any remaining HTML tags
     htmlString = htmlString.replace(/<[^>]*>/g, "");
-    
+
     // Split into paragraphs
-    const paragraphs = htmlString.split("\n\n").filter(p => p.trim());
-    
+    const paragraphs = htmlString.split("\n\n").filter((p) => p.trim());
+
     // Generate React-PDF components
     return paragraphs.map((paragraph, i) => {
       let parts = [];
       let currentIndex = 0;
-      
+
       // Process bold sections
       const boldPattern = /__BOLD_START__(.*?)__BOLD_END__/g;
       let boldMatch;
-      
+
       while ((boldMatch = boldPattern.exec(paragraph)) !== null) {
         // Add text before the bold part
         if (boldMatch.index > currentIndex) {
@@ -238,22 +243,26 @@ const parseHTML = (htmlString: string) => {
             </Text>
           );
         }
-        
+
         // Add the bold part
         parts.push(
-          <Text key={`bold-${i}-${boldMatch.index}`} style={{ fontWeight: "bold" }}>
+          <Text
+            key={`bold-${i}-${boldMatch.index}`}
+            style={{ fontWeight: "bold" }}
+          >
             {boldMatch[1]}
           </Text>
         );
-        
+
         currentIndex = boldMatch.index + boldMatch[0].length;
       }
-      
+
       // Process italic sections - added handling for italic text markers
-      if (currentIndex === 0) { // Only process if bold processing didn't change anything
+      if (currentIndex === 0) {
+        // Only process if bold processing didn't change anything
         const italicPattern = /__ITALIC_START__(.*?)__ITALIC_END__/g;
         let italicMatch;
-        
+
         while ((italicMatch = italicPattern.exec(paragraph)) !== null) {
           // Add text before the italic part
           if (italicMatch.index > currentIndex) {
@@ -263,18 +272,21 @@ const parseHTML = (htmlString: string) => {
               </Text>
             );
           }
-          
+
           // Add the italic part
           parts.push(
-            <Text key={`italic-${i}-${italicMatch.index}`} style={{ fontStyle: "italic" }}>
+            <Text
+              key={`italic-${i}-${italicMatch.index}`}
+              style={{ fontStyle: "italic" }}
+            >
               {italicMatch[1]}
             </Text>
           );
-          
+
           currentIndex = italicMatch.index + italicMatch[0].length;
         }
       }
-      
+
       // Add remaining text
       if (currentIndex < paragraph.length) {
         parts.push(
@@ -283,38 +295,50 @@ const parseHTML = (htmlString: string) => {
           </Text>
         );
       }
-      
+
       // If there were no special parts, just return the paragraph
       if (parts.length === 0) {
         // Check if the paragraph contains any formatting markers
-        if (paragraph.includes('__ITALIC_START__')) {
+        if (paragraph.includes("__ITALIC_START__")) {
           // Clean up the markers and render with italic style
           const cleanText = paragraph
-            .replace(/__ITALIC_START__/g, '')
-            .replace(/__ITALIC_END__/g, '');
-          parts.push(<Text key={`text-${i}-0`} style={{ fontStyle: "italic" }}>{cleanText}</Text>);
-        } else if (paragraph.includes('__BOLD_START__')) {
+            .replace(/__ITALIC_START__/g, "")
+            .replace(/__ITALIC_END__/g, "");
+          parts.push(
+            <Text key={`text-${i}-0`} style={{ fontStyle: "italic" }}>
+              {cleanText}
+            </Text>
+          );
+        } else if (paragraph.includes("__BOLD_START__")) {
           // Clean up the markers and render with bold style
           const cleanText = paragraph
-            .replace(/__BOLD_START__/g, '')
-            .replace(/__BOLD_END__/g, '');
-          parts.push(<Text key={`text-${i}-0`} style={{ fontWeight: "bold" }}>{cleanText}</Text>);
+            .replace(/__BOLD_START__/g, "")
+            .replace(/__BOLD_END__/g, "");
+          parts.push(
+            <Text key={`text-${i}-0`} style={{ fontWeight: "bold" }}>
+              {cleanText}
+            </Text>
+          );
         } else {
           // No formatting needed
           parts.push(<Text key={`text-${i}-0`}>{paragraph}</Text>);
         }
       }
-      
+
       // For bullet points
       if (paragraph.trim().startsWith("• ")) {
         return (
-          <View key={`para-${i}`} style={{ flexDirection: "row", marginBottom: 5 }} wrap={false}>
+          <View
+            key={`para-${i}`}
+            style={{ flexDirection: "row", marginBottom: 5 }}
+            wrap={false}
+          >
             <Text style={styles.bullet}>•</Text>
             <View style={styles.bulletText}>{parts}</View>
           </View>
         );
       }
-      
+
       return (
         <Text key={`para-${i}`} style={{ marginBottom: 3 }}>
           {parts}
@@ -586,7 +610,7 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
                       {Object.entries(item.fields).map(
                         ([fieldName, fieldValue]) => {
                           if (!fieldValue) return null;
-                          
+
                           // Special handling for content field with rich text
                           if (fieldName === "content") {
                             return (
@@ -595,7 +619,7 @@ const ResumePDF = ({ resumeData }: { resumeData: ResumeData }) => {
                               </View>
                             );
                           }
-                          
+
                           // Standard fields
                           return (
                             <Text
@@ -645,64 +669,28 @@ export const DownloadPDFButton = ({
     let isMounted = true; // Add this flag to prevent state updates if component unmounts
     setIsClient(true);
 
-    // Preload fonts to avoid async loading issues
-    const preloadFonts = async () => {
-      try {
-        // Skip if fonts are already loaded
-        if (isFontsLoaded) return;
-
-        // Force preload of fonts
-        const fontUrls = [
-          "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf",
-          "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf",
-          "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-italic-webfont.ttf",
-        ];
-
-        // Using Promise.allSettled instead of Promise.all to handle partial failures
-        const results = await Promise.allSettled(
-          fontUrls.map((url) =>
-            fetch(url).then((res) => {
-              if (!res.ok) throw new Error(`Failed to load font: ${url}`);
-              return res.blob();
-            })
-          )
-        );
-
-        // Log any failures but continue
-        results.forEach((result, index) => {
-          if (result.status === "rejected") {
-            console.warn(
-              `Font load warning for ${fontUrls[index]}:`,
-              result.reason
-            );
-          }
-        });
-
-        // Only update state if component is still mounted
-        if (isMounted) {
-          setIsFontsLoaded(true);
-        }
-      } catch (err) {
-        console.error("Font preloading error:", err);
-        // Only update state if component is still mounted
-        if (isMounted) {
-          addToast("Failed to load fonts for PDF generation", "error");
-          // Still set fonts loaded to true to avoid getting stuck
-          setIsFontsLoaded(true);
-        }
+    // Register fonts when the component mounts
+    try {
+      // Register fonts only once
+      registerFonts();
+      setIsFontsLoaded(true);
+    } catch (err) {
+      console.error("Font registration error:", err);
+      if (isMounted) {
+        addToast("Failed to prepare PDF generation", "error");
+        // Still set fonts loaded to true to avoid getting stuck
+        setIsFontsLoaded(true);
       }
-    };
-
-    preloadFonts();
+    }
 
     // Add cleanup function
     return () => {
       isMounted = false;
     };
-  }, [addToast, isFontsLoaded]);
+  }, [addToast]);
 
   // Only render the PDFDownloadLink on the client side and when fonts are loaded
-  if (!isClient) {
+  if (!isClient || !isFontsLoaded) {
     return (
       <button
         className={`bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md inline-flex items-center justify-center ${className}`}

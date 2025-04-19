@@ -30,27 +30,33 @@ export default function CustomSectionsForm({
 }: CustomSectionsFormProps) {
   // Form state
   const [newSectionTitle, setNewSectionTitle] = useState("");
-  const [expandedSectionId, setExpandedSectionId] = useState<string | null>(null);
-  
+  const [expandedSectionId, setExpandedSectionId] = useState<string | null>(
+    null
+  );
+
   // Editing state - separate state variables for title and content editing
-  const [editingSectionTitleId, setEditingSectionTitleId] = useState<string | null>(null);
-  const [editingSectionContentId, setEditingSectionContentId] = useState<string | null>(null);
+  const [editingSectionTitleId, setEditingSectionTitleId] = useState<
+    string | null
+  >(null);
+  const [editingSectionContentId, setEditingSectionContentId] = useState<
+    string | null
+  >(null);
   const [editingSectionTitle, setEditingSectionTitle] = useState("");
   const [editingContent, setEditingContent] = useState("");
-  
+
   // Form validation
   const [titleError, setTitleError] = useState("");
-  
+
   // Constants
   const MAX_SECTION_TITLE_LENGTH = 100;
-  
+
   // Use the toast context
   const { addToast } = useToast();
 
   // Common section templates
   const sectionTemplates = [
     { title: "Projects", icon: "🚀" },
-    { title: "Certifications", icon: "🏆" },
+    { title: "Conferences", icon: "🏆" },
     { title: "Publications", icon: "📝" },
     { title: "Volunteering", icon: "🤝" },
     { title: "Awards", icon: "🎖️" },
@@ -59,18 +65,14 @@ export default function CustomSectionsForm({
   // Quill editor modules and formats configuration
   const modules = {
     toolbar: [
-      ['bold', 'italic', 'underline'],
-      [{'list': 'ordered'}, {'list': 'bullet'}],
-      ['link'],
-      ['clean']
+      ["bold", "italic", "underline"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link"],
+      ["clean"],
     ],
   };
-  
-  const formats = [
-    'bold', 'italic', 'underline',
-    'list', 'bullet', 
-    'link'
-  ];
+
+  const formats = ["bold", "italic", "underline", "list", "bullet", "link"];
 
   // Add a new custom section with an empty content
   const addCustomSection = () => {
@@ -78,49 +80,55 @@ export default function CustomSectionsForm({
       setTitleError("Section title is required");
       return;
     }
-    
+
     if (newSectionTitle.length > MAX_SECTION_TITLE_LENGTH) {
-      setTitleError(`Section title must be ${MAX_SECTION_TITLE_LENGTH} characters or less`);
+      setTitleError(
+        `Section title must be ${MAX_SECTION_TITLE_LENGTH} characters or less`
+      );
       return;
     }
-    
+
     setTitleError("");
     const newSectionId = uuidv4();
-    
+
     // Create a new section with empty content
     const newSection: CustomSection = {
       id: newSectionId,
       title: newSectionTitle.trim(),
-      items: [{
-        id: uuidv4(),
-        fields: {
-          content: "" // Single rich text content field
-        }
-      }]
+      items: [
+        {
+          id: uuidv4(),
+          fields: {
+            content: "", // Single rich text content field
+          },
+        },
+      ],
     };
-    
+
     updateCustomSections([...customSections, newSection]);
     setNewSectionTitle("");
     setExpandedSectionId(newSectionId); // Auto-expand the new section
     addToast("New section added", "success");
   };
-  
+
   // Create a section from template
   const createSectionFromTemplate = (templateTitle: string) => {
     const newSectionId = uuidv4();
-    
+
     // Create a new section with the template title and empty content
     const newSection: CustomSection = {
       id: newSectionId,
       title: templateTitle,
-      items: [{
-        id: uuidv4(),
-        fields: {
-          content: "" // Single rich text content field
-        }
-      }]
+      items: [
+        {
+          id: uuidv4(),
+          fields: {
+            content: "", // Single rich text content field
+          },
+        },
+      ],
     };
-    
+
     updateCustomSections([...customSections, newSection]);
     setExpandedSectionId(newSectionId); // Auto-expand the new section
     addToast(`${templateTitle} section added`, "success");
@@ -155,12 +163,15 @@ export default function CustomSectionsForm({
       addToast("Section title cannot be empty", "error");
       return;
     }
-    
+
     if (editingSectionTitle.length > MAX_SECTION_TITLE_LENGTH) {
-      addToast(`Section title must be ${MAX_SECTION_TITLE_LENGTH} characters or less`, "error");
+      addToast(
+        `Section title must be ${MAX_SECTION_TITLE_LENGTH} characters or less`,
+        "error"
+      );
       return;
     }
-    
+
     if (editingSectionTitleId) {
       const updatedSections = customSections.map((section) =>
         section.id === editingSectionTitleId
@@ -175,43 +186,45 @@ export default function CustomSectionsForm({
 
   // Start editing content for a section
   const startEditingContent = (sectionId: string) => {
-    const section = customSections.find(s => s.id === sectionId);
+    const section = customSections.find((s) => s.id === sectionId);
     if (!section || section.items.length === 0) return;
-    
+
     // Get the content from the first item (we only use one item per section in this simplified model)
     const content = section.items[0].fields.content || "";
     setEditingContent(content);
     setEditingSectionContentId(sectionId);
   };
-  
+
   // Save edited content
   const saveEditedContent = (sectionId: string) => {
-    const section = customSections.find(s => s.id === sectionId);
+    const section = customSections.find((s) => s.id === sectionId);
     if (!section || section.items.length === 0) return;
-    
+
     const itemId = section.items[0].id;
-    
+
     const updatedSections = customSections.map((section) => {
       if (section.id === sectionId) {
         return {
           ...section,
-          items: [{
-            id: itemId,
-            fields: {
-              content: editingContent
-            }
-          }]
+          items: [
+            {
+              id: itemId,
+              fields: {
+                content: editingContent,
+              },
+            },
+          ],
         };
       }
       return section;
     });
-    
+
     updateCustomSections(updatedSections);
     setEditingSectionContentId(null);
     setEditingContent("");
     addToast("Section content updated", "success");
   };
-  
+
   // Cancel editing content
   const cancelEditingContent = () => {
     setEditingSectionContentId(null);
@@ -222,7 +235,8 @@ export default function CustomSectionsForm({
     <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
       <h3 className="text-lg font-semibold mb-3">Custom Sections</h3>
       <p className="text-gray-600 mb-4">
-        Add custom sections to highlight skills, projects, or achievements that don't fit in the standard categories.
+        Add custom sections to highlight skills, projects, or achievements that
+        don't fit in the standard categories.
       </p>
 
       {/* Quick templates for common section types */}
@@ -254,7 +268,9 @@ export default function CustomSectionsForm({
               if (titleError) setTitleError("");
             }}
             placeholder="Enter section title (e.g., Leadership, Patents)"
-            className={`form-input flex-grow ${titleError ? 'border-red-500' : ''}`}
+            className={`form-input flex-grow ${
+              titleError ? "border-red-500" : ""
+            }`}
             onKeyPress={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
@@ -270,7 +286,9 @@ export default function CustomSectionsForm({
             <FaPlus size={12} className="mr-2" /> Add Section
           </button>
         </div>
-        {titleError && <p className="text-red-500 text-xs mt-1">{titleError}</p>}
+        {titleError && (
+          <p className="text-red-500 text-xs mt-1">{titleError}</p>
+        )}
       </div>
 
       {/* List of existing custom sections */}
@@ -283,9 +301,11 @@ export default function CustomSectionsForm({
               className="mb-4 border border-gray-200 rounded-md overflow-hidden"
             >
               {/* Section header */}
-              <div 
+              <div
                 className={`flex justify-between items-center p-3 cursor-pointer ${
-                  expandedSectionId === section.id ? 'bg-gray-100' : 'bg-gray-50'
+                  expandedSectionId === section.id
+                    ? "bg-gray-100"
+                    : "bg-gray-50"
                 }`}
                 onClick={() => toggleSection(section.id)}
               >
@@ -391,11 +411,15 @@ export default function CustomSectionsForm({
                         <div className="font-medium w-full">
                           {section.items[0].fields.content ? (
                             <div
-                              dangerouslySetInnerHTML={{ __html: section.items[0].fields.content }}
+                              dangerouslySetInnerHTML={{
+                                __html: section.items[0].fields.content,
+                              }}
                               className="prose max-w-none"
                             />
                           ) : (
-                            <span className="text-gray-400">No content added</span>
+                            <span className="text-gray-400">
+                              No content added
+                            </span>
                           )}
                         </div>
                         <div className="flex-shrink-0 ml-2">
@@ -418,7 +442,9 @@ export default function CustomSectionsForm({
       ) : (
         <div className="bg-gray-50 border border-dashed border-gray-300 rounded-md p-6 text-center text-gray-500 mb-4">
           <p className="mb-2">No custom sections added yet</p>
-          <p className="text-sm">Use the Quick Add buttons above or create your own custom section</p>
+          <p className="text-sm">
+            Use the Quick Add buttons above or create your own custom section
+          </p>
         </div>
       )}
 
@@ -428,13 +454,12 @@ export default function CustomSectionsForm({
         </h4>
         <ul className="list-disc pl-4 text-sm text-blue-800 space-y-1">
           <li>
-            Use custom sections for projects, publications, patents, or volunteer work
+            Use custom sections for projects, publications, patents, or
+            volunteer work
           </li>
           <li>Each entry should have a clear title that stands out</li>
           <li>Include dates to show timeline and relevance</li>
-          <li>
-            Keep descriptions concise and highlight your contributions
-          </li>
+          <li>Keep descriptions concise and highlight your contributions</li>
           <li>
             Order sections by relevance to the position you're applying for
           </li>

@@ -14,7 +14,6 @@ import CertificationsForm from "@/components/CertificationsForm";
 import CustomSectionsForm from "@/components/CustomSectionsForm";
 import ResumePreview from "@/components/ResumePreview";
 import StepIndicator from "@/components/StepIndicator";
-import { DownloadPDFButton } from "@/components/ResumePDF";
 import { useToast } from "@/components/ToastContext";
 import {
   FaChevronLeft,
@@ -24,6 +23,25 @@ import {
   FaRedo,
   FaDownload,
 } from "react-icons/fa";
+import dynamic from "next/dynamic";
+
+// Dynamically import the PDF components to avoid loading them on initial page load
+const DynamicResumePDF = dynamic(
+  () => import("@/components/ResumePDF").then((mod) => mod.default),
+  { ssr: false, loading: () => null }
+);
+
+export const DynamicDownloadPDFButton = dynamic(
+  () => import("@/components/ResumePDF").then((mod) => mod.DownloadPDFButton),
+  {
+    ssr: false,
+    loading: () => (
+      <button className="bg-vivid-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-md inline-flex items-center justify-center">
+        <span>Loading PDF generator...</span>
+      </button>
+    ),
+  }
+);
 
 export default function ResumeBuilder() {
   const [resumeData, setResumeData] = useState<ResumeData>({
@@ -472,10 +490,15 @@ export default function ResumeBuilder() {
         return (
           <div className="space-y-6">
             <div className="border-l-4 border-blue-500 pl-4 py-2 mb-4 bg-blue-50 rounded-r-md">
-              <h2 className="text-lg font-semibold text-blue-800">Additional Information</h2>
-              <p className="text-sm text-blue-700">Add languages, certifications, and any custom sections to enhance your resume</p>
+              <h2 className="text-lg font-semibold text-blue-800">
+                Additional Information
+              </h2>
+              <p className="text-sm text-blue-700">
+                Add languages, certifications, and any custom sections to
+                enhance your resume
+              </p>
             </div>
-            
+
             {/* Languages section with distinct visual styling */}
             <div className="bg-white rounded-lg shadow-sm p-5 border-l-4 border-indigo-400">
               <h3 className="text-lg font-semibold mb-3 flex items-center">
@@ -486,7 +509,7 @@ export default function ResumeBuilder() {
                 updateLanguages={updateLanguages}
               />
             </div>
-            
+
             {/* Certifications section with distinct visual styling */}
             <div className="bg-white rounded-lg shadow-sm p-5 border-l-4 border-green-400">
               <h3 className="text-lg font-semibold mb-3 flex items-center">
@@ -497,7 +520,7 @@ export default function ResumeBuilder() {
                 updateCertifications={updateCertifications}
               />
             </div>
-            
+
             {/* Custom Sections with distinct visual styling */}
             <div className="bg-white rounded-lg shadow-sm p-5 border-l-4 border-orange-400">
               <h3 className="text-lg font-semibold mb-3 flex items-center">
@@ -634,7 +657,7 @@ export default function ResumeBuilder() {
                   as a PDF.
                 </p>
                 <div className="flex justify-center">
-                  <DownloadPDFButton resumeData={resumeData} />
+                  <DynamicDownloadPDFButton resumeData={resumeData} />
                 </div>
               </div>
             </div>
@@ -668,7 +691,7 @@ export default function ResumeBuilder() {
               </button>
 
               {currentStep === steps.length - 1 && (
-                <DownloadPDFButton resumeData={resumeData} />
+                <DynamicDownloadPDFButton resumeData={resumeData} />
               )}
             </div>
           </div>
@@ -742,7 +765,7 @@ export default function ResumeBuilder() {
               <div className="flex justify-between items-center mb-3 pb-3 border-b">
                 <h2 className="text-lg font-bold">Resume Preview</h2>
                 {resumeData.personalInfo.name && (
-                  <DownloadPDFButton
+                  <DynamicDownloadPDFButton
                     resumeData={resumeData}
                     btnText={
                       <>

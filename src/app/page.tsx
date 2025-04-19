@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -9,6 +12,53 @@ import {
 } from "react-icons/fa";
 
 export default function LandingPage() {
+  // Preload important resources when the component mounts
+  useEffect(() => {
+    // Preload the resume-builder page on hover
+    const getStartedLinks = document.querySelectorAll(
+      'a[href="/resume-builder"]'
+    );
+    getStartedLinks.forEach((link) => {
+      link.addEventListener(
+        "mouseover",
+        () => {
+          // Create a prefetch link for the resume-builder page
+          const linkEl = document.createElement("link");
+          linkEl.rel = "prefetch";
+          linkEl.href = "/resume-builder";
+          document.head.appendChild(linkEl);
+
+          // Also prefetch font files
+          const fontFiles = [
+            "/fonts/roboto-regular.ttf",
+            "/fonts/roboto-bold.ttf",
+            "/fonts/roboto-italic.ttf",
+          ];
+
+          fontFiles.forEach((font) => {
+            const fontLink = document.createElement("link");
+            fontLink.rel = "prefetch";
+            fontLink.href = font;
+            fontLink.as = "font";
+            document.head.appendChild(fontLink);
+          });
+        },
+        { once: true }
+      ); // Only trigger once
+    });
+
+    // Add resource hints directly to document head
+    const linkPreconnect = document.createElement("link");
+    linkPreconnect.rel = "preconnect";
+    linkPreconnect.href = "/resume-builder";
+    document.head.appendChild(linkPreconnect);
+
+    const linkDnsPrefetch = document.createElement("link");
+    linkDnsPrefetch.rel = "dns-prefetch";
+    linkDnsPrefetch.href = "/resume-builder";
+    document.head.appendChild(linkDnsPrefetch);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Section with enhanced styling */}
@@ -191,7 +241,7 @@ export default function LandingPage() {
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-oxford-blue to-transparent"></div>
         </section>
 
-        {/* Trust Badges Section */}
+        {/* Trust Badges Section with horizontal scrolling animation */}
         <section className="py-8 bg-white border-b border-gray-200">
           <div className="container mx-auto px-4">
             <div className="text-center mb-6">
@@ -199,30 +249,61 @@ export default function LandingPage() {
                 TRUSTED BY JOB SEEKERS FROM
               </p>
             </div>
-            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-              {[
-                { name: "Google", icon: FaGoogle, color: "#4285F4" },
-                { name: "Amazon", icon: FaAmazon, color: "#FF9900" },
-                { name: "Microsoft", icon: FaMicrosoft, color: "#00A4EF" },
-                { name: "Apple", icon: FaApple, color: "#A2AAAD" },
-                { name: "Meta", icon: FaFacebookSquare, color: "#0866FF" },
-              ].map((company, index) => (
-                <div
-                  key={index}
-                  className="grayscale opacity-50 hover:opacity-100 transition-all hover:grayscale-0 duration-300"
-                >
-                  <div className="flex items-center justify-center">
-                    <company.icon
-                      size={48}
-                      title={`${company.name} logo`}
-                      color={company.color}
-                      className="h-8 md:h-12 w-auto"
-                    />
+
+            {/* Infinite scrolling container with inline styles for animation */}
+            <div className="flex overflow-hidden">
+              <div className="flex animate-scroll whitespace-nowrap">
+                {[...Array(2)].map((_, containerIndex) => (
+                  <div key={containerIndex} className="flex items-center mx-4">
+                    {[
+                      { name: "Google", icon: FaGoogle, color: "#4285F4" },
+                      { name: "Amazon", icon: FaAmazon, color: "#FF9900" },
+                      {
+                        name: "Microsoft",
+                        icon: FaMicrosoft,
+                        color: "#00A4EF",
+                      },
+                      { name: "Apple", icon: FaApple, color: "#A2AAAD" },
+                      {
+                        name: "Meta",
+                        icon: FaFacebookSquare,
+                        color: "#0866FF",
+                      },
+                    ].map((company, index) => (
+                      <div
+                        key={`${containerIndex}-${index}`}
+                        className="mx-12 grayscale opacity-50 hover:opacity-100 transition-all hover:grayscale-0 duration-300"
+                      >
+                        <div className="flex items-center justify-center">
+                          <company.icon
+                            size={48}
+                            title={`${company.name} logo`}
+                            color={company.color}
+                            className="h-8 md:h-12 w-auto"
+                          />
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
+
+          {/* Add inline style for the animation */}
+          <style jsx>{`
+            @keyframes scroll {
+              0% {
+                transform: translateX(0);
+              }
+              100% {
+                transform: translateX(-50%);
+              }
+            }
+            .animate-scroll {
+              animation: scroll 20s linear infinite;
+            }
+          `}</style>
         </section>
 
         {/* Benefits Section with improved visuals */}
