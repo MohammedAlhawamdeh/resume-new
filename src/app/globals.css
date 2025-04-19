@@ -342,6 +342,29 @@ body {
   margin-bottom: 4px;
 }
 
+/* Make the Quill editor match the resume font style */
+.quill-container .ql-editor {
+  min-height: 200px;
+  font-family: "Open Sans", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333333;
+}
+
+/* Match the heading styles */
+.quill-container .ql-editor h1, 
+.quill-container .ql-editor h2, 
+.quill-container .ql-editor h3 {
+  font-family: "Open Sans", "Helvetica", "Arial", sans-serif;
+  font-weight: 600;
+}
+
+/* Match list styles */
+.quill-container .ql-editor ul li, 
+.quill-container .ql-editor ol li {
+  font-family: "Open Sans", "Helvetica", "Arial", sans-serif;
+}
+
 /* ATS-friendly print styles */
 @media print {
   body {
