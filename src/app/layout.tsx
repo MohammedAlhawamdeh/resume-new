@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/ToastContext";
+import { ClerkProvider } from "@clerk/nextjs";
+import Navbar from "@/components/Navbar";
 
 // Load only one font with optimized settings
 const inter = Inter({
@@ -30,9 +32,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable}`}>
-        <ToastProvider>{children}</ToastProvider>
-      </body>
+      <ClerkProvider>
+        <body className={`${inter.variable}`}>
+          <Navbar />
+          <ToastProvider>{children}</ToastProvider>
+        </body>
+      </ClerkProvider>
     </html>
   );
 }

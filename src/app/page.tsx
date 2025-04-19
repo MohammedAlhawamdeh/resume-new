@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useUser, SignedIn, SignedOut } from "@clerk/nextjs";
 import {
   FaGoogle,
   FaAmazon,
@@ -12,11 +13,13 @@ import {
 } from "react-icons/fa";
 
 export default function LandingPage() {
+  const { isSignedIn, user } = useUser();
+
   // Preload important resources when the component mounts
   useEffect(() => {
     // Preload the resume-builder page on hover
     const getStartedLinks = document.querySelectorAll(
-      'a[href="/resume-builder"]'
+      'a[href="/resume-builder"], a[href="/dashboard"]'
     );
     getStartedLinks.forEach((link) => {
       link.addEventListener(
@@ -25,7 +28,7 @@ export default function LandingPage() {
           // Create a prefetch link for the resume-builder page
           const linkEl = document.createElement("link");
           linkEl.rel = "prefetch";
-          linkEl.href = "/resume-builder";
+          linkEl.href = isSignedIn ? "/dashboard" : "/sign-in";
           document.head.appendChild(linkEl);
 
           // Also prefetch font files
@@ -50,14 +53,14 @@ export default function LandingPage() {
     // Add resource hints directly to document head
     const linkPreconnect = document.createElement("link");
     linkPreconnect.rel = "preconnect";
-    linkPreconnect.href = "/resume-builder";
+    linkPreconnect.href = isSignedIn ? "/dashboard" : "/sign-in";
     document.head.appendChild(linkPreconnect);
 
     const linkDnsPrefetch = document.createElement("link");
     linkDnsPrefetch.rel = "dns-prefetch";
-    linkDnsPrefetch.href = "/resume-builder";
+    linkDnsPrefetch.href = isSignedIn ? "/dashboard" : "/sign-in";
     document.head.appendChild(linkDnsPrefetch);
-  }, []);
+  }, [isSignedIn]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -90,12 +93,32 @@ export default function LandingPage() {
               Pricing
             </a>
           </nav>
-          <Link
-            href="/resume-builder"
-            className="bg-vivid-orange hover:bg-opacity-90 text-white px-6 py-2 rounded-md font-bold text-sm transition-all transform hover:scale-105 shadow-custom"
-          >
-            Get Started Free
-          </Link>
+
+          <SignedIn>
+            <Link
+              href="/dashboard"
+              className="bg-vivid-orange hover:bg-opacity-90 text-white px-6 py-2 rounded-md font-bold text-sm transition-all transform hover:scale-105 shadow-custom"
+            >
+              My Dashboard
+            </Link>
+          </SignedIn>
+
+          <SignedOut>
+            <div className="flex space-x-3">
+              <Link
+                href="/sign-in"
+                className="border border-white hover:border-vivid-orange hover:text-vivid-orange text-white px-5 py-2 rounded-md font-medium text-sm transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/sign-up"
+                className="bg-vivid-orange hover:bg-opacity-90 text-white px-5 py-2 rounded-md font-medium text-sm transition-all transform hover:scale-105 shadow-custom"
+              >
+                Sign Up
+              </Link>
+            </div>
+          </SignedOut>
         </div>
       </header>
 
@@ -128,26 +151,22 @@ export default function LandingPage() {
                   that stands out.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href="/resume-builder"
-                    className="group bg-vivid-orange hover:bg-opacity-90 text-white px-8 py-4 rounded-md font-bold text-lg text-center transition-all transform hover:scale-105 shadow-custom flex items-center justify-center"
-                  >
-                    Build My Resume Now
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                  <SignedIn>
+                    <Link
+                      href="/resume-builder"
+                      className="group bg-vivid-orange hover:bg-opacity-90 text-white px-8 py-4 rounded-md font-bold text-lg text-center transition-all transform hover:scale-105 shadow-custom flex items-center justify-center"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      />
-                    </svg>
-                  </Link>
+                      Build My Resume Now
+                    </Link>
+                  </SignedIn>
+                  <SignedOut>
+                    <Link
+                      href="/sign-up"
+                      className="group bg-vivid-orange hover:bg-opacity-90 text-white px-8 py-4 rounded-md font-bold text-lg text-center transition-all transform hover:scale-105 shadow-custom flex items-center justify-center"
+                    >
+                      Get Started Free
+                    </Link>
+                  </SignedOut>
                   <a
                     href="#how-it-works"
                     className="border-2 border-white hover:border-vivid-orange hover:text-vivid-orange text-center px-8 py-4 rounded-md font-bold text-lg transition-colors"
@@ -924,12 +943,22 @@ export default function LandingPage() {
                 resumes with our platform.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/resume-builder"
-                  className="bg-white text-vivid-orange hover:bg-gray-100 px-8 py-4 rounded-md font-bold text-lg inline-block transition-all transform hover:scale-105 shadow-lg"
-                >
-                  Build My Resume Now
-                </Link>
+                <SignedIn>
+                  <Link
+                    href="/resume-builder"
+                    className="bg-white text-vivid-orange hover:bg-gray-100 px-8 py-4 rounded-md font-bold text-lg inline-block transition-all transform hover:scale-105 shadow-lg"
+                  >
+                    Build My Resume Now
+                  </Link>
+                </SignedIn>
+                <SignedOut>
+                  <Link
+                    href="/sign-up"
+                    className="bg-white text-vivid-orange hover:bg-gray-100 px-8 py-4 rounded-md font-bold text-lg inline-block transition-all transform hover:scale-105 shadow-lg"
+                  >
+                    Get Started Free
+                  </Link>
+                </SignedOut>
                 <a
                   href="#pricing"
                   className="border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-md font-bold text-lg inline-block transition-colors"

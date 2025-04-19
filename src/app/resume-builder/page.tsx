@@ -15,6 +15,7 @@ import CustomSectionsForm from "@/components/CustomSectionsForm";
 import ResumePreview from "@/components/ResumePreview";
 import StepIndicator from "@/components/StepIndicator";
 import { useToast } from "@/components/ToastContext";
+import { useUser } from "@clerk/nextjs";
 import {
   FaChevronLeft,
   FaChevronRight,
@@ -24,6 +25,7 @@ import {
   FaDownload,
 } from "react-icons/fa";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 // Dynamically import the PDF components to avoid loading them on initial page load
 const DynamicResumePDF = dynamic(
@@ -44,6 +46,16 @@ export const DynamicDownloadPDFButton = dynamic(
 );
 
 export default function ResumeBuilder() {
+  const { user, isLoaded, isSignedIn } = useUser();
+  const router = useRouter();
+
+  // Redirect to sign-in if not authenticated
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.push("/sign-in");
+    }
+  }, [isLoaded, isSignedIn, router]);
+
   const [resumeData, setResumeData] = useState<ResumeData>({
     personalInfo: {
       name: "MOHAMMED ALHAWAMDEH",
