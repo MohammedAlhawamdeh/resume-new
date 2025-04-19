@@ -9,7 +9,7 @@ export default function DashboardContent() {
   const { isLoaded, userId } = useAuth();
   const { user } = useUser();
   const router = useRouter();
-  
+
   useEffect(() => {
     if (isLoaded && !userId) {
       router.push("/sign-in");
