@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/ToastContext";
 import { ClerkProvider } from "@clerk/nextjs";
-import Navbar from "@/components/Navbar";
 
 // Load only one font with optimized settings
 const inter = Inter({
@@ -34,7 +33,6 @@ export default function RootLayout({
     <html lang="en">
       <ClerkProvider>
         <body className={`${inter.variable}`}>
-          <Navbar />
           <ToastProvider>{children}</ToastProvider>
         </body>
       </ClerkProvider>

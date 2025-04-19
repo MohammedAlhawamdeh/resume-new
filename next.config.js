@@ -2,7 +2,7 @@
 const nextConfig = {
   /* config options here */
   reactStrictMode: true,
-  swcMinify: true,
+  // Removed deprecated swcMinify option
 
   // Optimize code splitting for better performance
   compiler: {

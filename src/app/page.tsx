@@ -1,19 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useUser, SignedIn, SignedOut } from "@clerk/nextjs";
+import { useUser, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import {
   FaGoogle,
   FaAmazon,
   FaMicrosoft,
   FaApple,
   FaFacebookSquare,
+  FaFileAlt,
 } from "react-icons/fa";
 
 export default function LandingPage() {
   const { isSignedIn, user } = useUser();
+  const [mounted, setMounted] = useState(false);
+
+  // Set mounted state to true after the component mounts
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Preload important resources when the component mounts
   useEffect(() => {
@@ -68,11 +75,12 @@ export default function LandingPage() {
       <header className="bg-oxford-blue text-white sticky top-0 z-50 border-b border-gray-800">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center">
-            <span className="text-2xl font-bold tracking-tight">
+            <Link href="/" className="text-2xl font-bold tracking-tight">
               <span className="text-white">KWIK</span>
               <span className="text-vivid-orange">CV</span>
-            </span>
+            </Link>
           </div>
+
           <nav className="hidden md:flex space-x-8">
             <a
               href="#features"
@@ -94,31 +102,52 @@ export default function LandingPage() {
             </a>
           </nav>
 
-          <SignedIn>
-            <Link
-              href="/dashboard"
-              className="bg-vivid-orange hover:bg-opacity-90 text-white px-6 py-2 rounded-md font-bold text-sm transition-all transform hover:scale-105 shadow-custom"
-            >
-              My Dashboard
-            </Link>
-          </SignedIn>
+          {/* Only show this section when client-side rendering is ready to prevent hydration issues */}
+          {mounted && (
+            <div className="flex items-center space-x-4">
+              <SignedIn>
+                <div className="flex items-center space-x-4">
+                  <Link
+                    href="/resume-builder"
+                    className="flex items-center bg-vivid-orange hover:bg-opacity-90 text-white px-6 py-2 rounded-md font-bold text-sm transition-all transform hover:scale-105 shadow-custom"
+                  >
+                    <FaFileAlt className="mr-2" /> Resume Builder
+                  </Link>
+                  <Link
+                    href="/dashboard"
+                    className="text-white hover:text-vivid-orange transition-colors font-medium text-sm"
+                  >
+                    Dashboard
+                  </Link>
+                  <UserButton
+                    afterSignOutUrl="/"
+                    appearance={{
+                      elements: {
+                        userButtonAvatarBox: "w-10 h-10",
+                      },
+                    }}
+                  />
+                </div>
+              </SignedIn>
 
-          <SignedOut>
-            <div className="flex space-x-3">
-              <Link
-                href="/sign-in"
-                className="border border-white hover:border-vivid-orange hover:text-vivid-orange text-white px-5 py-2 rounded-md font-medium text-sm transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/sign-up"
-                className="bg-vivid-orange hover:bg-opacity-90 text-white px-5 py-2 rounded-md font-medium text-sm transition-all transform hover:scale-105 shadow-custom"
-              >
-                Sign Up
-              </Link>
+              <SignedOut>
+                <div className="flex space-x-3">
+                  <Link
+                    href="/sign-in"
+                    className="border border-white hover:border-vivid-orange hover:text-vivid-orange text-white px-5 py-2 rounded-md font-medium text-sm transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="bg-vivid-orange hover:bg-opacity-90 text-white px-5 py-2 rounded-md font-medium text-sm transition-all transform hover:scale-105 shadow-custom"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              </SignedOut>
             </div>
-          </SignedOut>
+          )}
         </div>
       </header>
 

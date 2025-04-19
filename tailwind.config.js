@@ -1,3 +1,5 @@
+const { nextui } = require('@nextui-org/theme');
+
 /** @type {import('tailwindcss').Config} */
 const config = {
   content: [
@@ -67,4 +69,5 @@ const config = {
   },
   plugins: [],
 };
-export default config;
+
+module.exports = config;
